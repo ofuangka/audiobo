@@ -1,0 +1,40 @@
+.songs-flex {
+  display: flex;
+  padding: 20px;
+}
+.songs {
+  flex-grow: 1;
+}
+.letters {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+table {
+  border-collapse: collapse;
+  font-size: 0.8em;
+  width: 100%;
+}
+tr:hover td {
+  background-color: #eee;
+}
+td {
+  border-bottom: 1px solid lightgray;
+  cursor: default;
+  max-width: 150px;
+  overflow-x: hidden;
+  padding: 10px;
+  white-space: nowrap;
+}
+@media(max-width: 600px) {
+  td {
+    max-width: 50px;
+  }
+}
+.action-icon {
+  visibility: hidden;
+}
+tr:hover .action-icon {
+  visibility: visible;
+}

@@ -1,0 +1,44 @@
+.albums {
+  align-items: flex-start;
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 1;
+  overflow-y: scroll;
+  padding-left: 10px;
+}
+.album-art {
+  background-color: black;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  height: 192px;
+  justify-content: flex-end;
+  width: 192px;
+}
+.album-controls {
+  align-items: center;
+  display: none;
+  justify-content: flex-end;
+}
+.album-art:hover .album-controls, .album-controls.touch-device {
+  display: flex;
+}
+.album-controls button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.album {
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 144px;
+}
+@media (max-width: 600px) {
+  .album {
+    width: 160px;
+  }
+}
+.album p {
+  overflow-x: hidden;
+  white-space: nowrap;
+}

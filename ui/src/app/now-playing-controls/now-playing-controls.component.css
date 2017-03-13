@@ -1,0 +1,43 @@
+.now-playing-controls {
+  border-top: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+}
+.button-controls {
+  align-items: center;
+  display: flex;
+  padding: 0 20px 20px 20px;
+  min-height: -webkit-min-content;
+}
+.playback-controls {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex: 1 0 auto;
+}
+.playback-controls > button {
+  margin: 5px;
+}
+.progress-bar {
+  position: relative;
+  top: -24px;
+}
+.now-playing-info {
+  color: gray;
+  display: flex;
+  font-size: 0.8em;
+  padding: 0 20px;
+  position: relative;
+  top: -18px;
+}
+.now-playing-info > * {
+  flex-basis: 50px;
+}
+.now-playing-info > .title {
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+.now-playing-info > .track-length {
+  text-align: right;
+}

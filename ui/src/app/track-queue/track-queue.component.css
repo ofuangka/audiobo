@@ -1,0 +1,37 @@
+.queue-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.queue {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+.queue-controls {
+  display: flex;
+  justify-content: space-between;
+}
+.queue-controls button {
+  margin: 10px;
+}
+.queue table {
+  border-collapse: collapse;
+}
+.queue td {
+  border-bottom: 1px solid lightgray;
+  cursor: default;
+  font-size: 0.8em;
+  max-width: 100px;
+  overflow-x: hidden;
+  padding: 5px;
+  white-space: nowrap;
+}
+.queue tr:first-child td {
+  border-top: 1px solid lightgray;
+}
+.queue td:last-child {
+  border-left: 1px solid lightgray;
+  cursor: -webkit-grab;
+}

@@ -1,0 +1,26 @@
+<div class="queue-flex">
+  <div class="queue">
+    <table>
+      <tbody>
+        <tr *ngFor="let track of tracks">
+          <td>
+            <md-icon *ngIf="isPlaying(track)" title="Now playing">equalizer</md-icon>
+          </td>
+          <td>{{ track.title }}</td>
+          <td>{{ track.artist }}</td>
+          <td class="duration">{{ track.duration }}</td>
+          <td>
+            <md-icon (click)="removeTrack(track)" class="action-icon" title="Remove">clear</md-icon>
+          </td>
+          <td>
+            <md-icon class="drag-handle">reorder</md-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="queue-controls">
+    <button md-icon-button (click)="shuffleQueue()" title="Shuffle"><md-icon>shuffle</md-icon></button>
+    <button md-icon-button (click)="clearQueue()" title="Clear all"><md-icon>clear_all</md-icon></button>
+  </div>
+</div>

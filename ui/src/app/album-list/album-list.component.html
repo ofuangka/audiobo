@@ -1,0 +1,22 @@
+<div class="filter-container">
+  <form>
+    <md-input-container class="filter">
+      <input mdInput type="search" placeholder="Filter albums">
+    </md-input-container>
+  </form>
+</div>
+<div class="albums">
+  <md-card *ngFor="let album of albums" class="album">
+    <md-card-content>
+      <div md-card-image class="album-art">
+        <div class="album-controls" [ngClass]="{'touch-device': isTouchDevice()}">
+          <button md-mini-fab (click)="addAlbumToQueue(album)" title="Add to queue"><md-icon>add</md-icon></button>
+          <button md-mini-fab (click)="playAlbum(album)" title="Play now"><md-icon>play_arrow</md-icon></button>
+        </div>
+      </div>
+      <p>
+        {{ album.title }}<br /><small>{{ album.artist }}</small><br /><small>{{ album.year }}</small>
+      </p>
+    </md-card-content>
+  </md-card>
+</div>
