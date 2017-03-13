@@ -19,6 +19,6 @@
         <router-outlet></router-outlet>
       </div>
     </md-sidenav-container>
-    <now-playing-controls></now-playing-controls>
+    <now-playing-controls (queueToggle)="queueDrawer.toggle()"></now-playing-controls>
   </div>
 </md-sidenav-container>

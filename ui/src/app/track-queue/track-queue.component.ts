@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PlayerService } from '../player.service';
+
 @Component({
   selector: 'track-queue',
   templateUrl: './track-queue.component.html',
@@ -14,13 +16,13 @@ export class TrackQueueComponent implements OnInit {
     { id: '3', title: 'Death is the Road to Awe', artist: 'Clint Mansell', duration: '5:11' }
   ].reverse();
 
-  constructor() { }
+  constructor(private player: PlayerService) { }
 
   ngOnInit() {
   }
 
   isPlaying(track) {
-    return track.id === '0';
+    return this.player.isPlaying(track);
   }
 
   removeTrack(track) {

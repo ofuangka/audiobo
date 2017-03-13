@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'now-playing-controls',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NowPlayingControlsComponent implements OnInit {
 
+  @Output()
+  queueToggle: EventEmitter<any> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -14,7 +17,7 @@ export class NowPlayingControlsComponent implements OnInit {
   }
 
   toggleQueue() {
-
+    this.queueToggle.emit(null);
   }
 
   previous() {}

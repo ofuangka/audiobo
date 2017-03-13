@@ -14,6 +14,8 @@ import { RootNavComponent } from './root-nav/root-nav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
 import { CapabilitiesService } from './capabilities.service';
+import { PlayerService } from './player.service';
+import { SecurityService } from './security.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { CapabilitiesService } from './capabilities.service';
     MaterialModule,
     AppRoutingModule
   ],
-  providers: [CapabilitiesService],
+  providers: [CapabilitiesService, PlayerService, SecurityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

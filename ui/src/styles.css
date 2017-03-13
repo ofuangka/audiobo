@@ -21,8 +21,16 @@ a {
   width: 100%;
 }
 .duration {
-  text-align: right;
+  text-align: right !important;
 }
 .action-icon {
   cursor: pointer;
+}
+.text-right {
+  text-align: right !important;
+}
+@media(max-width: 600px) {
+  .hidden-sm {
+    display: none;
+  }
 }
