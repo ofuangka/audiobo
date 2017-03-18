@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RootNavComponent } from './root-nav.component';
+import { AboutDialogComponent } from './about-dialog.component';
 
-describe('RootNavComponent', () => {
-  let component: RootNavComponent;
-  let fixture: ComponentFixture<RootNavComponent>;
+describe('AboutDialogComponent', () => {
+  let component: AboutDialogComponent;
+  let fixture: ComponentFixture<AboutDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RootNavComponent ]
+      declarations: [ AboutDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RootNavComponent);
+    fixture = TestBed.createComponent(AboutDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,43 @@
+<div class="queue-flex">
+  <div class="queue">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>NAME</th>
+          <th>ARTIST</th>
+          <th class="duration">TIME</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">
+            <md-icon title="Now playing">equalizer</md-icon>
+          </td>
+          <td>{{ playing.title }}</td>
+          <td>{{ playing.artist }}</td>
+          <td>{{ playing.duration }}</td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let song of songs" class="highlight">
+          <td></td>
+          <td>{{ song.title }}</td>
+          <td>{{ song.artist }}</td>
+          <td class="duration">{{ song.duration }}</td>
+          <td class="text-center">
+            <md-icon (click)="remove(song)" class="action-icon" title="Remove">clear</md-icon>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="text-right" colspan="5">
+            <button md-button (click)="shuffle()" [disabled]="songs.length === 0" title="Shuffle">SHUFFLE</button>
+            <button md-button (click)="clear()" [disabled]="songs.length === 0" title="Clear">CLEAR</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

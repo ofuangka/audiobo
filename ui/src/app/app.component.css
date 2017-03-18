@@ -22,3 +22,7 @@ md-sidenav-container {
 .toolbar button {
   margin: 5px;
 }
+#queue-drawer {
+  background: transparent;
+  box-shadow: none;
+}

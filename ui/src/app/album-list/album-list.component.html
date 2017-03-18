@@ -5,8 +5,11 @@
     </md-input-container>
   </form>
 </div>
+<div *ngIf="filteredAlbums.length === 0" class="no-albums-message">
+  <md-card>No albums to display</md-card>
+</div>
 <div class="albums">
-  <md-card *ngFor="let album of albums" class="album">
+  <md-card *ngFor="let album of filteredAlbums" class="album">
     <md-card-content>
       <div md-card-image class="album-art">
         <div class="album-controls" [ngClass]="{'touch-device': isTouchDevice()}">
@@ -15,7 +18,7 @@
         </div>
       </div>
       <p>
-        {{ album.title }}<br /><small>{{ album.artist }}</small><br /><small>{{ album.year }}</small>
+        <a>{{ album.title }}</a><br /><a><small class="artist">{{ album.artist }}</small></a>
       </p>
     </md-card-content>
   </md-card>

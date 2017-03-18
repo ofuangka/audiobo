@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TrackQueueComponent } from './track-queue.component';
+import { LibrarySetupComponent } from './library-setup.component';
 
-describe('TrackQueueComponent', () => {
-  let component: TrackQueueComponent;
-  let fixture: ComponentFixture<TrackQueueComponent>;
+describe('LibrarySetupComponent', () => {
+  let component: LibrarySetupComponent;
+  let fixture: ComponentFixture<LibrarySetupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrackQueueComponent ]
+      declarations: [ LibrarySetupComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TrackQueueComponent);
+    fixture = TestBed.createComponent(LibrarySetupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

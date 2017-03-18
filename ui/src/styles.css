@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
 html {
+  cursor: default;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 html, body, app-root {
@@ -29,8 +30,14 @@ a {
 .text-right {
   text-align: right !important;
 }
+.text-center {
+  text-align: center !important;
+}
 @media(max-width: 600px) {
   .hidden-sm {
     display: none;
   }
+}
+.invisible {
+  visibility: hidden;
 }

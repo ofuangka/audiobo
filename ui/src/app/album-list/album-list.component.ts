@@ -20,6 +20,8 @@ export class AlbumListComponent implements OnInit {
     { id: '7', title: 'Shovel Knight The Definitive Soundtrack', artist: 'Jake Kaufman', year: '2014' },
 
   ];
+  filteredAlbums = this.albums;
+
   constructor(private capabilities: CapabilitiesService) { }
 
   ngOnInit() {

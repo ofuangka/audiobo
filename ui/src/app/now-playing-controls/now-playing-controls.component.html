@@ -1,16 +1,16 @@
 <div class="now-playing-controls">
-  <md-slider class="progress-bar"></md-slider>
+  <md-slider class="progress-bar" [ngClass]="{'invisible': !isPlaying()}"></md-slider>
   <div class="now-playing-info">
     <span>0:00</span>
-    <span class="title">Holy Dread!</span>
-    <span class="track-length">5:41</span>
+    <span class="title">{{ playing.title }} - {{ playing.artist }}</span>
+    <span class="duration">{{ playing.duration }}</span>
   </div>
   <div class="button-controls">
     <button md-icon-button (click)="like()" title="Like"><md-icon>favorite_border</md-icon></button>
 
     <div class="playback-controls">
-      <button md-icon-button (click)="previous()" title="Previous"><md-icon>skip_previous</md-icon></button>
-      <button md-fab color="warn" (click)="playPauseRandom()" title="Play"><md-icon>play_arrow</md-icon></button>
+      <button md-icon-button (click)="previous()" [disabled]="!hasPrevious()" title="Previous"><md-icon>skip_previous</md-icon></button>
+      <button md-fab color="warn" (click)="playPauseRandom()" title="Play"><md-icon>{{ getPlayButtonIcon() }}</md-icon></button>
       <button md-icon-button (click)="next()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>
 

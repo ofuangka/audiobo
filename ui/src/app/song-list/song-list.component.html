@@ -20,15 +20,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let song of songs">
-            <td>
-              <md-icon *ngIf="isPlaying(song)">equalizer</md-icon>
+          <tr *ngIf="filteredSongs.length === 0">
+            <td colspan="6">No songs to display</td>
+          </tr>
+          <tr *ngFor="let song of filteredSongs" class="highlight">
+            <td class="text-center">
+              <md-icon *ngIf="isSongPlaying(song)">equalizer</md-icon>
             </td>
             <td class="title">{{ song.title }}</td>
             <td class="hidden-sm">{{ song.artist }}</td>
             <td class="hidden-sm">{{ song.album }}</td>
             <td class="hidden-sm duration">{{ song.duration }}</td>
-            <td class="text-right">
+            <td class="text-center">
               <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
               <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>
             </td>

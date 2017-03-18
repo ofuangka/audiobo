@@ -23,18 +23,13 @@ th {
   text-align: left;
   white-space: nowrap;
 }
-tr:hover td {
-  background-color: #eee;
+tr.highlight:hover td {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 td {
-  border-bottom: 1px solid lightgray;
-  cursor: default;
   overflow-x: hidden;
   padding: 10px;
   white-space: nowrap;
-}
-tr:last-child td {
-  border-bottom: none;
 }
 .action-icon {
   visibility: hidden;
