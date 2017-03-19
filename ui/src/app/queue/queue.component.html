@@ -1,6 +1,6 @@
 <div class="queue-flex">
   <div class="queue">
-    <table>
+    <table (click)="stopPropagation($event)">
       <thead>
         <tr>
           <th></th>
@@ -15,9 +15,9 @@
           <td class="text-center">
             <md-icon title="Now playing">equalizer</md-icon>
           </td>
-          <td>{{ playing.title }}</td>
-          <td>{{ playing.artist }}</td>
-          <td>{{ playing.duration }}</td>
+          <td>{{ currentSong.title }}</td>
+          <td>{{ currentSong.artist }}</td>
+          <td>{{ currentSong.duration }}</td>
           <td></td>
         </tr>
         <tr *ngFor="let song of songs" class="highlight">

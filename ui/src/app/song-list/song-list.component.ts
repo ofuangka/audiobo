@@ -36,7 +36,7 @@ export class SongListComponent implements OnInit {
   }
 
   isSongPlaying(song) {
-    return this.player.playing.id === song.id;
+    return this.player.currentSong.id === song.id;
   }
 
 }

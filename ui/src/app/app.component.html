@@ -6,13 +6,13 @@
     <div class="toolbar">
       <button md-icon-button (click)="sidenavDrawer.toggle()" class="nav-button" title="Menu"><md-icon>menu</md-icon></button>
       <nav>
-        <button md-button [routerLink]="['/library/albums']">Albums</button>
-        <button md-button [routerLink]="['/library/songs']">Songs</button>
+        <button md-button [routerLink]="['/library/albums']">ALBUMS</button>
+        <button md-button [routerLink]="['/library/songs']">SONGS</button>
       </nav>
       <button md-icon-button (click)="showAbout()" class="nav-button" title="About Audiobo"><md-icon>audiotrack</md-icon></button>
     </div>
     <md-sidenav-container mode="over">
-      <md-sidenav #queueDrawer align="end" id="queue-drawer">
+      <md-sidenav #queueDrawer align="end" id="queue-drawer" (click)="queueDrawer.toggle()">
         <queue></queue>
       </md-sidenav>
       <div class="content">

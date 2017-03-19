@@ -1,9 +1,9 @@
 <div class="now-playing-controls">
-  <md-slider class="progress-bar" [ngClass]="{'invisible': !isPlaying()}"></md-slider>
+  <md-slider class="progress-bar" [ngClass]="{'invisible': !isPlaying()}" [value]="getProgress()"></md-slider>
   <div class="now-playing-info">
     <span>0:00</span>
-    <span class="title">{{ playing.title }} - {{ playing.artist }}</span>
-    <span class="duration">{{ playing.duration }}</span>
+    <span class="title">{{ currentSong.title }} - {{ currentSong.artist }}</span>
+    <span class="duration">{{ currentSong.duration }}</span>
   </div>
   <div class="button-controls">
     <button md-icon-button (click)="like()" title="Like"><md-icon>favorite_border</md-icon></button>

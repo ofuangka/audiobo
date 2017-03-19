@@ -11,13 +11,13 @@ export class NowPlayingControlsComponent implements OnInit {
 
   @Output()
   queueToggle: EventEmitter<any> = new EventEmitter();
-
-  playing;
+  
+  currentSong;
 
   constructor(private player: PlayerService) { }
 
   ngOnInit() {
-    this.playing = this.player.playing;
+    this.currentSong = this.player.currentSong;
   }
 
   toggleQueue() {
@@ -26,13 +26,19 @@ export class NowPlayingControlsComponent implements OnInit {
 
   previous() {}
   next() {}
-  playPauseRandom() {}
+  playPauseRandom() {
+    if (!this.isPlaying()) {
+      this.player.play();
+    } else {
+      this.player.pause();
+    }
+  }
   like() {}
   getPlayButtonIcon() {
-    if (this.player.isPlaying()) {
+    if (this.player.playing) {
       return 'pause';
-    } else if (this.playing === null) {
-      return 'casino';
+    } else if (this.player.loading) {
+      return 'sync';
     } else {
       return 'play_arrow';
     }
@@ -41,7 +47,10 @@ export class NowPlayingControlsComponent implements OnInit {
     return this.player.hasPrevious();
   }
   isPlaying() {
-    return this.player.isPlaying();
+    return this.player.playing;
+  }
+  getProgress() {
+    return this.player.progress;
   }
 
 }

@@ -8,7 +8,7 @@ import { PlayerService } from '../player.service';
   styleUrls: ['./queue.component.css']
 })
 export class QueueComponent implements OnInit {
-  playing;
+  currentSong;
   songs = [
     { id: '1', title: 'Holy Dread!', artist: 'Clint Mansell', duration: '3:51' },
     { id: '2', title: 'Finish It', artist: 'Clint Mansell', duration: '4:37' },
@@ -18,11 +18,11 @@ export class QueueComponent implements OnInit {
   constructor(private player: PlayerService) { }
 
   ngOnInit() {
-    this.playing = this.player.playing;
+    this.currentSong = this.player.currentSong;
   }
 
   isSongPlaying(song) {
-    return this.player.playing.id === song.id;
+    return this.currentSong.id === song.id;
   }
 
   remove(song) {
@@ -35,6 +35,10 @@ export class QueueComponent implements OnInit {
 
   shuffle() {
     this.songs.sort((a, b) => Math.random() - 0.5);
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
 }
