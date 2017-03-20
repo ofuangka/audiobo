@@ -18,6 +18,7 @@ import { PlayerService } from './player.service';
 import { SecurityService } from './security.service';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
+import { SecondsPipe } from './seconds.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LibrarySetupComponent } from './library-setup/library-setup.component';
     AlbumListComponent,
     SongListComponent,
     AboutDialogComponent,
-    LibrarySetupComponent
+    LibrarySetupComponent,
+    SecondsPipe
   ],
   imports: [
     BrowserModule,

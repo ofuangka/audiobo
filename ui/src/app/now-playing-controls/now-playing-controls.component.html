@@ -1,7 +1,7 @@
 <div class="now-playing-controls">
-  <md-slider class="progress-bar" [ngClass]="{'invisible': !isPlaying()}" [value]="getProgress()"></md-slider>
+  <md-slider class="progress-bar" [ngClass]="{'invisible': !isPlaying() && !isPaused()}" [value]="getProgress()" (change)="seek($event)"></md-slider>
   <div class="now-playing-info">
-    <span>0:00</span>
+    <span>{{ currentTime | seconds }}</span>
     <span class="title">{{ currentSong.title }} - {{ currentSong.artist }}</span>
     <span class="duration">{{ currentSong.duration }}</span>
   </div>
@@ -9,7 +9,7 @@
     <button md-icon-button (click)="like()" title="Like"><md-icon>favorite_border</md-icon></button>
 
     <div class="playback-controls">
-      <button md-icon-button (click)="previous()" [disabled]="!hasPrevious()" title="Previous"><md-icon>skip_previous</md-icon></button>
+      <button md-icon-button (click)="previous()" [disabled]="!hasPrevious() && !(getProgress() > 0)" title="Previous"><md-icon>skip_previous</md-icon></button>
       <button md-fab color="warn" (click)="playPauseRandom()" title="Play"><md-icon>{{ getPlayButtonIcon() }}</md-icon></button>
       <button md-icon-button (click)="next()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>

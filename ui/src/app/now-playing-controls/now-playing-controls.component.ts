@@ -24,7 +24,13 @@ export class NowPlayingControlsComponent implements OnInit {
     this.queueToggle.emit(null);
   }
 
-  previous() {}
+  previous() {
+    if (this.getProgress() > 0) {
+      this.player.restart();
+    } else {
+      /* TODO: implement */
+    }
+  }
   next() {}
   playPauseRandom() {
     if (!this.isPlaying()) {
@@ -51,6 +57,15 @@ export class NowPlayingControlsComponent implements OnInit {
   }
   getProgress() {
     return this.player.progress;
+  }
+  seek(event) {
+    this.player.seek(event.value);
+  }
+  isPaused() {
+    return this.player.isPaused();
+  }
+  getCurrentTime() {
+    return this.player.currentTime;
   }
 
 }
