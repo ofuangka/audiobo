@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
+import { Song } from '../domain/song';
+
 @Injectable()
 export class PlayerService {
 
-  currentSong = { id: '0', title: 'The Last Man', artist: 'Clint Mansell', duration: '6:09' };
+  currentSong: Song = { id: '0', title: 'The Kill', artist: '30 Seconds to Mars', album: 'A Beautiful Lie', duration: 609 };
   playing = false;
   loading = false;
   audio = new Audio();
@@ -33,14 +35,6 @@ export class PlayerService {
   seek(to) {
     let newTime = (to / 100) * this.audio.duration;
     this.audio.currentTime = newTime;
-  }
-
-  hasNext() {
-    return true;
-  }
-
-  hasPrevious() {
-    return false;
   }
 
   isPaused() {

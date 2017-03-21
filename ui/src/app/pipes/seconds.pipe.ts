@@ -14,11 +14,11 @@ export class SecondsPipe implements PipeTransform {
       return '0:00';
     } else {
       if (remainder > HOUR) {
-        let hours = remainder / HOUR;
+        let hours = Math.floor(remainder / HOUR);
         ret += hours + ':';
         remainder = remainder % HOUR;
       }
-      let minutes = remainder / MINUTE;
+      let minutes = Math.floor(remainder / MINUTE);
       if (minutes < 10 && ret) {
         ret += '0';
       }

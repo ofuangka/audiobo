@@ -17,14 +17,14 @@
           </td>
           <td>{{ currentSong.title }}</td>
           <td>{{ currentSong.artist }}</td>
-          <td>{{ currentSong.duration }}</td>
+          <td>{{ currentSong.duration | seconds }}</td>
           <td></td>
         </tr>
         <tr *ngFor="let song of songs" class="highlight">
           <td></td>
           <td>{{ song.title }}</td>
           <td>{{ song.artist }}</td>
-          <td class="duration">{{ song.duration }}</td>
+          <td class="duration">{{ song.duration | seconds }}</td>
           <td class="text-center">
             <md-icon (click)="remove(song)" class="action-icon" title="Remove">clear</md-icon>
           </td>

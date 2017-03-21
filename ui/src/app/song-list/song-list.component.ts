@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PlayerService } from '../player.service';
+import { PlayerService } from '../services';
+import { Song } from '../domain/song';
 
 @Component({
   selector: 'app-song-list',
@@ -9,11 +10,11 @@ import { PlayerService } from '../player.service';
 })
 export class SongListComponent implements OnInit {
 
-  songs = [
-    { id: '0', title: 'The Last Man', artist: 'Clint Mansell', album: 'The Fountain', duration: '6:09'},
-    { id: '1', title: 'Holy Dread!', artist: 'Clint Mansell', album: 'The Fountain', duration: '3:51' },
-    { id: '2', title: 'Finish It', artist: 'Clint Mansell', album: 'The Fountain', duration: '4:12' },
-    { id: '3', title: 'Death is the Road to Awe', artist: 'Clint Mansell', album: 'The Fountain', duration: '4:38' }
+  songs: [Song] = [
+    { id: '0', title: 'The Last Man', artist: 'Clint Mansell', album: 'The Fountain', duration: 100 },
+    { id: '1', title: 'Holy Dread!', artist: 'Clint Mansell', album: 'The Fountain', duration: 200 },
+    { id: '2', title: 'Finish It', artist: 'Clint Mansell', album: 'The Fountain', duration: 300 },
+    { id: '3', title: 'Death is the Road to Awe', artist: 'Clint Mansell', album: 'The Fountain', duration: 400 }
   ];
   filteredSongs = this.songs;
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -32,7 +33,7 @@ export class SongListComponent implements OnInit {
   }
 
   jumpTo(letter) {
-    
+
   }
 
   isSongPlaying(song) {

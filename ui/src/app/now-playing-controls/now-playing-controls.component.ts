@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { PlayerService } from '../player.service';
+import { PlayerService, QueueService } from '../services';
 
 @Component({
   selector: 'now-playing-controls',
@@ -11,10 +11,12 @@ export class NowPlayingControlsComponent implements OnInit {
 
   @Output()
   queueToggle: EventEmitter<any> = new EventEmitter();
-  
-  currentSong;
 
-  constructor(private player: PlayerService) { }
+  currentSong;
+  frozenProgress = 0;
+  progressDisabled = false;
+
+  constructor(private player: PlayerService, private queue: QueueService) { }
 
   ngOnInit() {
     this.currentSong = this.player.currentSong;
@@ -31,7 +33,7 @@ export class NowPlayingControlsComponent implements OnInit {
       /* TODO: implement */
     }
   }
-  next() {}
+  next() { }
   playPauseRandom() {
     if (!this.isPlaying()) {
       this.player.play();
@@ -39,7 +41,7 @@ export class NowPlayingControlsComponent implements OnInit {
       this.player.pause();
     }
   }
-  like() {}
+  like() { }
   getPlayButtonIcon() {
     if (this.player.playing) {
       return 'pause';
@@ -50,7 +52,7 @@ export class NowPlayingControlsComponent implements OnInit {
     }
   }
   hasPrevious() {
-    return this.player.hasPrevious();
+    return this.queue.hasPrevious(this.player.currentSong);
   }
   isPlaying() {
     return this.player.playing;
@@ -66,6 +68,15 @@ export class NowPlayingControlsComponent implements OnInit {
   }
   getCurrentTime() {
     return this.player.currentTime;
+  }
+
+  disableProgress() {
+    this.frozenProgress = this.player.progress;
+    this.progressDisabled = true;
+  }
+
+  enableProgress() {
+    this.progressDisabled = false;
   }
 
 }

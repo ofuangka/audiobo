@@ -9,22 +9,20 @@ import { AppRoutingModule } from './app-routing.module';
 
 import 'hammerjs';
 import { NowPlayingControlsComponent } from './now-playing-controls/now-playing-controls.component';
-import { QueueComponent } from './queue/queue.component';
+import { QueueDrawerComponent } from './queue-drawer/queue-drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
-import { CapabilitiesService } from './capabilities.service';
-import { PlayerService } from './player.service';
-import { SecurityService } from './security.service';
+import { CapabilitiesService, PlayerService, SecurityService, QueueService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
-import { SecondsPipe } from './seconds.pipe';
+import { SecondsPipe } from './pipes/seconds.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NowPlayingControlsComponent,
-    QueueComponent,
+    QueueDrawerComponent,
     SidenavComponent,
     AlbumListComponent,
     SongListComponent,
@@ -39,7 +37,7 @@ import { SecondsPipe } from './seconds.pipe';
     MaterialModule,
     AppRoutingModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService],
   bootstrap: [AppComponent],
   entryComponents: [AboutDialogComponent, LibrarySetupComponent]
 })

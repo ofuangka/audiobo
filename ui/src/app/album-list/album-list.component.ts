@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CapabilitiesService } from '../capabilities.service';
+import { CapabilitiesService } from '../services';
 
 @Component({
   selector: 'app-album-list',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { SecurityService } from './security.service';
+import { SecurityService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 
 @Component({
