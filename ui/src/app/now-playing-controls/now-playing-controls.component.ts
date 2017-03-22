@@ -43,9 +43,9 @@ export class NowPlayingControlsComponent implements OnInit {
   }
   like() { }
   getPlayButtonIcon() {
-    if (this.player.playing) {
+    if (this.isPlaying()) {
       return 'pause';
-    } else if (this.player.loading) {
+    } else if (this.isLoading()) {
       return 'sync';
     } else {
       return 'play_arrow';
@@ -56,6 +56,9 @@ export class NowPlayingControlsComponent implements OnInit {
   }
   isPlaying() {
     return this.player.playing;
+  }
+  isLoading() {
+    return this.player.loading;
   }
   getProgress() {
     return this.player.progress;

@@ -13,7 +13,7 @@
       <button md-icon-button (click)="previous()" [disabled]="!hasPrevious() && !(getProgress()> 0)" title="Previous">
         <md-icon>skip_previous</md-icon>
       </button>
-      <button md-fab color="warn" (click)="playPauseRandom()" title="Play"><md-icon>{{ getPlayButtonIcon() }}</md-icon></button>
+      <button md-fab color="warn" (click)="playPauseRandom()" [disabled]="isLoading()" title="Play"><md-icon>{{ getPlayButtonIcon() }}</md-icon></button>
       <button md-icon-button (click)="next()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>
 
