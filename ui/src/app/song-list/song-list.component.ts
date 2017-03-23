@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PlayerService } from '../services';
+import { QueueService } from '../services';
 import { Song } from '../domain/song';
 
 @Component({
@@ -10,16 +10,11 @@ import { Song } from '../domain/song';
 })
 export class SongListComponent implements OnInit {
 
-  songs: [Song] = [
-    { id: '0', title: 'The Last Man', artist: 'Clint Mansell', album: 'The Fountain', duration: 100 },
-    { id: '1', title: 'Holy Dread!', artist: 'Clint Mansell', album: 'The Fountain', duration: 200 },
-    { id: '2', title: 'Finish It', artist: 'Clint Mansell', album: 'The Fountain', duration: 300 },
-    { id: '3', title: 'Death is the Road to Awe', artist: 'Clint Mansell', album: 'The Fountain', duration: 400 }
-  ];
+  songs = [Song];
   filteredSongs = this.songs;
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  constructor(private player: PlayerService) { }
+  constructor(private queue: QueueService) { }
 
   ngOnInit() {
   }
@@ -37,7 +32,7 @@ export class SongListComponent implements OnInit {
   }
 
   isSongPlaying(song) {
-    return this.player.currentSong.id === song.id;
+    return this.queue.currentSong.id === song.id;
   }
 
 }

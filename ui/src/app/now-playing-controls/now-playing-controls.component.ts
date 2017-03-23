@@ -1,84 +1,96 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { PlayerService, QueueService } from '../services';
+
+import { Song } from '../domain/song';
 
 @Component({
   selector: 'now-playing-controls',
   templateUrl: './now-playing-controls.component.html',
   styleUrls: ['./now-playing-controls.component.css']
 })
-export class NowPlayingControlsComponent implements OnInit {
+export class NowPlayingControlsComponent {
 
   @Output()
   queueToggle: EventEmitter<any> = new EventEmitter();
 
-  currentSong;
+  get currentSong() {
+    return this.queue.currentSong;
+  }
   frozenProgress = 0;
   progressDisabled = false;
+  get currentTime() {
+    return this.player.currentTime;
+  }
+  get loading() {
+    return this.player.loading;
+  }
+  get playing() {
+    return this.player.playing;
+  }
+  get playStatusIcon() {
+    if (this.playing) {
+      return 'pause';
+    } else if (this.loading) {
+      return 'sync';
+    } else {
+      return 'play_arrow';
+    }
+  }
+  get progress() {
+    return this.player.progress;
+  }
+  get paused() {
+    return this.player.paused;
+  }
 
   constructor(private player: PlayerService, private queue: QueueService) { }
 
-  ngOnInit() {
-    this.currentSong = this.player.currentSong;
+  freezeProgress() {
+    this.frozenProgress = this.player.progress;
+    this.progressDisabled = true;
+  }
+
+  hasPrevious() {
+    return this.queue.hasPrevious();
+  }
+
+  like() {
+    /* TODO: implement */
+  }
+
+  next() {
+    this.queue.next();
+    this.player.autoload(this.currentSong);
+  }
+
+  playPause() {
+    if (!this.player.initialized) {
+      this.player.autoload(this.currentSong);
+    } else if (this.paused) {
+      this.player.unpause();
+    } else {
+      this.player.pause();
+    }
+  }
+
+  previous() {
+    if (this.progress > 0) {
+      this.player.seek(0);
+    } else {
+      /* TODO: implement */
+    }
+  }
+
+  seek(to: number) {
+    this.player.seek(to);
   }
 
   toggleQueue() {
     this.queueToggle.emit(null);
   }
 
-  previous() {
-    if (this.getProgress() > 0) {
-      this.player.restart();
-    } else {
-      /* TODO: implement */
-    }
-  }
-  next() { }
-  playPauseRandom() {
-    if (!this.isPlaying()) {
-      this.player.play();
-    } else {
-      this.player.pause();
-    }
-  }
-  like() { }
-  getPlayButtonIcon() {
-    if (this.isPlaying()) {
-      return 'pause';
-    } else if (this.isLoading()) {
-      return 'sync';
-    } else {
-      return 'play_arrow';
-    }
-  }
-  hasPrevious() {
-    return this.queue.hasPrevious(this.player.currentSong);
-  }
-  isPlaying() {
-    return this.player.playing;
-  }
-  isLoading() {
-    return this.player.loading;
-  }
-  getProgress() {
-    return this.player.progress;
-  }
-  seek(event) {
-    this.player.seek(event.value);
-  }
-  isPaused() {
-    return this.player.isPaused();
-  }
-  getCurrentTime() {
-    return this.player.currentTime;
-  }
-
-  disableProgress() {
-    this.frozenProgress = this.player.progress;
-    this.progressDisabled = true;
-  }
-
-  enableProgress() {
+  unfreezeProgress() {
     this.progressDisabled = false;
   }
 

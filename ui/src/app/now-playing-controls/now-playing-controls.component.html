@@ -1,8 +1,8 @@
 <div class="now-playing-controls">
-  <md-slider class="progress-bar" [ngClass]="{'invisible': !isPlaying() && !isPaused()}" [value]="progressDisabled ? frozenProgress : getProgress()"
-    (change)="seek($event); enableProgress()" (mousedown)="disableProgress()"></md-slider>
+  <md-slider class="progress-bar" max="1000" [ngClass]="{'invisible': !(playing || paused)}" [value]="progressDisabled ? frozenProgress : progress"
+    (change)="seek($event.value); unfreezeProgress()" (mousedown)="freezeProgress()"></md-slider>
   <div class="now-playing-info">
-    <span>{{ getCurrentTime() | seconds }}</span>
+    <span>{{ currentTime | seconds }}</span>
     <span class="title">{{ currentSong.title }} - {{ currentSong.artist }}</span>
     <span class="duration">{{ currentSong.duration | seconds }}</span>
   </div>
@@ -10,10 +10,10 @@
     <button md-icon-button (click)="like()" class="invisible" title="Like"><md-icon>favorite_border</md-icon></button>
 
     <div class="playback-controls">
-      <button md-icon-button (click)="previous()" [disabled]="!hasPrevious() && !(getProgress()> 0)" title="Previous">
+      <button md-icon-button (click)="previous()" [disabled]="!hasPrevious() && progress === 0" title="Previous">
         <md-icon>skip_previous</md-icon>
       </button>
-      <button md-fab color="warn" (click)="playPauseRandom()" [disabled]="isLoading()" title="Play"><md-icon>{{ getPlayButtonIcon() }}</md-icon></button>
+      <button md-fab color="warn" (click)="playPause()" [disabled]="loading" title="Play"><md-icon>{{ playStatusIcon }}</md-icon></button>
       <button md-icon-button (click)="next()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>
 
