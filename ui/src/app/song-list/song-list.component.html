@@ -25,7 +25,8 @@
           </tr>
           <tr *ngFor="let song of filteredSongs" class="highlight">
             <td class="text-center">
-              <md-icon *ngIf="isSongPlaying(song)">equalizer</md-icon>
+              <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
+              <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
             </td>
             <td class="title">{{ song.title }}</td>
             <td class="hidden-sm">{{ song.artist }}</td>

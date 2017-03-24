@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { PlayerService, QueueService } from '../services';
 
@@ -9,16 +9,17 @@ import { Song } from '../domain/song';
   templateUrl: './now-playing-controls.component.html',
   styleUrls: ['./now-playing-controls.component.css']
 })
-export class NowPlayingControlsComponent {
+export class NowPlayingControlsComponent implements OnInit {
 
   @Output()
   queueToggle: EventEmitter<any> = new EventEmitter();
 
+  get currentDuration() {
+    return this.player.currentDuration;
+  }
   get currentSong() {
     return this.queue.currentSong;
   }
-  frozenProgress = 0;
-  progressDisabled = false;
   get currentTime() {
     return this.player.currentTime;
   }
@@ -43,16 +44,30 @@ export class NowPlayingControlsComponent {
   get paused() {
     return this.player.paused;
   }
+  frozenProgress = 0;
+  progressDisabled = false;
 
   constructor(private player: PlayerService, private queue: QueueService) { }
+
+  ngOnInit() {
+    this.player.songComplete$.subscribe(() => this.next());
+  }
 
   freezeProgress() {
     this.frozenProgress = this.player.progress;
     this.progressDisabled = true;
   }
 
+  hasNext() {
+    return this.queue.hasNext();
+  }
+
   hasPrevious() {
     return this.queue.hasPrevious();
+  }
+
+  isQueueEmpty() {
+    return this.queue.isEmpty();
   }
 
   like() {
@@ -60,8 +75,10 @@ export class NowPlayingControlsComponent {
   }
 
   next() {
-    this.queue.next();
-    this.player.autoload(this.currentSong);
+    if (this.queue.hasNext()) {
+      this.queue.next();
+      this.player.autoload(this.currentSong);
+    }
   }
 
   playPause() {
@@ -75,10 +92,11 @@ export class NowPlayingControlsComponent {
   }
 
   previous() {
-    if (this.progress > 0) {
+    if (this.progress > 1) {
       this.player.seek(0);
-    } else {
-      /* TODO: implement */
+    } else if (this.queue.hasPrevious()) {
+      this.queue.previous();
+      this.player.autoload(this.currentSong);
     }
   }
 

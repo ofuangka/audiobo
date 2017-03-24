@@ -13,10 +13,11 @@ import { QueueDrawerComponent } from './queue-drawer/queue-drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
-import { CapabilitiesService, PlayerService, SecurityService, QueueService } from './services';
+import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
 import { SecondsPipe } from './pipes/seconds.pipe';
+import { HyphenZeroesPipe } from './pipes/hyphen-zeroes.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SecondsPipe } from './pipes/seconds.pipe';
     SongListComponent,
     AboutDialogComponent,
     LibrarySetupComponent,
-    SecondsPipe
+    SecondsPipe,
+    HyphenZeroesPipe
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,7 @@ import { SecondsPipe } from './pipes/seconds.pipe';
     MaterialModule,
     AppRoutingModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService],
   bootstrap: [AppComponent],
   entryComponents: [AboutDialogComponent, LibrarySetupComponent]
 })

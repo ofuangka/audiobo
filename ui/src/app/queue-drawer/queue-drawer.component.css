@@ -31,7 +31,7 @@
   background: rgba(0, 0, 0, 0.04);
 }
 @media(max-width: 600px) {
-  .queue td {
+  .queue td.width-sm {
     max-width: 100px;
   }
 }

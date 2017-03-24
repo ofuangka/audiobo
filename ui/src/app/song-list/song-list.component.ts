@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { QueueService } from '../services';
+import { QueueService, LibraryService, PlayerService } from '../services';
 import { Song } from '../domain/song';
 
 @Component({
@@ -8,31 +8,36 @@ import { Song } from '../domain/song';
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.css']
 })
-export class SongListComponent implements OnInit {
+export class SongListComponent {
 
-  songs = [Song];
+  get songs() {
+    return this.library.songs;
+  }
   filteredSongs = this.songs;
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  constructor(private queue: QueueService) { }
-
-  ngOnInit() {
-  }
+  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService) { }
 
   play(song) {
-
+    this.queue.clear();
+    this.queue.add(song);
+    this.player.autoload(this.queue.currentSong);
   }
 
   addToQueue(song) {
-
+    this.queue.add(song);
   }
 
   jumpTo(letter) {
 
   }
 
-  isSongPlaying(song) {
-    return this.queue.currentSong.id === song.id;
+  isSongCurrent(song): boolean {
+    return this.queue.currentSong && this.queue.currentSong.id === song.id;
+  }
+
+  isSongPlaying(song): boolean {
+    return this.isSongCurrent(song) && this.player.playing;
   }
 
 }

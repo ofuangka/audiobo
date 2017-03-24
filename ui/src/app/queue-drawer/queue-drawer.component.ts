@@ -16,20 +16,44 @@ export class QueueDrawerComponent {
 
   constructor(private queue: QueueService, private player: PlayerService) { }
 
-  isSongPlaying(song) {
-    return this.queue.currentSong.id === song.id && this.player.playing;
+  isSongCurrent(song: Song): boolean {
+    return this.queue.currentSong && this.queue.currentSong.id === song.id;
   }
 
-  remove(song) {
-    this.queue.remove(song);
+  isSongPlaying(song: Song): boolean {
+    return this.isSongCurrent(song) && this.player.playing;
+  }
+
+  remove(song: Song) {
+    if (this.queue.length === 1) {
+      this.clear();
+    } else {
+      if (this.queue.hasNext()) {
+        this.queue.remove(song);
+        this.player.autoload(this.queue.currentSong);
+      } else {
+        this.queue.remove(song);
+        this.player.pause();
+        this.player.seek(0);
+      }
+    }
   }
 
   clear() {
-    this.queue.clear(this.player.playing);
+    if (this.player.playing) {
+      this.player.pause();
+      this.player.seek(0);
+    }
+    this.queue.clear();
   }
 
   shuffle() {
-    this.queue.shuffle(this.player.playing);
+    this.queue.shuffle();
+  }
+
+  skipTo(song: Song) {
+    this.queue.skipTo(song);
+    this.player.autoload(this.queue.currentSong);
   }
 
   stopPropagation(event) {
