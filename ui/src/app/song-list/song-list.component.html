@@ -23,7 +23,7 @@
           <tr *ngIf="filteredSongs.length === 0">
             <td colspan="6">No songs to display</td>
           </tr>
-          <tr *ngFor="let song of filteredSongs" class="highlight" (dblclick)="play(song)">
+          <tr *ngFor="let song of filteredSongs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
             <td class="text-center">
               <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
               <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>

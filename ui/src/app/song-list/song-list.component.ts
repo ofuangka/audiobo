@@ -31,6 +31,10 @@ export class SongListComponent implements OnInit{
     return this.library.albums[song.albumId].title;
   }
 
+  handleSongClick(song: Song) {
+    
+  }
+
   isSongCurrent(song: Song): boolean {
     return this.queue.currentSong && this.queue.currentSong === song;
   }
