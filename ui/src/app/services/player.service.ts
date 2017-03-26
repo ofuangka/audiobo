@@ -11,6 +11,7 @@ export class PlayerService {
   private songComplete = new Subject();
 
   audio = new Audio();
+  autoplay = false;
   currentTime = 0;
   songComplete$ = this.songComplete.asObservable();
   loading = false;
@@ -32,12 +33,13 @@ export class PlayerService {
     this.audio.addEventListener('loadstart', event => { this.playing = false; this.loading = true });
     this.audio.addEventListener('playing', event => this.playing = true);
     this.audio.addEventListener('pause', event => this.playing = false);
-    this.audio.addEventListener('canplay', event => this.loading = false);
+    this.audio.addEventListener('canplay', event => { this.loading = false; if (this.autoplay) this.autoplay = false; this.audio.play(); });
     this.audio.addEventListener('timeupdate', event => { this.currentTime = this.audio.currentTime });
     this.audio.addEventListener('ended', event => this.songComplete.next());
   }
 
   autoload(song: Song) {
+    this.autoplay = true;
     this.audio.autoplay = true;
     this.audio.src = this.getSrc(song);
   }

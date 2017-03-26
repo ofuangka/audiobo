@@ -12,7 +12,7 @@
   <md-card *ngFor="let album of filteredAlbums" class="album">
     <md-card-content>
       <div md-card-image class="album-art">
-        <div class="album-controls" [ngClass]="{'touch-device': isTouchDevice()}">
+        <div class="album-controls">
           <button md-mini-fab (click)="addAlbumToQueue(album)" title="Add to queue"><md-icon>add</md-icon></button>
           <button md-mini-fab (click)="playAlbum(album)" title="Play now"><md-icon>play_arrow</md-icon></button>
         </div>
