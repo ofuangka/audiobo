@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let song of songs" class="highlight" (dblclick)="skipTo(song)">
+        <tr *ngFor="let song of songs" class="highlight" (click)="handleSongClick(song)">
           <td class="text-center">
             <md-icon *ngIf="isSongCurrent(song)" title="Now playing">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
           </td>

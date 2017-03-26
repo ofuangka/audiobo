@@ -10,6 +10,7 @@ import { Song } from '../domain/song';
 })
 export class QueueDrawerComponent {
 
+  private selectedSong: Song;
   get songs() {
     return this.queue.songs;
   }
@@ -53,6 +54,15 @@ export class QueueDrawerComponent {
       this.player.seek(0);
     }
     this.queue.clear();
+  }
+
+  handleSongClick(song: Song) {
+    if (this.selectedSong !== song) {
+      this.selectedSong = song;
+    } else {
+      this.skipTo(song);
+      this.selectedSong = null;
+    }
   }
 
   shuffle() {

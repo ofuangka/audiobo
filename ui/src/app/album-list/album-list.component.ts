@@ -32,6 +32,10 @@ export class AlbumListComponent implements OnInit {
     }
   }
 
+  goToAlbumDetails(album: Album) {
+
+  }
+
   playAlbum(album: Album) {
     this.queue.clear();
     this.addAlbumToQueue(album);

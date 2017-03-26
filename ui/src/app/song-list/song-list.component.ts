@@ -9,7 +9,7 @@ import { Song } from '../domain/song';
   styleUrls: ['./song-list.component.css']
 })
 export class SongListComponent implements OnInit{
-
+  private selectedSong: Song;
   songs: Song[] = [];
   filteredSongs: Song[] = [];
   letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -29,6 +29,15 @@ export class SongListComponent implements OnInit{
 
   getAlbumTitle(song): string {
     return this.library.albums[song.albumId].title;
+  }
+
+  handleSongClick(song) {
+    if (this.selectedSong !== song) {
+      this.selectedSong = song;
+    } else {
+      this.play(song);
+      this.selectedSong = null;
+    }
   }
 
   isSongCurrent(song): boolean {
