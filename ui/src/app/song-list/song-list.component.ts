@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { QueueService, LibraryService, PlayerService } from '../services';
+import { QueueService, LibraryService, PlayerService, ComparatorService } from '../services';
 import { Song } from '../domain/song';
 
 @Component({
@@ -8,18 +8,20 @@ import { Song } from '../domain/song';
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.css']
 })
-export class SongListComponent implements OnInit{
+export class SongListComponent implements OnInit {
   private selectedSong: Song;
-  songs: Song[] = [];
-  filteredSongs: Song[] = [];
-  letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService) { }
+  songs: Song[] = [];
+  sortedBy: string;
+  filteredSongs: Song[] = [];
+
+  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService, private comparator: ComparatorService) { }
 
   ngOnInit() {
     for (let id of Object.keys(this.library.songs)) {
       this.songs.push(this.library.songs[id]);
       this.filteredSongs.push(this.library.songs[id]);
+      this.sortBy('title');
     }
   }
 
@@ -32,7 +34,7 @@ export class SongListComponent implements OnInit{
   }
 
   handleSongClick(song: Song) {
-    
+
   }
 
   isSongCurrent(song: Song): boolean {
@@ -49,4 +51,26 @@ export class SongListComponent implements OnInit{
     this.player.autoload(this.queue.currentSong);
   }
 
+  sortBy(property: string) {
+    let reverse = property === this.sortedBy;
+    if (property === 'album') {
+      this.filteredSongs.sort(this.comparator.songAlbumTitle(reverse));
+    } else {
+      this.filteredSongs.sort(this.comparator.property(property, reverse));
+    }
+    if (reverse) {
+      this.sortedBy = '!' + property;
+    } else {
+      this.sortedBy = property;
+    }
+  }
+
+  sortDir(property): number {
+    if (this.sortedBy === property) {
+      return 1;
+    } else if (this.sortedBy === '!' + property) {
+      return -1;
+    }
+    return 0;
+  }
 }

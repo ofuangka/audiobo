@@ -12,10 +12,10 @@
         <thead>
           <tr>
             <th></th>
-            <th>NAME</th>
-            <th class="hidden-sm">ARTIST</th>
-            <th class="hidden-sm">ALBUM</th>
-            <th class="hidden-sm duration">TIME</th>
+            <th><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
+            <th class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
+            <th class="hidden-sm"><a (click)="sortBy('album')">ALBUM <sort-arrow [dir]="sortDir('album')"></sort-arrow></a></th>
+            <th class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
             <th></th>
           </tr>
         </thead>

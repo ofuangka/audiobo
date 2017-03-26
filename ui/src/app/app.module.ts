@@ -13,11 +13,11 @@ import { QueueDrawerComponent } from './queue-drawer/queue-drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
-import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService } from './services';
+import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
 import { SecondsPipe } from './pipes/seconds.pipe';
-import { HyphenZeroesPipe } from './pipes/hyphen-zeroes.pipe';
+import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { HyphenZeroesPipe } from './pipes/hyphen-zeroes.pipe';
     AboutDialogComponent,
     LibrarySetupComponent,
     SecondsPipe,
-    HyphenZeroesPipe
+    SortArrowComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +39,7 @@ import { HyphenZeroesPipe } from './pipes/hyphen-zeroes.pipe';
     MaterialModule,
     AppRoutingModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService],
   bootstrap: [AppComponent],
   entryComponents: [AboutDialogComponent, LibrarySetupComponent]
 })

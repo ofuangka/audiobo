@@ -8,7 +8,7 @@
 <div *ngIf="filteredAlbums.length === 0" class="no-albums-message">
   <md-card>No albums to display</md-card>
 </div>
-<div class="albums">
+<div #albums class="albums" (window:resize)="handleWindowResize($event)">
   <md-card *ngFor="let album of filteredAlbums" class="album">
     <md-card-content>
       <div md-card-image class="album-art" (click)="goToAlbumDetails(album)">
@@ -20,6 +20,11 @@
       <p>
         <a>{{ album.title }}</a><br /><a><small class="artist">{{ album.artist }}</small></a>
       </p>
+    </md-card-content>
+  </md-card>
+  <md-card *ngFor="let album of remainderAlbums" class="album invisible">
+    <md-card-content>
+      <div md-card-image class="album-art"></div>
     </md-card-content>
   </md-card>
 </div>

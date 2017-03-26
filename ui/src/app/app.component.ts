@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MdDialog } from '@angular/material';
 
 import { SecurityService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
@@ -10,11 +10,10 @@ import { AboutDialogComponent } from './about-dialog/about-dialog.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+
   constructor(private security: SecurityService, public dialog: MdDialog) { }
-  ngOnInit() {
-  }
   showAbout = function () {
-    let dialogRef = this.dialog.open(AboutDialogComponent);
+    this.dialog.open(AboutDialogComponent);
   }
 }

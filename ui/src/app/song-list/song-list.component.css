@@ -23,6 +23,10 @@ th {
   text-align: left;
   white-space: nowrap;
 }
+th > a {
+  align-items: center;
+  display: inline-flex;
+}
 tr.highlight:hover td {
   background-color: rgba(0, 0, 0, 0.04);
 }

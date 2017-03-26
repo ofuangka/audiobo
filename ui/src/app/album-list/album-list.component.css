@@ -3,6 +3,7 @@
   display: flex;
   flex-flow: row wrap;
   flex-grow: 1;
+  justify-content: center;
   padding: 10px 0 0 10px;
 }
 .album-art {
