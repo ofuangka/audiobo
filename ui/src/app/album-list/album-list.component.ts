@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CapabilitiesService } from '../services';
+import { CapabilitiesService, LibraryService, QueueService, PlayerService } from '../services';
+import { Album } from '../domain/album';
 
 @Component({
   selector: 'app-album-list',
@@ -9,34 +10,32 @@ import { CapabilitiesService } from '../services';
 })
 export class AlbumListComponent implements OnInit {
 
-  albums = [
-    { id: '0', title: 'Tommy', artist: 'The Who', year: '1971' },
-    { id: '1', title: 'Enter the Gungeon', artist: 'Doseone', year: '2016' },
-    { id: '2', title: 'FTL', artist: 'Ben Prunty', year: '2012' },
-    { id: '3', title: 'Shovel Knight The Definitive Soundtrack', artist: 'Jake Kaufman', year: '2014' },
-    { id: '4', title: 'Tommy', artist: 'The Who', year: '1971' },
-    { id: '5', title: 'Enter the Gungeon', artist: 'Doseone', year: '2016' },
-    { id: '6', title: 'FTL', artist: 'Ben Prunty', year: '2012' },
-    { id: '7', title: 'Shovel Knight The Definitive Soundtrack', artist: 'Jake Kaufman', year: '2014' },
+  albums: Album[] = [];
+  filteredAlbums: Album[] = [];
 
-  ];
-  filteredAlbums = this.albums;
-
-  constructor(private capabilities: CapabilitiesService) { }
+  constructor(private capabilities: CapabilitiesService, private library: LibraryService, private queue: QueueService, private player: PlayerService) { }
 
   ngOnInit() {
+    for (let id of Object.keys(this.library.albums)) {
+      this.albums.push(this.library.albums[id]);
+      this.filteredAlbums.push(this.library.albums[id]);
+    }
   }
 
   isTouchDevice() {
     return this.capabilities.isTouchDevice();
   }
 
-  addAlbumToQueue(album) {
-
+  addAlbumToQueue(album: Album) {
+    for (let songId of album.songIds) {
+      this.queue.add(this.library.songs[songId]);
+    }
   }
 
-  playAlbum(album) {
-    
+  playAlbum(album: Album) {
+    this.queue.clear();
+    this.addAlbumToQueue(album);
+    this.player.autoload(this.queue.currentSong);
   }
 
 }

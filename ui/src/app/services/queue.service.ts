@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Song } from '../domain/song';
 import { LibraryService } from './library.service';
+import { RandomService } from './random.service';
 
 class QueueEntry {
   previous: QueueEntry;
@@ -35,7 +36,7 @@ export class QueueService {
     return ret;
   }
 
-  constructor(private library: LibraryService) {
+  constructor(private library: LibraryService, private random: RandomService) {
     this.clear();
   }
 
@@ -110,7 +111,36 @@ export class QueueService {
   }
 
   shuffle() {
-    /* TODO: implement */
+
+    /* this loads an array with the QueueEntry objects, sorts it randomly, 
+    then recreates the queue in the newly sorted order */
+    let buf: QueueEntry[] = [],
+      pointer = this.first;
+    
+    /* create the array */
+    while (pointer !== null) {
+      buf.push(pointer);
+      pointer = pointer.next;
+    }
+
+    /* randomize the array */
+    buf.sort(() => Math.random() - 0.5);
+
+    /* recreate the queue */
+    for (let i = 0; i < buf.length; i++) {
+      if (i === 0) {
+        buf[i].previous = null;
+      } else {
+        buf[i].previous = buf[i - 1];
+      }
+      if (i === buf.length - 1) {
+        buf[i].next = null;
+      } else {
+        buf[i].next = buf[i + 1];
+      }
+    }
+    this.first = (buf.length > 0) ? buf[0] : null;
+    this.last = (buf.length > 0) ? buf[buf.length - 1] : null;
   }
 
   skipTo(song: Song) {

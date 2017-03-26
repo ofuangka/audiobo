@@ -3,7 +3,7 @@
   display: flex;
   flex-flow: row wrap;
   flex-grow: 1;
-  padding-left: 10px;
+  padding: 10px 0 0 10px;
 }
 .album-art {
   background-color: black;
@@ -11,9 +11,9 @@
   border-top-right-radius: 2px;
   display: flex;
   flex-direction: column;
-  height: 192px;
+  height: 172px;
   justify-content: flex-end;
-  width: 192px;
+  width: 172px;
 }
 .album-controls {
   align-items: center;
@@ -30,11 +30,11 @@
 .album {
   margin-bottom: 10px;
   margin-right: 10px;
-  width: 144px;
+  width: 124px;
 }
 @media (max-width: 600px) {
   .album {
-    width: 160px;
+    width: 140px;
   }
 }
 .album p {

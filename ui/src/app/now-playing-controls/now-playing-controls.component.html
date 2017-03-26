@@ -13,7 +13,7 @@
       <button md-icon-button (click)="previous()" [disabled]="!hasPrevious() && progress === 0" title="Previous">
         <md-icon>skip_previous</md-icon>
       </button>
-      <button md-fab color="warn" (click)="playPause()" [disabled]="loading || isQueueEmpty()" title="Play"><md-icon>{{ playStatusIcon }}</md-icon></button>
+      <button md-fab color="warn" (click)="playPause()" [disabled]="loading || isQueueEmpty()" title="Play"><md-icon [ngClass]="{rotate: loading}">{{ playStatusIcon }}</md-icon></button>
       <button md-icon-button (click)="next()" [disabled]="!hasNext()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>
 

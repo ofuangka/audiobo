@@ -1,10 +1,10 @@
-<div class="filter-container">
+<!--<div class="filter-container">
   <form>
     <md-input-container class="filter">
       <input mdInput type="search" placeholder="Filter songs">
     </md-input-container>
   </form>
-</div>
+</div>-->
 <div class="songs-flex">
   <div class="songs">
     <md-card>
@@ -30,7 +30,7 @@
             </td>
             <td class="title">{{ song.title }}</td>
             <td class="hidden-sm">{{ song.artist }}</td>
-            <td class="hidden-sm">{{ song.album }}</td>
+            <td class="hidden-sm">{{ getAlbumTitle(song) }}</td>
             <td class="hidden-sm duration">{{ song.duration | seconds }}</td>
             <td class="text-center">
               <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
@@ -41,7 +41,7 @@
       </table>
     </md-card>
   </div>
-  <div class="letters">
+  <!--<div class="letters">
     <a *ngFor="let letter of letters" (click)="jumpTo(letter)">{{ letter }}</a>
-  </div>
+  </div>-->
 </div>

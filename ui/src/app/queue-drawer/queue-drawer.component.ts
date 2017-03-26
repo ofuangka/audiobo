@@ -16,8 +16,12 @@ export class QueueDrawerComponent {
 
   constructor(private queue: QueueService, private player: PlayerService) { }
 
+  isEmpty(): boolean {
+    return this.queue.isEmpty();
+  }
+
   isSongCurrent(song: Song): boolean {
-    return this.queue.currentSong && this.queue.currentSong.id === song.id;
+    return this.queue.currentSong && this.queue.currentSong === song;
   }
 
   isSongPlaying(song: Song): boolean {
@@ -28,13 +32,17 @@ export class QueueDrawerComponent {
     if (this.queue.length === 1) {
       this.clear();
     } else {
-      if (this.queue.hasNext()) {
-        this.queue.remove(song);
-        this.player.autoload(this.queue.currentSong);
+      if (this.isSongPlaying(song)) {
+        if (this.queue.hasNext()) {
+          this.queue.remove(song);
+          this.player.autoload(this.queue.currentSong);
+        } else {
+          this.queue.remove(song);
+          this.player.pause();
+          this.player.seek(0);
+        }
       } else {
         this.queue.remove(song);
-        this.player.pause();
-        this.player.seek(0);
       }
     }
   }

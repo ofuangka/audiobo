@@ -26,8 +26,8 @@
       <tfoot>
         <tr>
           <td class="text-right" colspan="5">
-            <button md-button (click)="shuffle()" title="Shuffle">SHUFFLE</button>
-            <button md-button (click)="clear()" title="Clear">CLEAR</button>
+            <button md-button (click)="shuffle()" [disabled]="isEmpty()" title="Shuffle">SHUFFLE</button>
+            <button md-button (click)="clear()" [disabled]="isEmpty()" title="Clear">CLEAR</button>
           </td>
         </tr>
       </tfoot>
