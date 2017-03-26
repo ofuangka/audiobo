@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class SortArrowComponent {
 
   @Input()
-  dir: string;
+  dir: number;
 
   constructor() { }
 
