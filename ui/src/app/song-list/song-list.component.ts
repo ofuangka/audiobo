@@ -23,36 +23,23 @@ export class SongListComponent implements OnInit{
     }
   }
 
-  addToQueue(song) {
+  addToQueue(song: Song) {
     this.queue.add(song);
   }
 
-  getAlbumTitle(song): string {
+  getAlbumTitle(song: Song): string {
     return this.library.albums[song.albumId].title;
   }
 
-  handleSongClick(song) {
-    if (this.selectedSong !== song) {
-      this.selectedSong = song;
-    } else {
-      this.play(song);
-      this.selectedSong = null;
-    }
-  }
-
-  isSongCurrent(song): boolean {
+  isSongCurrent(song: Song): boolean {
     return this.queue.currentSong && this.queue.currentSong === song;
   }
 
-  isSongPlaying(song): boolean {
+  isSongPlaying(song: Song): boolean {
     return this.isSongCurrent(song) && this.player.playing;
   }
 
-  jumpTo(letter) {
-
-  }
-
-  play(song) {
+  play(song: Song) {
     this.queue.clear();
     this.queue.add(song);
     this.player.autoload(this.queue.currentSong);

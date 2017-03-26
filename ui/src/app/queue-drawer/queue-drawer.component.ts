@@ -17,6 +17,10 @@ export class QueueDrawerComponent {
 
   constructor(private queue: QueueService, private player: PlayerService) { }
 
+  handleSongClick(song: Song) {
+    
+  }
+
   isEmpty(): boolean {
     return this.queue.isEmpty();
   }
@@ -54,15 +58,6 @@ export class QueueDrawerComponent {
       this.player.seek(0);
     }
     this.queue.clear();
-  }
-
-  handleSongClick(song: Song) {
-    if (this.selectedSong !== song) {
-      this.selectedSong = song;
-    } else {
-      this.skipTo(song);
-      this.selectedSong = null;
-    }
   }
 
   shuffle() {
