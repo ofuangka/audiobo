@@ -48,6 +48,7 @@ export class QueueDrawerComponent {
         }
       } else {
         this.queue.remove(song);
+        this.player.seek(0);
       }
     }
   }
