@@ -46,4 +46,14 @@ export class AlbumDetailsComponent implements OnInit {
     return 0;
   }
 
+  sortBy(property: string) {
+    let reverse = this.sortedBy === property;
+    this.songs.sort(this.comparator.property(property, reverse));
+    if (reverse) {
+      this.sortedBy = '!' + property;
+    } else {
+      this.sortedBy = property;
+    }
+  }
+
 }
