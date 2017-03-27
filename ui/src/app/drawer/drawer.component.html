@@ -1,5 +1,5 @@
-<div class="queue-flex">
-  <div class="queue">
+<div class="drawer-flex">
+  <div class="drawer">
     <table (click)="stopPropagation($event)">
       <thead>
         <tr>
@@ -11,6 +11,11 @@
         </tr>
       </thead>
       <tbody>
+        <tr *ngIf="isQueueEmpty()">
+          <td></td>
+          <td colspan="3">Your queue is currently empty :(</td>
+          <td></td>
+        </tr>
         <tr *ngFor="let song of songs" class="highlight" (dblclick)="skipTo(song)" (click)="handleSongClick(song)">
           <td class="text-center">
             <md-icon *ngIf="isSongCurrent(song)" title="Now playing">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
@@ -26,8 +31,8 @@
       <tfoot>
         <tr>
           <td class="text-right" colspan="5">
-            <button md-button (click)="shuffle()" [disabled]="isEmpty()" title="Shuffle">SHUFFLE</button>
-            <button md-button (click)="clear()" [disabled]="isEmpty()" title="Clear">CLEAR</button>
+            <button md-button (click)="shuffle()" [disabled]="isQueueEmpty()" title="Shuffle">SHUFFLE</button>
+            <button md-button (click)="clear()" [disabled]="isQueueEmpty()" title="Clear">CLEAR</button>
           </td>
         </tr>
       </tfoot>

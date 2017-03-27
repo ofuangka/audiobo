@@ -19,16 +19,22 @@ class QueueEntry {
 @Injectable()
 export class QueueService {
 
-  first: QueueEntry;
-  current: QueueEntry;
-  last: QueueEntry;
+  private _current: QueueEntry;
+  private _first: QueueEntry;
+  private _last: QueueEntry;
+
   length: number;
-  get currentSong() {
-    return (this.current) ? this.current.song : null;
+  get current() {
+    return (this._current) ? this._current.song : null;
   }
-  get songs() {
+
+  constructor(private library: LibraryService, private random: RandomService) {
+    this.clear();
+  }
+
+  asArray(): Song[] {
     let ret = [],
-      pointer = this.first;
+      pointer = this._first;
     while (pointer !== null) {
       ret.push(pointer.song);
       pointer = pointer.next;
@@ -36,47 +42,59 @@ export class QueueService {
     return ret;
   }
 
-  constructor(private library: LibraryService, private random: RandomService) {
-    this.clear();
-  }
-
   add(song: Song) {
-    var newEntry = new QueueEntry(this.last, song, null);
+    var newEntry = new QueueEntry(this._last, song, null);
     if (this.isEmpty()) {
-      this.first = this.current = this.last = newEntry;
+      this._first = this._current = this._last = newEntry;
     } else {
-      this.last.next = newEntry;
-      this.last = newEntry;
+      this._last.next = newEntry;
+      this._last = newEntry;
     }
     this.length++;
   }
 
+  clear() {
+    this._first = this._current = this._last = null;
+    this.length = 0;
+  }
+
   hasPrevious(): boolean {
-    return this.current && this.current.previous !== null;
+    return this._current && this._current.previous !== null;
   }
 
   hasNext(): boolean {
-    return this.current && this.current.next !== null;
+    return this._current && this._current.next !== null;
   }
 
   isEmpty(): boolean {
     return this.length === 0;
   }
 
-  previous() {
-    if (this.current.previous !== null) {
-      this.current = this.current.previous;
+  jumpTo(song: Song) {
+    let pointer = this._first;
+    while (pointer) {
+      if (pointer.song === song) {
+        this._current = pointer;
+        break;
+      }
+      pointer = pointer.next;
     }
   }
 
-  next() {
-    if (this.current.next !== null) {
-      this.current = this.current.next;
+  goPrevious() {
+    if (this._current.previous !== null) {
+      this._current = this._current.previous;
+    }
+  }
+
+  goNext() {
+    if (this._current.next !== null) {
+      this._current = this._current.next;
     }
   }
 
   remove(song: Song) {
-    let pointer = this.first;
+    let pointer = this._first;
     while (pointer) {
       if (pointer.song === song) {
         if (this.length === 1) {
@@ -88,14 +106,14 @@ export class QueueService {
           if (pointer.next) {
             pointer.next.previous = pointer.previous;
           }
-          if (pointer === this.first) {
-            this.first = pointer.next;
+          if (pointer === this._first) {
+            this._first = pointer.next;
           }
-          if (pointer === this.current) {
-            this.current = pointer.next || pointer.previous;
+          if (pointer === this._current) {
+            this._current = pointer.next || pointer.previous;
           }
-          if (pointer === this.last) {
-            this.last = pointer.previous;
+          if (pointer === this._last) {
+            this._last = pointer.previous;
           }
           this.length--;
         }
@@ -105,17 +123,12 @@ export class QueueService {
     }
   }
 
-  clear() {
-    this.first = this.current = this.last = null;
-    this.length = 0;
-  }
-
   shuffle() {
 
     /* this loads an array with the QueueEntry objects, sorts it randomly, 
     then recreates the queue in the newly sorted order */
     let buf: QueueEntry[] = [],
-      pointer = this.first;
+      pointer = this._first;
     
     /* create the array */
     while (pointer !== null) {
@@ -139,19 +152,8 @@ export class QueueService {
         buf[i].next = buf[i + 1];
       }
     }
-    this.first = (buf.length > 0) ? buf[0] : null;
-    this.last = (buf.length > 0) ? buf[buf.length - 1] : null;
-  }
-
-  skipTo(song: Song) {
-    let pointer = this.first;
-    while (pointer) {
-      if (pointer.song === song) {
-        this.current = pointer;
-        break;
-      }
-      pointer = pointer.next;
-    }
+    this._first = (buf.length > 0) ? buf[0] : null;
+    this._last = (buf.length > 0) ? buf[buf.length - 1] : null;
   }
 
 }

@@ -1,43 +1,43 @@
-.queue-flex {
+.drawer-flex {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.queue {
+.drawer {
   display: flex;
   flex-direction: column-reverse;
   flex-grow: 1;
   overflow-y: scroll;
 }
-.queue table {
+.drawer table {
   background-color: white;
   border-collapse: collapse;
   border-top-left-radius: 1px;
   border-top-right-radius: 1px;
   font-size: 0.8em;
 }
-.queue th {
+.drawer th {
   font-size: 0.8em;
   padding: 10px;
   padding-top: 40px;
   text-align: left;
 }
-.queue td {
+.drawer td {
   overflow-x: hidden;
   padding: 10px;
   white-space: nowrap;
 }
-.queue tbody tr.highlight:hover td {
+.drawer tr.highlight:hover td {
   background: rgba(0, 0, 0, 0.04);
 }
 @media(max-width: 600px) {
-  .queue td.width-sm {
+  .drawer td.width-sm {
     max-width: 100px;
   }
 }
 .action-icon {
   visibility: hidden;
 }
-.queue tr:hover .action-icon {
+.drawer tr:hover .action-icon {
   visibility: visible;
 }

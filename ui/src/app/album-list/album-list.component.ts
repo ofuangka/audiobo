@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { LibraryService, QueueService, PlayerService, ComparatorService } from '../services';
 import { Album } from '../domain/album';
 
+const ALBUM_WIDTH = 182;
+
 @Component({
   selector: 'album-list',
   templateUrl: './album-list.component.html',
@@ -11,7 +13,7 @@ import { Album } from '../domain/album';
 export class AlbumListComponent implements OnInit, AfterViewInit {
 
   @ViewChild("albums")
-  albumsViewChild: ElementRef
+  albumsViewChild: ElementRef;
 
   albums: Album[] = [];
   filteredAlbums: Album[] = [];
@@ -49,13 +51,12 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   playAlbum(album: Album) {
     this.queue.clear();
     this.addAlbumToQueue(album);
-    this.player.autoload(this.queue.currentSong);
+    this.player.autoload(this.queue.current);
   }
 
   setUpRemainderAlbums() {
-    let ALBUM_WIDTH = 182,
-      numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
-      remainder = numPerRow - (this.albums.length % numPerRow);
+    let numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
+      remainder = numPerRow - (this.albums.length % numPerRow) + 1;
     this.remainderAlbums = [];
     for (let i = 0; i < remainder; i++) {
       this.remainderAlbums.push(true);

@@ -1,22 +1,24 @@
 <div class="now-playing-controls">
-  <md-slider class="progress-bar" max="1000" [ngClass]="{'invisible': !(playing || paused)}" [value]="progressDisabled ? frozenProgress : progress"
-    (change)="seek($event.value); unfreezeProgress()" (mousedown)="freezeProgress()"></md-slider>
+  <md-slider class="progress-bar" max="1000" [ngClass]="{invisible: !(playing || paused)}" [value]="progressFrozen ? normalize(frozenProgress, 1000) : normalize(progress, 1000)"
+    (change)="seek(denormalize($event.value, 1000)); unfreezeProgress()" (mousedown)="freezeProgress()"></md-slider>
   <div class="now-playing-info">
-    <span>{{ currentTime | seconds }}</span>
-    <span class="title">{{ (currentSong) ? (currentSong.title + ' - ' + currentSong.artist) : '' }}</span>
-    <span class="duration">{{ (currentSong) ? (currentSong.duration | seconds) : '-:--' }}</span>
+    <span>{{ elapsedTime | seconds }}</span>
+    <span class="title">{{ (nowPlaying) ? (nowPlaying.title + ' - ' + nowPlaying.artist) : '' }}</span>
+    <span class="duration">{{ (nowPlaying) ? (nowPlaying.duration | seconds) : '-:--' }}</span>
   </div>
   <div class="button-controls">
-    <button md-icon-button (click)="like()" class="invisible" title="Like"><md-icon>favorite_border</md-icon></button>
+    <button md-icon-button class="invisible" title="Like"><md-icon>favorite_border</md-icon></button>
 
     <div class="playback-controls">
-      <button md-icon-button (click)="previous()" [disabled]="!hasPrevious() && progress === 0" title="Previous">
+      <button md-icon-button (click)="skipPrevious()" [disabled]="!queueHasPrevious() && progress === 0" title="Previous">
         <md-icon>skip_previous</md-icon>
       </button>
-      <button md-fab color="warn" (click)="playPause()" [disabled]="loading || isQueueEmpty()" title="Play"><md-icon [ngClass]="{rotate: loading}">{{ playStatusIcon }}</md-icon></button>
-      <button md-icon-button (click)="next()" [disabled]="!hasNext()" title="Next"><md-icon>skip_next</md-icon></button>
+      <button md-fab color="warn" (click)="playPause()" [disabled]="loading || isQueueEmpty()" [title]="getPlayButtonTitle()">
+        <md-icon [ngClass]="{rotate: loading}">{{ getPlayButtonIcon() }}</md-icon>
+      </button>
+      <button md-icon-button (click)="skipNext()" [disabled]="!queueHasNext()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>
 
-    <button md-icon-button (click)="toggleQueue()" title="Queue"><md-icon>queue_music</md-icon></button>
+    <button md-icon-button (click)="toggleDrawer()" title="Queue"><md-icon>queue_music</md-icon></button>
   </div>
 </div>

@@ -12,104 +12,114 @@ import { Song } from '../domain/song';
 export class NowPlayingControlsComponent implements OnInit {
 
   @Output()
-  queueToggle: EventEmitter<any> = new EventEmitter();
+  drawerToggle: EventEmitter<any> = new EventEmitter();
 
-  get currentDuration() {
-    return this.player.currentDuration;
+  get nowPlaying() {
+    return this.queue.current;
   }
-  get currentSong() {
-    return this.queue.currentSong;
-  }
-  get currentTime() {
+  get elapsedTime() {
     return this.player.currentTime;
   }
   get loading() {
     return this.player.loading;
   }
-  get playing() {
-    return this.player.playing;
-  }
-  get playStatusIcon() {
-    if (this.playing) {
-      return 'pause';
-    } else if (this.loading) {
-      return 'sync';
-    } else {
-      return 'play_arrow';
-    }
-  }
-  get progress() {
-    return this.player.progress;
-  }
   get paused() {
     return this.player.paused;
   }
+  get playing() {
+    return this.player.playing;
+  }
+  get progress() {
+    return this.player.currentTime / this.player.duration;
+  }
   frozenProgress = 0;
-  progressDisabled = false;
+  progressFrozen = false;
 
   constructor(private player: PlayerService, private queue: QueueService) { }
 
   ngOnInit() {
-    this.player.songComplete$.subscribe(() => this.next());
+    this.player.songEnded$.subscribe(() => { if (this.queueHasNext()) { this.skipNext(); } else { this.player.stop(); } });
+  }
+
+  denormalize(value: number, max: number) {
+    return value / max;
   }
 
   freezeProgress() {
-    this.frozenProgress = this.player.progress;
-    this.progressDisabled = true;
+    this.frozenProgress = this.progress;
+    this.progressFrozen = true;
   }
 
-  hasNext() {
+  getPlayButtonIcon(): string {
+    if (this.playing) {
+      return 'pause';
+    } else if (this.loading) {
+      return 'sync';
+    }
+    return 'play_arrow';
+  }
+
+  getPlayButtonTitle(): string {
+    if (this.playing) {
+      return 'Pause';
+    } else if (this.loading) {
+      return 'Loading';
+    }
+    return 'Play';
+  }
+
+  queueHasNext(): boolean {
     return this.queue.hasNext();
   }
 
-  hasPrevious() {
+  queueHasPrevious(): boolean {
     return this.queue.hasPrevious();
   }
 
-  isQueueEmpty() {
+  isQueueEmpty(): boolean {
     return this.queue.isEmpty();
   }
 
-  like() {
-    /* TODO: implement */
+  normalize(value: number, max: number): number {
+    return Math.floor(value * max);
   }
 
-  next() {
+  skipNext() {
     if (this.queue.hasNext()) {
-      this.queue.next();
-      this.player.autoload(this.currentSong);
+      this.queue.goNext();
+      this.player.autoload(this.nowPlaying);
     }
   }
 
   playPause() {
     if (!this.player.initialized) {
-      this.player.autoload(this.currentSong);
+      this.player.autoload(this.nowPlaying);
     } else if (this.paused) {
-      this.player.unpause();
+      this.player.play();
     } else {
       this.player.pause();
     }
   }
 
-  previous() {
+  skipPrevious() {
     if (this.progress > 1) {
       this.player.seek(0);
     } else if (this.queue.hasPrevious()) {
-      this.queue.previous();
-      this.player.autoload(this.currentSong);
+      this.queue.goPrevious();
+      this.player.autoload(this.nowPlaying);
     }
   }
 
-  seek(to: number) {
-    this.player.seek(to);
+  seek(progress: number) {
+    this.player.seek(progress * this.player.duration);
   }
 
-  toggleQueue() {
-    this.queueToggle.emit(null);
+  toggleDrawer() {
+    this.drawerToggle.emit(null);
   }
 
   unfreezeProgress() {
-    this.progressDisabled = false;
+    this.progressFrozen = false;
   }
 
 }

@@ -4,12 +4,11 @@ import { QueueService, LibraryService, PlayerService, ComparatorService } from '
 import { Song } from '../domain/song';
 
 @Component({
-  selector: 'app-song-list',
+  selector: 'song-list',
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.css']
 })
 export class SongListComponent implements OnInit {
-  private selectedSong: Song;
 
   songs: Song[] = [];
   sortedBy: string;
@@ -38,7 +37,7 @@ export class SongListComponent implements OnInit {
   }
 
   isSongCurrent(song: Song): boolean {
-    return this.queue.currentSong && this.queue.currentSong === song;
+    return this.queue.current && this.queue.current === song;
   }
 
   isSongPlaying(song: Song): boolean {
@@ -48,7 +47,7 @@ export class SongListComponent implements OnInit {
   play(song: Song) {
     this.queue.clear();
     this.queue.add(song);
-    this.player.autoload(this.queue.currentSong);
+    this.player.autoload(this.queue.current);
   }
 
   sortBy(property: string) {

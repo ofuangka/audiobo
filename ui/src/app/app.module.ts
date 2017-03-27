@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import 'hammerjs';
 import { NowPlayingControlsComponent } from './now-playing-controls/now-playing-controls.component';
-import { QueueDrawerComponent } from './queue-drawer/queue-drawer.component';
+import { DrawerComponent } from './drawer/drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
@@ -23,7 +23,7 @@ import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
   declarations: [
     AppComponent,
     NowPlayingControlsComponent,
-    QueueDrawerComponent,
+    DrawerComponent,
     SidenavComponent,
     AlbumListComponent,
     SongListComponent,
