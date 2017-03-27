@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { LibraryService, QueueService, PlayerService, ComparatorService } from '../services';
 import { Album } from '../domain/album';
@@ -20,7 +21,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   remainderAlbums: boolean[] = [];
   sortedBy: string;
 
-  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService) { }
+  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router) { }
 
   ngOnInit() {
     for (let id of Object.keys(this.library.albums)) {
@@ -40,8 +41,17 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  goToAlbumDetails(album: Album) {
+  private getAlbumId(album: Album) {
+    for (let id of Object.keys(this.library.albums)) {
+      if (album === this.library.albums[id]) {
+        return id;
+      }
+    }
+    throw new Error('Could not find album in library');
+  }
 
+  goToAlbumDetails(album: Album) {
+    this.router.navigate(['library', 'albums', this.getAlbumId(album)])
   }
 
   handleWindowResize(event: Event) {
@@ -71,6 +81,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     } else {
       this.sortedBy = property;
     }
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
   }
 
 }

@@ -17,7 +17,9 @@ import { CapabilitiesService, PlayerService, SecurityService, QueueService, Libr
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
 import { SecondsPipe } from './pipes/seconds.pipe';
+import { ZeroPadPipe } from './pipes/zero-pad.pipe';
 import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
+import { AlbumDetailsComponent } from './album-details/album-details.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
     AboutDialogComponent,
     LibrarySetupComponent,
     SecondsPipe,
-    SortArrowComponent
+    SortArrowComponent,
+    AlbumDetailsComponent,
+    ZeroPadPipe
   ],
   imports: [
     BrowserModule,

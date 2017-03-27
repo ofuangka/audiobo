@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+:focus {
+  outline: 0;
+}
 html {
   cursor: default;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -21,7 +24,7 @@ a {
 .filter {
   width: 100%;
 }
-.duration {
+.duration, .track {
   text-align: right !important;
 }
 .action-icon {
@@ -49,3 +52,40 @@ a {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(-360deg); transform: rotate(-360deg); } }
+.songs-flex {
+  display: flex;
+  padding: 20px;
+}
+.songs {
+  flex-grow: 1;
+}
+.songs table {
+  border-collapse: collapse;
+  font-size: 0.8em;
+  width: 100%;
+}
+.songs th {
+  font-size: 0.8em;
+  overflow-x: hidden;
+  padding: 0 10px 10px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+.songs th > a {
+  align-items: center;
+  display: inline-flex;
+}
+.songs tr.highlight:hover td {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.songs td {
+  overflow-x: hidden;
+  padding: 10px;
+  white-space: nowrap;
+}
+.songs .action-icon {
+  visibility: hidden;
+}
+.songs tr:hover .action-icon {
+  visibility: visible;
+}

@@ -30,7 +30,8 @@ export class NowPlayingControlsComponent implements OnInit {
     return this.player.playing;
   }
   get progress() {
-    return this.player.currentTime / this.player.duration;
+    let ret = this.player.currentTime / this.player.duration;
+    return (isNaN(ret)) ? 0 : ret;
   }
   frozenProgress = 0;
   progressFrozen = false;
@@ -102,7 +103,7 @@ export class NowPlayingControlsComponent implements OnInit {
   }
 
   skipPrevious() {
-    if (this.progress > 1) {
+    if (this.elapsedTime > 0) {
       this.player.seek(0);
     } else if (this.queue.hasPrevious()) {
       this.queue.goPrevious();
