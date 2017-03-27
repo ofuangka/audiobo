@@ -40,6 +40,7 @@ export class PlayerService {
 
   autoload(song: Song) {
     this.autoplay = true;
+    this.audio.autoplay = true;
     this.audio.src = this.getSrc(song);
   }
 
@@ -49,6 +50,7 @@ export class PlayerService {
 
   load(song: Song) {
     this.autoplay = false;
+    this.audio.autoplay = false;
     this.audio.src = this.getSrc(song);
   }
 
@@ -67,6 +69,7 @@ export class PlayerService {
   stop() {
     this.seek(0);
     this.pause();
+    this.loading = false;
   }
 
   getSrc(song: Song): string {
