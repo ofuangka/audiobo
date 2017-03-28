@@ -66,9 +66,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   setUpRemainderAlbums() {
     let numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
-      remainder = numPerRow - (this.albums.length % numPerRow) + 1;
+      remainder = this.albums.length % numPerRow,
+      numToAdd = (remainder === 0) ? 1 : numPerRow - remainder + 1;
     this.remainderAlbums = [];
-    for (let i = 0; i < remainder; i++) {
+    for (let i = 0; i < numToAdd; i++) {
       this.remainderAlbums.push(true);
     }
   }

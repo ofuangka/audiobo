@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -43,7 +43,7 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
     MaterialModule,
     AppRoutingModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title],
   bootstrap: [AppComponent],
   entryComponents: [AboutDialogComponent, LibrarySetupComponent]
 })

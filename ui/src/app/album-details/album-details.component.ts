@@ -29,12 +29,24 @@ export class AlbumDetailsComponent implements OnInit {
     this.songs.sort(this.comparator.property('track', false));
   }
 
+  addAlbumToQueue(album: Album) {
+    for (let songId of album.songIds) {
+      this.queue.add(this.library.songs[songId]);
+    }
+  }
+
   isSongCurrent(song: Song): boolean {
     return this.queue.current === song;
   }
 
   isSongPlaying(song: Song): boolean {
     return this.isSongCurrent(song) && this.player.playing;
+  }
+
+  playAlbum(album: Album) {
+    this.queue.clear();
+    this.addAlbumToQueue(album);
+    this.player.autoload(this.queue.current);
   }
 
   sortDir(property: string) {

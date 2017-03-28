@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Subject } from 'rxjs/Subject';
+
 import { Song } from '../domain/song';
 import { LibraryService } from './library.service';
 import { RandomService } from './random.service';
@@ -22,8 +24,11 @@ export class QueueService {
   private _current: QueueEntry;
   private _first: QueueEntry;
   private _last: QueueEntry;
+  private currentChanged = new Subject();
 
+  currentChanged$ = this.currentChanged.asObservable();
   length: number;
+
   get current() {
     return (this._current) ? this._current.song : null;
   }
@@ -46,6 +51,7 @@ export class QueueService {
     var newEntry = new QueueEntry(this._last, song, null);
     if (this.isEmpty()) {
       this._first = this._current = this._last = newEntry;
+      this.currentChanged.next(this.current);
     } else {
       this._last.next = newEntry;
       this._last = newEntry;
@@ -55,6 +61,7 @@ export class QueueService {
 
   clear() {
     this._first = this._current = this._last = null;
+    this.currentChanged.next(this.current);
     this.length = 0;
   }
 
@@ -75,6 +82,7 @@ export class QueueService {
     while (pointer) {
       if (pointer.song === song) {
         this._current = pointer;
+        this.currentChanged.next(this.current);
         break;
       }
       pointer = pointer.next;
@@ -84,12 +92,14 @@ export class QueueService {
   goPrevious() {
     if (this._current.previous !== null) {
       this._current = this._current.previous;
+      this.currentChanged.next(this.current);
     }
   }
 
   goNext() {
     if (this._current.next !== null) {
       this._current = this._current.next;
+      this.currentChanged.next(this.current);
     }
   }
 
@@ -111,6 +121,7 @@ export class QueueService {
           }
           if (pointer === this._current) {
             this._current = pointer.next || pointer.previous;
+            this.currentChanged.next(this.current);
           }
           if (pointer === this._last) {
             this._last = pointer.previous;

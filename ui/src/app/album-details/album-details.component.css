@@ -1,0 +1,19 @@
+.album-art {
+  border-top-left-radius: 2px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.album-info {
+  display: flex;
+}
+.album-other {
+  color: gray;
+}
+.album-controls {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: right;
+}
+.album-controls button {
+  margin-left: 10px;
+}

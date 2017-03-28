@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { PlayerService, QueueService } from '../services';
 
@@ -36,10 +37,11 @@ export class NowPlayingControlsComponent implements OnInit {
   frozenProgress = 0;
   progressFrozen = false;
 
-  constructor(private player: PlayerService, private queue: QueueService) { }
+  constructor(private player: PlayerService, private queue: QueueService, private title: Title) { }
 
   ngOnInit() {
     this.player.songEnded$.subscribe(() => { if (this.queueHasNext()) { this.skipNext(); } else { this.player.stop(); } });
+    this.queue.currentChanged$.subscribe((newSong: Song) => newSong ? this.title.setTitle(newSong.title + ' - ' + newSong.artist) : 'Audiobo');
   }
 
   denormalize(value: number, max: number) {
