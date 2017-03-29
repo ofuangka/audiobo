@@ -20,7 +20,6 @@ import { SecondsPipe } from './pipes/seconds.pipe';
 import { ZeroPadPipe } from './pipes/zero-pad.pipe';
 import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
-import { AlbumArtComponent } from './album-art/album-art.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +34,7 @@ import { AlbumArtComponent } from './album-art/album-art.component';
     SecondsPipe,
     SortArrowComponent,
     AlbumDetailsComponent,
-    ZeroPadPipe,
-    AlbumArtComponent
+    ZeroPadPipe
   ],
   imports: [
     BrowserModule,
