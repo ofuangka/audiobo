@@ -1,7 +1,11 @@
 .album-art {
   border-top-left-radius: 2px;
+  flex-shrink: 0;
   margin-right: 20px;
   margin-bottom: 20px;
+}
+.album-text {
+  flex-shrink: 1;
 }
 .album-info {
   display: flex;
