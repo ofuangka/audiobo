@@ -5,8 +5,8 @@
         <div md-card-image class="album-info">
           <div class="album-art">
             <div class="album-controls">
-              <button md-mini-fab (click)="stopPropagation($event); addAlbumToQueue(album)" title="Add to queue"><md-icon>add</md-icon></button>
-              <button md-mini-fab (click)="stopPropagation($event); playAlbum(album)" title="Play now"><md-icon>play_arrow</md-icon></button>
+              <button md-mini-fab (click)="addAlbumToQueue(album)" title="Add to queue"><md-icon>add</md-icon></button>
+              <button md-mini-fab (click)="playAlbum(album)" title="Play now"><md-icon>play_arrow</md-icon></button>
             </div>
           </div>
           <div class="album-text">
