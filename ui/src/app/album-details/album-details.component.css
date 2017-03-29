@@ -9,11 +9,3 @@
 .album-other {
   color: gray;
 }
-.album-controls {
-  flex-grow: 1;
-  padding: 20px;
-  text-align: right;
-}
-.album-controls button {
-  margin-left: 10px;
-}

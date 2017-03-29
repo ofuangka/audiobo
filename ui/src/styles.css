@@ -61,7 +61,7 @@ a {
 }
 .songs table {
   border-collapse: collapse;
-  font-size: 0.8em;
+  font-size: 0.9em;
   width: 100%;
 }
 .songs th {
@@ -96,4 +96,16 @@ a {
   height: 172px;
   justify-content: flex-end;
   width: 172px;
+}
+.album-art:hover .album-controls {
+  display: flex;
+}
+.album-controls button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.album-controls {
+  align-items: center;
+  display: none;
+  justify-content: flex-end;
 }

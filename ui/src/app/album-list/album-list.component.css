@@ -31,15 +31,3 @@
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
-.album-art:hover .album-controls {
-  display: flex;
-}
-.album-controls button {
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-.album-controls {
-  align-items: center;
-  display: none;
-  justify-content: flex-end;
-}

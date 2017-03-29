@@ -1,0 +1,6 @@
+<div class="album-art" (click)="imageClick.emit($event)">
+  <div class="album-controls">
+    <button md-mini-fab (click)="addClick.emit($event)" title="Add to queue"><md-icon>add</md-icon></button>
+    <button md-mini-fab (click)="playClick.emit($event)" title="Play now"><md-icon>play_arrow</md-icon></button>
+  </div>
+</div>
