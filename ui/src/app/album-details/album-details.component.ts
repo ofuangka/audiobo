@@ -14,6 +14,7 @@ import { Song, Album } from '../domain';
 export class AlbumDetailsComponent implements OnInit {
 
   album: Album;
+  totalDuration: number;
   songs: Song[];
   sortedBy: string;
 
@@ -22,9 +23,12 @@ export class AlbumDetailsComponent implements OnInit {
   ngOnInit() {
     let albumId = this.route.snapshot.params['albumId']
     this.album = this.library.albums[albumId];
+    this.totalDuration = 0;
     this.songs = [];
     for (let songId of this.album.songIds) {
-      this.songs.push(this.library.songs[songId]);
+      let song = this.library.songs[songId];
+      this.songs.push(song);
+      this.totalDuration += song.duration;
     }
     this.songs.sort(this.comparator.property('track', false));
   }
@@ -33,6 +37,14 @@ export class AlbumDetailsComponent implements OnInit {
     for (let songId of album.songIds) {
       this.queue.add(this.library.songs[songId]);
     }
+  }
+
+  handleAlbumArtClick() {
+
+  }
+
+  handleSongClick() {
+
   }
 
   isSongCurrent(song: Song): boolean {

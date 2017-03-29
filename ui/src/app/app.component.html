@@ -19,6 +19,6 @@
         <router-outlet></router-outlet>
       </div>
     </md-sidenav-container>
-    <now-playing-controls (drawerToggle)="drawer.toggle()"></now-playing-controls>
+    <now-playing-controls *ngIf="!isQueueEmpty() || drawer.opened" (drawerToggle)="drawer.toggle()" [@flyInOut]="'in'"></now-playing-controls>
   </div>
 </md-sidenav-container>

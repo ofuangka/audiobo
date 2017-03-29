@@ -10,7 +10,6 @@ export class LibraryService {
     '0': {
       title: 'A Beautiful Lie',
       artist: '30 Seconds to Mars',
-      year: 2005,
       songIds: [
         '0'
       ]
@@ -18,7 +17,6 @@ export class LibraryService {
     '1': {
       title: 'Never Take Friendship Personal',
       artist: 'Anberlin',
-      year: 2005,
       songIds: [
         '1'
       ]
@@ -26,7 +24,6 @@ export class LibraryService {
     '2': {
       title: 'Anastacia',
       artist: 'Anastacia',
-      year: 2004,
       songIds: [
         '2'
       ]
@@ -34,14 +31,12 @@ export class LibraryService {
     '3': {
       title: 'As Tall as Lions',
       artist: 'As Tall as Lions',
-      year: 2006,
       songIds: [
         '3'
       ]
     },
     '4': {
       title: "Arm's Way",
-      year: 2008,
       artist: 'Islands',
       songIds: [
         '4'

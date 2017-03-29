@@ -3,7 +3,7 @@
     <md-card>
       <md-card-content>
         <div md-card-image class="album-info">
-          <div class="album-art">
+          <div class="album-art" (click)="handleAlbumArtClick()">
             <div class="album-controls">
               <button md-mini-fab (click)="addAlbumToQueue(album)" title="Add to queue"><md-icon>add</md-icon></button>
               <button md-mini-fab (click)="playAlbum(album)" title="Play now"><md-icon>play_arrow</md-icon></button>
@@ -13,8 +13,7 @@
             <h3>{{ album.title }}</h3>
             <div class="album-other">
               <p>{{ album.artist }}</p>
-              <p>{{ album.year }}</p>
-              <p>{{ album.songIds.length }} song{{ album.songIds.length !== 1 ? 's' : ''}}</p>
+              <p>{{ album.songIds.length }} song{{ album.songIds.length !== 1 ? 's' : ''}} &middot; {{ totalDuration | seconds }}</p>
             </div>
           </div>
         </div>
