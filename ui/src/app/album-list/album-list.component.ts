@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LibraryService, QueueService, PlayerService, ComparatorService } from '../services';
+import { LibraryService, QueueService, PlayerService, ComparatorService, BackgroundColorService } from '../services';
 import { Album } from '../domain/album';
 
 const ALBUM_WIDTH = 182;
@@ -21,7 +21,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   remainderAlbums: boolean[] = [];
   sortedBy: string;
 
-  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router) { }
+  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router, private backgroundColor: BackgroundColorService) { }
 
   ngOnInit() {
     for (let id of Object.keys(this.library.albums)) {
@@ -36,8 +36,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   }
 
   addAlbumToQueue(album: Album) {
-    for (let songId of album.songIds) {
-      this.queue.add(this.library.songs[songId]);
+    let orderedSongs = this.getAlbumSongsInOrder(album);
+    for (let song of orderedSongs) {
+      this.queue.add(song);
     }
   }
 
@@ -48,6 +49,19 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
       }
     }
     throw new Error('Could not find album in library');
+  }
+
+  private getAlbumSongsInOrder(album: Album) {
+    let ret = [];
+    for (let songId of album.songIds) {
+      ret.push(this.library.songs[songId]);
+    }
+    ret.sort(this.comparator.property('track', false));
+    return ret;
+  }
+
+  getBackgroundColor(album: Album) {
+    return this.backgroundColor.get(album.title);
   }
 
   goToAlbumDetails(album: Album) {

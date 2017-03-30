@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Title } from '@angular/platform-browser';
 
 import { MdDialog } from '@angular/material';
 
 import { SecurityService, QueueService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
+import { Song } from './domain';
 
 @Component({
   animations: [
@@ -24,9 +26,13 @@ import { AboutDialogComponent } from './about-dialog/about-dialog.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  constructor(private security: SecurityService, public dialog: MdDialog, private queue: QueueService) { }
+  constructor(private security: SecurityService, public dialog: MdDialog, private queue: QueueService, private title: Title) { }
+
+  ngOnInit() {
+    this.queue.currentChanged$.subscribe((newSong: Song) => this.title.setTitle(newSong ? newSong.title + ' - ' + newSong.artist : 'Audiobo'));
+  }
 
   isQueueEmpty() {
     return this.queue.isEmpty();

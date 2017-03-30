@@ -37,16 +37,6 @@ export class QueueService {
     this.clear();
   }
 
-  asArray(): Song[] {
-    let ret = [],
-      pointer = this._first;
-    while (pointer !== null) {
-      ret.push(pointer.song);
-      pointer = pointer.next;
-    }
-    return ret;
-  }
-
   add(song: Song) {
     var newEntry = new QueueEntry(this._last, song, null);
     if (this.isEmpty()) {
@@ -57,6 +47,16 @@ export class QueueService {
       this._last = newEntry;
     }
     this.length++;
+  }
+
+  asArray(): Song[] {
+    let ret = [],
+      pointer = this._first;
+    while (pointer !== null) {
+      ret.push(pointer.song);
+      pointer = pointer.next;
+    }
+    return ret;
   }
 
   clear() {

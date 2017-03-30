@@ -14,7 +14,7 @@ import { DrawerComponent } from './drawer/drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
-import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService } from './services';
+import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, HashCodeService, BackgroundColorService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
 import { SecondsPipe } from './pipes/seconds.pipe';
@@ -45,7 +45,7 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title, HashCodeService, BackgroundColorService],
   bootstrap: [AppComponent],
   entryComponents: [AboutDialogComponent, LibrarySetupComponent]
 })

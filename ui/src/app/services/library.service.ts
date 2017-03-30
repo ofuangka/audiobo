@@ -32,7 +32,8 @@ export class LibraryService {
       title: 'As Tall as Lions',
       artist: 'As Tall as Lions',
       songIds: [
-        '3'
+        '3',
+        '6'
       ]
     },
     '4': {
@@ -40,6 +41,13 @@ export class LibraryService {
       artist: 'Islands',
       songIds: [
         '4'
+      ]
+    },
+    '5': {
+      title: 'iii',
+      artist: 'Miike Snow',
+      songIds: [
+        '5'
       ]
     }
   };
@@ -83,6 +91,22 @@ export class LibraryService {
       artist: 'Islands',
       albumId: '4',
       duration: 338
+    },
+    '5': {
+      url: 'http://72.182.62.242:4200/Miike%20Snow/iii/03%20-%20Genghis%20Khan.mp3',
+      track: 3,
+      title: 'Genghis Khan',
+      artist: 'Miike Snow',
+      albumId: '5',
+      duration: 211
+    },
+    '6': {
+      url: 'http://72.182.62.242:4200/As%20Tall%20as%20Lions/As%20Tall%20as%20Lions/001%20-%20Stab%20City.mp3',
+      track: 1,
+      title: 'Stab City',
+      artist: 'As Tall as Lions',
+      albumId: '3',
+      duration: 215
     }
   };
   get numSongs() {

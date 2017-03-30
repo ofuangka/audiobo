@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
 
-import { LibraryService, ComparatorService, QueueService, PlayerService } from '../services';
+import { LibraryService, ComparatorService, QueueService, PlayerService, BackgroundColorService } from '../services';
 import { Song, Album } from '../domain';
 
 @Component({
@@ -18,7 +18,7 @@ export class AlbumDetailsComponent implements OnInit {
   songs: Song[];
   sortedBy: string;
 
-  constructor(private route: ActivatedRoute, private library: LibraryService, private comparator: ComparatorService, private queue: QueueService, private player: PlayerService) { }
+  constructor(private route: ActivatedRoute, private library: LibraryService, private comparator: ComparatorService, private queue: QueueService, private player: PlayerService, private backgroundColor: BackgroundColorService) { }
 
   ngOnInit() {
     let albumId = this.route.snapshot.params['albumId']
@@ -33,10 +33,14 @@ export class AlbumDetailsComponent implements OnInit {
     this.songs.sort(this.comparator.property('track', false));
   }
 
-  addAlbumToQueue(album: Album) {
-    for (let songId of album.songIds) {
-      this.queue.add(this.library.songs[songId]);
+  addAlbumToQueue() {
+    for (let song of this.songs) {
+      this.queue.add(song);
     }
+  }
+
+  getBackgroundColor() {
+    return this.backgroundColor.get(this.album.title);
   }
 
   handleAlbumArtClick() {
@@ -55,9 +59,15 @@ export class AlbumDetailsComponent implements OnInit {
     return this.isSongCurrent(song) && this.player.playing;
   }
 
-  playAlbum(album: Album) {
+  play(song: Song) {
     this.queue.clear();
-    this.addAlbumToQueue(album);
+    this.queue.add(song);
+    this.player.autoload(this.queue.current);
+  }
+
+  playAlbum() {
+    this.queue.clear();
+    this.addAlbumToQueue();
     this.player.autoload(this.queue.current);
   }
 

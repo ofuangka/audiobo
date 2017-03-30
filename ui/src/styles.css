@@ -109,3 +109,33 @@ a {
   display: none;
   justify-content: flex-end;
 }
+.bg-0 {
+  background-color: #B21212;
+}
+.bg-1 {
+  background-color: #FFFC19;
+}
+.bg-2 {
+  background-color: #FF0000;
+}
+.bg-3 {
+  background-color: #1485CC;
+}
+.bg-4 {
+  background-color: #0971B2;
+}
+.bg-5 {
+  background-color: #468966;
+}
+.bg-6 {
+  background-color: #468966;
+}
+.bg-7 {
+  background-color: #FFB03B;
+}
+.bg-8 {
+  background-color: #FFB03B;
+}
+.bg-9 {
+  background-color: #8E2800;
+}
