@@ -49,6 +49,20 @@ export class LibraryService {
       songIds: [
         '5'
       ]
+    },
+    '6': {
+      title: '21',
+      artist: 'Adele',
+      songIds: [
+        '7'
+      ]
+    },
+    '7': {
+      title: 'Mean Everything to Nothing',
+      artist: 'Manchester Orchestra',
+      songIds: [
+        '8'
+      ]
     }
   };
   songs: { [id: string]: Song } = {
@@ -107,6 +121,22 @@ export class LibraryService {
       artist: 'As Tall as Lions',
       albumId: '3',
       duration: 215
+    },
+    '7': {
+      url: 'http://72.182.62.242:4200/Adele/21/001%20-%20Rolling%20In%20The%20Deep.mp3',
+      track: 1,
+      title: 'Rolling in the Deep',
+      artist: 'Adele',
+      albumId: '6',
+      duration: 235
+    },
+    '8': {
+      url: 'http://72.182.62.242:4200/Manchester%20Orchestra/Mean%20Everything%20to%20Nothing/002%20-%20Shake%20It%20Out.mp3',
+      track: 2,
+      title: 'Shake It Out',
+      artist: 'Manchester Orchestra',
+      albumId: '7',
+      duration: 222
     }
   };
   get numSongs() {

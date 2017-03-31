@@ -18,6 +18,13 @@ export class AlbumDetailsComponent implements OnInit {
   songs: Song[];
   sortedBy: string;
 
+  get playing() {
+    return this.player.playing;
+  }
+  get loading() {
+    return this.player.loading;
+  }
+
   constructor(private route: ActivatedRoute, private library: LibraryService, private comparator: ComparatorService, private queue: QueueService, private player: PlayerService, private backgroundColor: BackgroundColorService) { }
 
   ngOnInit() {
@@ -49,6 +56,10 @@ export class AlbumDetailsComponent implements OnInit {
 
   handleSongClick() {
 
+  }
+
+  isAlbumCurrent() {
+    return this.queue.current && this.library.albums[this.queue.current.albumId] === this.album;
   }
 
   isSongCurrent(song: Song): boolean {

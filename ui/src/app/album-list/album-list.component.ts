@@ -21,6 +21,13 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   remainderAlbums: boolean[] = [];
   sortedBy: string;
 
+  get loading() {
+    return this.player.loading;
+  }
+  get playing() {
+    return this.player.playing;
+  }
+
   constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router, private backgroundColor: BackgroundColorService) { }
 
   ngOnInit() {
@@ -70,6 +77,14 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   handleWindowResize(event: Event) {
     this.setUpRemainderAlbums();
+  }
+
+  isAlbumCurrent(album: Album): boolean {
+    return (this.queue.current) ? this.library.albums[this.queue.current.albumId] === album : false;
+  }
+
+  isAlbumPlaying(album: Album): boolean {
+    return this.isAlbumCurrent(album) && this.playing;
   }
 
   playAlbum(album: Album) {

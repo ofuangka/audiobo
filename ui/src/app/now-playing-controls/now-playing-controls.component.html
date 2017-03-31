@@ -10,13 +10,13 @@
     <button md-icon-button class="invisible" title="Like"><md-icon>favorite_border</md-icon></button>
 
     <div class="playback-controls">
-      <button md-icon-button (click)="skipPrevious()" [disabled]="!queueHasPrevious() && elapsedTime === 0" title="Previous">
+      <button md-icon-button (click)="skipPrevious(playing)" [disabled]="!queueHasPrevious() && elapsedTime <= 1" title="Previous">
         <md-icon>skip_previous</md-icon>
       </button>
       <button md-fab color="warn" (click)="playPause()" [disabled]="loading || isQueueEmpty()" [title]="getPlayButtonTitle()">
         <md-icon [ngClass]="{rotate: loading}">{{ getPlayButtonIcon() }}</md-icon>
       </button>
-      <button md-icon-button (click)="skipNext()" [disabled]="!queueHasNext()" title="Next"><md-icon>skip_next</md-icon></button>
+      <button md-icon-button (click)="skipNext(playing)" [disabled]="!queueHasNext()" title="Next"><md-icon>skip_next</md-icon></button>
     </div>
 
     <button md-icon-button (click)="toggleDrawer()" title="Queue"><md-icon>queue_music</md-icon></button>

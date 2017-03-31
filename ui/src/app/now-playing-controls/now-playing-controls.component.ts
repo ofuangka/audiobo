@@ -39,7 +39,7 @@ export class NowPlayingControlsComponent implements OnInit {
   constructor(private player: PlayerService, private queue: QueueService) { }
 
   ngOnInit() {
-    this.player.songEnded$.subscribe(() => { if (this.queueHasNext()) { this.skipNext(); } else { this.player.stop(); } });
+    this.player.songEnded$.subscribe(() => { if (this.queueHasNext()) { this.skipNext(true); } else { this.player.stop(); } });
   }
 
   denormalize(value: number, max: number) {
@@ -85,10 +85,11 @@ export class NowPlayingControlsComponent implements OnInit {
     return Math.floor(value * max);
   }
 
-  skipNext() {
+  skipNext(autoplay: boolean) {
     if (this.queue.hasNext()) {
       this.queue.goNext();
-      if (this.playing) {
+
+      if (autoplay) {
         this.player.autoload(this.nowPlaying);
       } else {
         this.player.load(this.nowPlaying);
@@ -106,12 +107,12 @@ export class NowPlayingControlsComponent implements OnInit {
     }
   }
 
-  skipPrevious() {
-    if (this.elapsedTime > 0) {
+  skipPrevious(autoplay: boolean) {
+    if (this.elapsedTime > 1) {
       this.player.seek(0);
     } else if (this.queue.hasPrevious()) {
       this.queue.goPrevious();
-      if (this.playing) {
+      if (autoplay) {
         this.player.autoload(this.nowPlaying);
       } else {
         this.player.load(this.nowPlaying);

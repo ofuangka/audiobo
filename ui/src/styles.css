@@ -109,6 +109,10 @@ a {
   display: none;
   justify-content: flex-end;
 }
+.album-status {
+  flex-grow: 1;
+  padding: 10px;
+}
 .bg-0 {
   background-color: #B21212;
 }

@@ -4,6 +4,12 @@
       <md-card-content>
         <div md-card-image class="album-info">
           <div class="album-art" (click)="handleAlbumArtClick()" [ngClass]="getBackgroundColor()">
+            <div class="album-status">
+              <span *ngIf="isAlbumCurrent()">
+                <md-icon *ngIf="loading" [ngClass]="{spin: loading}">sync</md-icon>
+                <md-icon *ngIf="playing">equalizer</md-icon>
+              </span>
+            </div>
             <div class="album-controls">
               <button md-mini-fab (click)="addAlbumToQueue()" title="Add to queue"><md-icon>add</md-icon></button>
               <button md-mini-fab (click)="playAlbum()" title="Play now"><md-icon>play_arrow</md-icon></button>
@@ -14,7 +20,8 @@
             <div class="album-other">
               <p>{{ album.artist }}</p>
               <p>{{ album.songIds.length }} song{{ album.songIds.length !== 1 ? 's' : ''}} &middot; {{ totalDuration | seconds
-                }}</p>
+                }}
+              </p>
             </div>
           </div>
         </div>
