@@ -31,3 +31,9 @@
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
+.album-controls {
+  display: none;
+}
+.album-art:hover .album-controls {
+  display: flex;
+}

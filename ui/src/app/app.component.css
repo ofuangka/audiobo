@@ -26,3 +26,6 @@ md-sidenav-container {
   background: transparent;
   box-shadow: none;
 }
+.spacer {
+  height: 130px;
+}

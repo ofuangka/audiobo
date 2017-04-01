@@ -75,6 +75,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     this.router.navigate(['library', 'albums', this.getAlbumId(album)])
   }
 
+  handleAlbumArtClick(album: Album) {
+
+  }
+
   handleWindowResize(event: Event) {
     this.setUpRemainderAlbums();
   }
@@ -96,7 +100,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   setUpRemainderAlbums() {
     let numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
       remainder = this.albums.length % numPerRow,
-      numToAdd = (remainder === 0) ? 1 : numPerRow - remainder + 1;
+      numToAdd = (remainder === 0) ? 0 : numPerRow - remainder;
     this.remainderAlbums = [];
     for (let i = 0; i < numToAdd; i++) {
       this.remainderAlbums.push(true);

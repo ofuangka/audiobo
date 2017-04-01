@@ -97,16 +97,13 @@ a {
   justify-content: flex-end;
   width: 172px;
 }
-.album-art:hover .album-controls {
-  display: flex;
-}
 .album-controls button {
   margin-right: 10px;
   margin-bottom: 10px;
 }
 .album-controls {
   align-items: center;
-  display: none;
+  display: flex;
   justify-content: flex-end;
 }
 .album-status {

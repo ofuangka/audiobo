@@ -17,6 +17,7 @@
       </md-sidenav>
       <div class="content">
         <router-outlet></router-outlet>
+        <div class="spacer"></div>
       </div>
     </md-sidenav-container>
     <now-playing-controls *ngIf="!isQueueEmpty() || drawer.opened" (drawerToggle)="drawer.toggle()" [@flyInOut]="'in'"></now-playing-controls>

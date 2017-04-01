@@ -11,7 +11,7 @@
 <div #albums class="albums" (window:resize)="handleWindowResize($event)">
   <md-card *ngFor="let album of filteredAlbums" class="album">
     <md-card-content>
-      <div md-card-image class="album-art" [ngClass]="getBackgroundColor(album)" (click)="goToAlbumDetails(album)">
+      <div md-card-image class="album-art" [ngClass]="getBackgroundColor(album)" (click)="handleAlbumArtClick(album)">
         <div class="album-status">
           <span *ngIf="isAlbumCurrent(album)">
             <md-icon *ngIf="loading" [ngClass]="{spin: loading}">sync</md-icon>
