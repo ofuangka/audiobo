@@ -65,6 +65,7 @@ export class LibraryService {
       ]
     }
   };
+  refreshing = false;
   songs: { [id: string]: Song } = {
     '0': {
       url: 'http://72.182.62.242:4200/30%20Seconds%20to%20Mars/A%20Beautiful%20Lie/003%20-%20The%20Kill.mp3',

@@ -14,13 +14,14 @@ import { DrawerComponent } from './drawer/drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
-import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, HashCodeService, BackgroundColorService } from './services';
+import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, HashCodeService, BackgroundColorService, PathValidatorService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupComponent } from './library-setup/library-setup.component';
 import { SecondsPipe } from './pipes/seconds.pipe';
 import { ZeroPadPipe } from './pipes/zero-pad.pipe';
 import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
+import { LibraryStatusComponent } from './library-status/library-status.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
     SecondsPipe,
     SortArrowComponent,
     AlbumDetailsComponent,
-    ZeroPadPipe
+    ZeroPadPipe,
+    LibraryStatusComponent
   ],
   imports: [
     BrowserModule,
@@ -45,8 +47,8 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title, HashCodeService, BackgroundColorService],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title, HashCodeService, BackgroundColorService, PathValidatorService],
   bootstrap: [AppComponent],
-  entryComponents: [AboutDialogComponent, LibrarySetupComponent]
+  entryComponents: [AboutDialogComponent, LibrarySetupComponent, LibraryStatusComponent]
 })
 export class AppModule { }

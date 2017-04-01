@@ -41,3 +41,6 @@
 .drawer tr:hover .action-icon {
   visibility: visible;
 }
+.empty-message {
+  color: gray;
+}

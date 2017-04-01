@@ -1,3 +1,29 @@
-<p>
-  library-setup works!
-</p>
+<h2 md-dialog-title>Add media folders</h2>
+<md-dialog-content>
+  <div class="folders">
+    <div *ngIf="folders.length === 0">
+      No media folders have been added yet. Add one to get started.
+    </div>
+    <div *ngFor="let folder of folders" class="folder-container">
+      <div class="folder-row">
+        <md-input-container floatPlaceholder="never">
+          <input mdInput [value]="folder.path" (keyup)="folder.triggerPathChange($event.target.value)"
+            placeholder="Folder (e.g. /music)" />
+        </md-input-container>
+        <a (click)="removeFolder(folder)">
+          <md-icon>clear</md-icon>
+        </a>
+      </div>
+      <a>
+        <md-icon [ngClass]="{rotate: folder.loading}" class="folder-status">{{ getFolderStatusIcon(folder) }}</md-icon>
+      </a>
+    </div>
+  </div>
+  <div class="add-folder">
+    <button md-button (click)="generateNewFolder()">{{ folders.length === 0 ? 'Add one' : 'Add another' }}</button>
+  </div>
+</md-dialog-content>
+<md-dialog-actions>
+  <button md-raised-button md-dialog-close>Cancel</button>
+  <button md-raised-button color="primary" (click)="refreshAndClose()" [disabled]="!allFoldersValid()">Refresh library</button>
+</md-dialog-actions>

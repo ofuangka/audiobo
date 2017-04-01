@@ -4,9 +4,9 @@ import { Title } from '@angular/platform-browser';
 
 import { MdDialog } from '@angular/material';
 
-import { SecurityService, QueueService } from './services';
-import { AboutDialogComponent } from './about-dialog/about-dialog.component';
+import { SecurityService, QueueService, LibraryService } from './services';
 import { Song } from './domain';
+import { LibraryStatusComponent } from './library-status/library-status.component';
 
 @Component({
   animations: [
@@ -28,7 +28,11 @@ import { Song } from './domain';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private security: SecurityService, public dialog: MdDialog, private queue: QueueService, private title: Title) { }
+  get refreshing() {
+    return this.library.refreshing;
+  }
+
+  constructor(private security: SecurityService, public dialog: MdDialog, private queue: QueueService, private title: Title, private library: LibraryService) { }
 
   ngOnInit() {
     this.queue.currentChanged$.subscribe((newSong: Song) => this.title.setTitle(newSong ? newSong.title + ' - ' + newSong.artist : 'Audiobo'));
@@ -38,7 +42,7 @@ export class AppComponent implements OnInit {
     return this.queue.isEmpty();
   }
 
-  showAbout = function () {
-    this.dialog.open(AboutDialogComponent);
+  showLibraryStatus() {
+    this.dialog.open(LibraryStatusComponent);
   }
 }

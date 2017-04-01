@@ -13,7 +13,7 @@
       <tbody>
         <tr *ngIf="isQueueEmpty()">
           <td></td>
-          <td colspan="3">Your queue is currently empty :(</td>
+          <td colspan="3"><span class="empty-message">Your queue is currently empty :(</span></td>
           <td></td>
         </tr>
         <tr *ngFor="let song of songs" class="highlight" (dblclick)="skipTo(song)" (click)="handleSongClick(song)">

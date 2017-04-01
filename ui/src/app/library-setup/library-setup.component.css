@@ -1,0 +1,43 @@
+.folders {
+  display: flex;
+  flex-direction: column;
+}
+.folder-row {
+  align-items: center;
+  border: 1px solid lightgray;
+  border-bottom: none;
+  display: flex;
+  padding: 0 10px 0 20px;
+}
+.folder-container:first-child .folder-row {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+.folder-container:last-child .folder-row {
+  border-bottom: 1px solid lightgray;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.folder-row md-input-container {
+  flex-grow: 1;
+}
+.folder-row input {
+  width: 100%;
+}
+.folder-row a {
+  margin-left: 10px;
+}
+.add-folder {
+  padding: 10px;
+  text-align: center;
+}
+md-dialog-actions {
+  justify-content: space-between;
+}
+.folder-container {
+  align-items: center;
+  display: flex;
+}
+.folder-status {
+  margin-left: 20px;
+}

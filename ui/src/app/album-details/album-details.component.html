@@ -6,7 +6,7 @@
           <div class="album-art" (click)="handleAlbumArtClick()" [ngClass]="getBackgroundColor()">
             <div class="album-status">
               <span *ngIf="isAlbumCurrent()">
-                <md-icon *ngIf="loading" [ngClass]="{spin: loading}">sync</md-icon>
+                <md-icon *ngIf="loading" [ngClass]="{rotate: loading}">sync</md-icon>
                 <md-icon *ngIf="playing">equalizer</md-icon>
               </span>
             </div>

@@ -14,7 +14,7 @@
       <div md-card-image class="album-art" [ngClass]="getBackgroundColor(album)" (click)="handleAlbumArtClick(album)">
         <div class="album-status">
           <span *ngIf="isAlbumCurrent(album)">
-            <md-icon *ngIf="loading" [ngClass]="{spin: loading}">sync</md-icon>
+            <md-icon *ngIf="loading" [ngClass]="{rotate: loading}">sync</md-icon>
             <md-icon *ngIf="playing">equalizer</md-icon>
           </span>
         </div>
