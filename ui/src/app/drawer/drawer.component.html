@@ -16,15 +16,16 @@
           <td colspan="3"><span class="empty-message">Your queue is currently empty :(</span></td>
           <td></td>
         </tr>
-        <tr *ngFor="let song of songs" class="highlight" (dblclick)="skipTo(song)" (click)="handleSongClick(song)">
+        <tr *ngFor="let song of songs; let i = index" class="highlight" (dblclick)="skipTo(i)" (click)="handleSongClick(song)">
           <td class="text-center">
-            <md-icon *ngIf="isSongCurrent(song)" title="Now playing">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
+            <md-icon *ngIf="currentIndex === i" title="Now playing">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
           </td>
+          <td>
           <td class="width-sm">{{ song.title }}</td>
           <td class="width-sm">{{ song.artist }}</td>
           <td class="duration">{{ song.duration | seconds }}</td>
           <td class="text-center">
-            <md-icon (click)="remove(song)" class="action-icon" title="Remove">clear</md-icon>
+            <md-icon (click)="remove(i)" class="action-icon" title="Remove">clear</md-icon>
           </td>
         </tr>
       </tbody>

@@ -37,13 +37,17 @@ export class AlbumDetailsComponent implements OnInit {
       this.songs.push(song);
       this.totalDuration += song.duration;
     }
-    this.songs.sort(this.comparator.property('track', false));
+    this.sortBy('track');
   }
 
   addAlbumToQueue() {
     for (let song of this.songs) {
       this.queue.add(song);
     }
+  }
+
+  addToQueue(song: Song) {
+    this.queue.add(song);
   }
 
   getBackgroundColor() {

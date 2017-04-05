@@ -27,6 +27,7 @@ export class QueueService {
   private currentChanged = new Subject();
 
   currentChanged$ = this.currentChanged.asObservable();
+  currentIndex = -1;
   length: number;
 
   get current() {
@@ -41,6 +42,7 @@ export class QueueService {
     var newEntry = new QueueEntry(this._last, song, null);
     if (this.isEmpty()) {
       this._first = this._current = this._last = newEntry;
+      this.currentIndex = 0;
       this.currentChanged.next(this.current);
     } else {
       this._last.next = newEntry;
@@ -61,6 +63,7 @@ export class QueueService {
 
   clear() {
     this._first = this._current = this._last = null;
+    this.currentIndex = -1;
     this.currentChanged.next(this.current);
     this.length = 0;
   }
@@ -77,21 +80,25 @@ export class QueueService {
     return this.length === 0;
   }
 
-  jumpTo(song: Song) {
-    let pointer = this._first;
+  jumpTo(index: number) {
+    let pointer = this._first,
+      pointerIndex = 0;
     while (pointer) {
-      if (pointer.song === song) {
+      if (pointerIndex === index) {
         this._current = pointer;
+        this.currentIndex = pointerIndex;
         this.currentChanged.next(this.current);
         break;
       }
       pointer = pointer.next;
+      pointerIndex++;
     }
   }
 
   goPrevious() {
     if (this._current.previous !== null) {
       this._current = this._current.previous;
+      this.currentIndex--;
       this.currentChanged.next(this.current);
     }
   }
@@ -99,14 +106,16 @@ export class QueueService {
   goNext() {
     if (this._current.next !== null) {
       this._current = this._current.next;
+      this.currentIndex++;
       this.currentChanged.next(this.current);
     }
   }
 
-  remove(song: Song) {
-    let pointer = this._first;
+  remove(index: number) {
+    let pointer = this._first,
+      pointerIndex = 0;
     while (pointer) {
-      if (pointer.song === song) {
+      if (pointerIndex === index) {
         if (this.length === 1) {
           this.clear();
         } else {
@@ -119,8 +128,13 @@ export class QueueService {
           if (pointer === this._first) {
             this._first = pointer.next;
           }
-          if (pointer === this._current) {
-            this._current = pointer.next || pointer.previous;
+          if (pointer.song === this._current.song) {
+            if (pointer.next) {
+              this._current = pointer.next;
+            } else {
+              this._current = pointer.previous;
+              this.currentIndex--;
+            }
             this.currentChanged.next(this.current);
           }
           if (pointer === this._last) {
@@ -131,6 +145,7 @@ export class QueueService {
         break;
       }
       pointer = pointer.next;
+      pointerIndex++;
     }
   }
 
@@ -140,7 +155,7 @@ export class QueueService {
     then recreates the queue in the newly sorted order */
     let buf: QueueEntry[] = [],
       pointer = this._first;
-    
+
     /* create the array */
     while (pointer !== null) {
       buf.push(pointer);
@@ -161,6 +176,11 @@ export class QueueService {
         buf[i].next = null;
       } else {
         buf[i].next = buf[i + 1];
+      }
+
+      /* this always chooses the last occurrence of a song as the current one (not sure how to fix that) */
+      if (buf[i].song === this.current) {
+        this.currentIndex = i;
       }
     }
     this._first = (buf.length > 0) ? buf[0] : null;

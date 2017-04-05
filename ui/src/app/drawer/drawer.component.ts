@@ -10,6 +10,9 @@ import { Song } from '../domain/song';
 })
 export class DrawerComponent {
 
+  get currentIndex() {
+    return this.queue.currentIndex;
+  }
   get songs() {
     return this.queue.asArray();
   }
@@ -32,15 +35,19 @@ export class DrawerComponent {
     return this.isSongCurrent(song) && this.player.playing;
   }
 
-  remove(song: Song) {
-    if (this.isSongCurrent(song)) {
+  remove(index: number) {
+    if (index === this.currentIndex) {
       this.player.stop();
-      this.queue.remove(song);
+      this.queue.remove(index);
       if (!this.isQueueEmpty()) {
-        this.player.autoload(this.queue.current);
+        if (index === this.currentIndex) {
+          this.player.autoload(this.queue.current);
+        } else {
+          this.player.load(this.queue.current);
+        }
       }
     } else {
-      this.queue.remove(song);
+      this.queue.remove(index);
     }
   }
 
@@ -53,8 +60,8 @@ export class DrawerComponent {
     this.queue.shuffle();
   }
 
-  skipTo(song: Song) {
-    this.queue.jumpTo(song);
+  skipTo(index: number) {
+    this.queue.jumpTo(index);
     this.player.autoload(this.queue.current);
   }
 
