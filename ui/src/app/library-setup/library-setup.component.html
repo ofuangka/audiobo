@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="add-folder">
-    <button md-button (click)="generateNewFolder()">{{ folders.length === 0 ? 'Add one' : 'Add another' }}</button>
+    <button md-button (click)="generateNewFolder()" [disabled]="folders.length > 4">{{ folders.length === 0 ? 'Add one' : 'Add another' }}</button>
   </div>
 </md-dialog-content>
 <md-dialog-actions>

@@ -15,10 +15,10 @@ import { LibraryStatusComponent } from './library-status/library-status.componen
         transform: 'translateY(0)'
       })),
       transition('void => *', [
-        style({ transform: 'translateY(100%)' }), animate('0.2s ease-in')
+        style({ transform: 'translateY(100%)' }), animate('0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)')
       ]),
       transition('* => void', [
-        animate('0.2s ease-out', style({ transform: 'translateY(100%)' }))
+        animate('0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)', style({ transform: 'translateY(100%)' }))
       ])
     ])
   ],

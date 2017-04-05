@@ -63,6 +63,35 @@ export class LibraryService {
       songIds: [
         '8'
       ]
+    },
+    '8': {
+      title: 'Mer de noms',
+      artist: 'A Perfect Circle',
+      songIds: [
+        '9'
+      ]
+    },
+    '9': {
+      title: 'The Suburbs',
+      artist: 'Arcade Fire',
+      songIds: [
+        '10'
+      ]
+    },
+    '10': {
+      title: '23',
+      artist: 'Blonde Redhead',
+      songIds: [
+        '11'
+      ]
+    },
+    '11': {
+      title: 'The Complex',
+      artist: 'Blue Man Group',
+      songIds: [
+        '12',
+        '13'
+      ]
     }
   };
   refreshing = false;
@@ -137,6 +166,46 @@ export class LibraryService {
       title: 'Shake It Out',
       artist: 'Manchester Orchestra',
       albumId: '7',
+      duration: 222
+    },
+    '9': {
+      url: 'http://72.182.62.242:4200/A%20Perfect%20Circle/Mer%20de%20noms/004%20-%20Judith.mp3',
+      track: 4,
+      title: 'Judith',
+      artist: 'A Perfect Circle',
+      albumId: '8',
+      duration: 222
+    },
+    '10': {
+      url: 'http://72.182.62.242:4200/Arcade%20Fire/The%20Suburbs/001%20-%20The%20Suburbs.mp3',
+      track: 1,
+      title: 'The Suburbs',
+      artist: 'Arcade Fire',
+      albumId: '9',
+      duration: 222
+    },
+    '11': {
+      url: 'http://72.182.62.242:4200/Blonde%20Redhead/23/001%20-%2023.mp3',
+      track: 1,
+      title: '23',
+      artist: 'Blonde Redhead',
+      albumId: '10',
+      duration: 222
+    },
+    '12': {
+      url: 'http://72.182.62.242:4200/Blue%20Man%20Group/The%20Complex/001%20-%20Above.mp3',
+      track: 1,
+      title: 'Above',
+      artist: 'Blue Man Group',
+      albumId: '11',
+      duration: 222
+    },
+    '13': {
+      url: 'http://72.182.62.242:4200/Blue%20Man%20Group/The%20Complex/012%20-%20The%20Complex.mp3',
+      track: 12,
+      title: 'The Complex',
+      artist: 'Blue Man Group',
+      albumId: '11',
       duration: 222
     }
   };

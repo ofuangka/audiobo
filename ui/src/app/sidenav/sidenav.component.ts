@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdSidenav } from '@angular/material';
 
 import { LibrarySetupComponent } from '../library-setup/library-setup.component';
 import { AboutDialogComponent } from '../about-dialog/about-dialog.component';
@@ -11,7 +11,7 @@ import { AboutDialogComponent } from '../about-dialog/about-dialog.component';
 })
 export class SidenavComponent implements OnInit {
 
-  constructor(public dialog: MdDialog) { }
+  constructor(public dialog: MdDialog, private sidenav: MdSidenav) { }
 
   ngOnInit() {
   }
@@ -21,7 +21,9 @@ export class SidenavComponent implements OnInit {
   }
 
   showLibrarySetup() {
-    this.dialog.open(LibrarySetupComponent);
+    this.dialog.open(LibrarySetupComponent).afterClosed().subscribe(() => {
+      this.sidenav.close();
+    });
   }
 
 }
