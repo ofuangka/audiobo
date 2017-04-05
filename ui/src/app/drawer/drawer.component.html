@@ -20,7 +20,6 @@
           <td class="text-center">
             <md-icon *ngIf="currentIndex === i" title="Now playing">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
           </td>
-          <td>
           <td class="width-sm">{{ song.title }}</td>
           <td class="width-sm">{{ song.artist }}</td>
           <td class="duration">{{ song.duration | seconds }}</td>
