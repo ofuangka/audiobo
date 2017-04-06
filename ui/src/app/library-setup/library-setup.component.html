@@ -4,11 +4,11 @@
     <div *ngIf="folders.length === 0">
       No media folders have been added yet. Add one to get started.
     </div>
-    <div *ngFor="let folder of folders" class="folder-container">
+    <div *ngFor="let folder of folders; let i = index" class="folder-container">
       <div class="folder-row">
         <md-input-container floatPlaceholder="never">
           <input mdInput [value]="folder.path" (keyup)="folder.triggerPathChange($event.target.value)"
-            placeholder="Folder (e.g. /music)" />
+            placeholder="Folder (e.g. /music)" tabindex="-1" />
         </md-input-container>
         <a (click)="removeFolder(folder)">
           <md-icon>clear</md-icon>

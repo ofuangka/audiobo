@@ -6,7 +6,7 @@ import { MdDialog } from '@angular/material';
 
 import { SecurityService, QueueService, LibraryService } from './services';
 import { Song } from './domain';
-import { LibraryStatusComponent } from './library-status/library-status.component';
+import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 
 @Component({
   animations: [
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     return this.queue.isEmpty();
   }
 
-  showLibraryStatus() {
-    this.dialog.open(LibraryStatusComponent);
+  showAboutDialog() {
+    this.dialog.open(AboutDialogComponent);
   }
 }

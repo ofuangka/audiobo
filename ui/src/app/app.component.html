@@ -9,7 +9,7 @@
         <button md-button [routerLink]="['/library/albums']">ALBUMS</button>
         <button md-button [routerLink]="['/library/songs']">SONGS</button>
       </nav>
-      <button md-icon-button (click)="showLibraryStatus()" class="nav-button" title="Library status"><md-icon [ngClass]="{rotate: refreshing}">{{ refreshing ? 'sync': 'audiotrack'}}</md-icon></button>
+      <button md-icon-button (click)="showAboutDialog()" class="nav-button" title="About Audiobo"><md-icon [ngClass]="{rotate: refreshing}">{{ refreshing ? 'sync': 'audiotrack'}}</md-icon></button>
     </div>
     <md-sidenav-container mode="over">
       <md-sidenav #drawer align="end" id="queue-drawer" (click)="drawer.toggle()">

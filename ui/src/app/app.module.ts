@@ -21,7 +21,6 @@ import { SecondsPipe } from './pipes/seconds.pipe';
 import { ZeroPadPipe } from './pipes/zero-pad.pipe';
 import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
-import { LibraryStatusComponent } from './library-status/library-status.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,7 @@ import { LibraryStatusComponent } from './library-status/library-status.componen
     SecondsPipe,
     SortArrowComponent,
     AlbumDetailsComponent,
-    ZeroPadPipe,
-    LibraryStatusComponent
+    ZeroPadPipe
   ],
   imports: [
     BrowserModule,
@@ -49,6 +47,6 @@ import { LibraryStatusComponent } from './library-status/library-status.componen
   ],
   providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title, HashCodeService, BackgroundColorService, PathValidatorService],
   bootstrap: [AppComponent],
-  entryComponents: [AboutDialogComponent, LibrarySetupComponent, LibraryStatusComponent]
+  entryComponents: [AboutDialogComponent, LibrarySetupComponent]
 })
 export class AppModule { }

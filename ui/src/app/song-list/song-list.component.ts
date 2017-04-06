@@ -20,8 +20,8 @@ export class SongListComponent implements OnInit {
     for (let id of Object.keys(this.library.songs)) {
       this.songs.push(this.library.songs[id]);
       this.filteredSongs.push(this.library.songs[id]);
-      this.sortBy('title');
     }
+    this.sortBy('title');
   }
 
   addToQueue(song: Song) {
