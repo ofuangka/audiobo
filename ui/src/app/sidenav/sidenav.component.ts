@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdSidenav } from '@angular/material';
 
-import { LibrarySetupComponent } from '../library-setup/library-setup.component';
+import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-setup-dialog.component';
 
 @Component({
   selector: 'sidenav',
@@ -15,9 +15,11 @@ export class SidenavComponent implements OnInit {
   ngOnInit() {
   }
 
-  showLibrarySetup() {
-    this.dialog.open(LibrarySetupComponent).afterClosed().subscribe(() => {
-      this.sidenav.close();
+  showLibrarySetupDialog() {
+    this.dialog.open(LibrarySetupDialogComponent).afterClosed().subscribe((userSelectedRefresh) => {
+      if (userSelectedRefresh) {
+        this.sidenav.close();
+      }
     });
   }
 

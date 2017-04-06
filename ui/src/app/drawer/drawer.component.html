@@ -22,7 +22,7 @@
           </td>
           <td class="width-sm">{{ song.title }}</td>
           <td class="width-sm">{{ song.artist }}</td>
-          <td class="duration">{{ song.duration | seconds }}</td>
+          <td class="duration">{{ song.duration | duration }}</td>
           <td class="text-center">
             <md-icon (click)="remove(i)" class="action-icon" title="Remove">clear</md-icon>
           </td>

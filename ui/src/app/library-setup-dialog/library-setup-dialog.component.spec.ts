@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LibrarySetupComponent } from './library-setup.component';
+import { LibrarySetupDialogComponent } from './library-setup-dialog.component';
 
-describe('LibrarySetupComponent', () => {
-  let component: LibrarySetupComponent;
-  let fixture: ComponentFixture<LibrarySetupComponent>;
+describe('LibrarySetupDialogComponent', () => {
+  let component: LibrarySetupDialogComponent;
+  let fixture: ComponentFixture<LibrarySetupDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LibrarySetupComponent ]
+      declarations: [ LibrarySetupDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LibrarySetupComponent);
+    fixture = TestBed.createComponent(LibrarySetupDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

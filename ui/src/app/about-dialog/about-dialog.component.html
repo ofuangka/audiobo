@@ -1,6 +1,21 @@
-<h2>Audiobo <md-icon>audiotrack</md-icon> <small>0.0.1</small></h2>
-<hr />
-<h3>Release notes</h3>
-<ul>
-  <li>Initial implementation</li>
-</ul>
+<div class="about-heading">
+  <h2 md-dialog-title class="about-title">Audiobo</h2>
+  <md-icon [ngClass]="{rotate: refreshing}">{{ (refreshing) ? 'sync' : 'audiotrack'}}</md-icon>
+</div>
+<div md-dialog-content>
+  <md-tab-group>
+    <md-tab label="Statistics">
+      <p>{{ numAlbums | number }} album{{ numAlbums !== 1 ? 's' : ''}} &middot; {{ numSongs | number }} song{{ numSongs !==
+        1 ? 's' : ''}} &middot; {{ totalTime | duration }}
+    </md-tab>
+    <md-tab label="Release notes">
+      <dl>
+        <dt>v0.0.0-M20170405-01</dt>
+        <dd>This is the first release of Audiobo. We hope you like it.</dd>
+      </dl>
+    </md-tab>
+  </md-tab-group>
+</div>
+<div md-dialog-actions class="about-actions">
+  <button md-raised-button (click)="dialogRef.close()">Ok</button>
+</div>

@@ -23,17 +23,17 @@ class LibrarySetupFolder extends Folder {
 }
 
 @Component({
-  selector: 'library-setup',
-  templateUrl: './library-setup.component.html',
-  styleUrls: ['./library-setup.component.css']
+  selector: 'library-setup-dialog',
+  templateUrl: './library-setup-dialog.component.html',
+  styleUrls: ['./library-setup-dialog.component.css']
 })
-export class LibrarySetupComponent implements OnInit {
+export class LibrarySetupDialogComponent implements OnInit {
 
   folders: LibrarySetupFolder[] = [];
   persistedFolders: Folder[] = [];
   pathChangeSubscriptions: Subscription[] = [];
 
-  constructor(private library: LibraryService, private dialog: MdDialogRef<LibrarySetupComponent>, private pathValidator: PathValidatorService) { }
+  constructor(private library: LibraryService, private dialog: MdDialogRef<LibrarySetupDialogComponent>, private pathValidator: PathValidatorService) { }
 
   ngOnInit() {
     for (let folder of this.persistedFolders) {
@@ -91,7 +91,7 @@ export class LibrarySetupComponent implements OnInit {
 
   refreshAndClose() {
     this.library.refreshing = true;
-    this.dialog.close();
+    this.dialog.close(true);
   }
 
 }

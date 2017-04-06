@@ -1,2 +1,2 @@
-export * from './seconds.pipe';
+export * from './duration.pipe';
 export * from './zero-pad.pipe';

@@ -2,9 +2,9 @@
   <md-slider class="progress-bar" max="1000" [ngClass]="{invisible: !(playing || paused)}" [value]="progressFrozen ? normalize(frozenProgress, 1000) : normalize(progress, 1000)"
     (change)="seek(denormalize($event.value, 1000)); unfreezeProgress()" (mousedown)="freezeProgress()"></md-slider>
   <div class="now-playing-info">
-    <span>{{ elapsedTime | seconds }}</span>
+    <span>{{ elapsedTime | duration }}</span>
     <span class="title">{{ (nowPlaying) ? (nowPlaying.title + ' - ' + nowPlaying.artist) : '' }}</span>
-    <span class="duration">{{ (nowPlaying) ? (nowPlaying.duration | seconds) : '-:--' }}</span>
+    <span class="duration">{{ (nowPlaying) ? (nowPlaying.duration | duration) : '-:--' }}</span>
   </div>
   <div class="button-controls">
     <button md-icon-button class="invisible" title="Like"><md-icon>favorite_border</md-icon></button>

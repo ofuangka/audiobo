@@ -32,7 +32,7 @@
               <td class="title">{{ song.title }}</td>
               <td class="hidden-sm">{{ song.artist }}</td>
               <td class="hidden-sm">{{ getAlbumTitle(song) }}</td>
-              <td class="hidden-sm duration">{{ song.duration | seconds }}</td>
+              <td class="hidden-sm duration">{{ song.duration | duration }}</td>
               <td class="text-center">
                 <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
                 <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>

@@ -45,6 +45,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   addAlbumToQueue(album: Album) {
     let orderedSongs = this.getAlbumSongsInOrder(album);
     for (let song of orderedSongs) {
+      if (this.queue.isEmpty()) {
+        this.player.load(song);
+      }
       this.queue.add(song);
     }
   }
