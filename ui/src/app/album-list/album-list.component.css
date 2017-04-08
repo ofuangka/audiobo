@@ -11,9 +11,6 @@
   margin-right: 10px;
   width: 124px;
 }
-.albums, .album {
-  -webkit-transform: translate3d(0,0,0);
-}
 @media (max-width: 600px) {
   .album {
     width: 140px;
