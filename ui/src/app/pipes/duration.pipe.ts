@@ -10,8 +10,8 @@ export class DurationPipe implements PipeTransform {
   transform(value: any): string {
     let ret = '';
     let remainder = parseInt(value);
-    if (isNaN(remainder)) {
-      return '0:00';
+    if (isNaN(remainder) || value < 0) {
+      return '-:--';
     } else {
       if (remainder > HOUR) {
         let hours = Math.floor(remainder / HOUR);

@@ -14,6 +14,17 @@ export class NowPlayingControlsComponent implements OnInit {
   @Output()
   drawerToggle: EventEmitter<any> = new EventEmitter();
 
+  get duration() {
+    if (this.nowPlaying) {
+      if (this.player.durationAvailable) {
+        return this.player.duration;
+      } else {
+        return this.nowPlaying.duration;
+      }
+    }
+    return -1;
+    
+  }
   get nowPlaying() {
     return this.queue.current;
   }

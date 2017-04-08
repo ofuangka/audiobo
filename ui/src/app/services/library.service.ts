@@ -174,7 +174,7 @@ export class LibraryService {
       title: 'Judith',
       artist: 'A Perfect Circle',
       albumId: '8',
-      duration: 222
+      duration: 247
     },
     '10': {
       url: 'http://72.182.62.242:4200/Arcade%20Fire/The%20Suburbs/001%20-%20The%20Suburbs.mp3',
@@ -182,7 +182,7 @@ export class LibraryService {
       title: 'The Suburbs',
       artist: 'Arcade Fire',
       albumId: '9',
-      duration: 222
+      duration: 315
     },
     '11': {
       url: 'http://72.182.62.242:4200/Blonde%20Redhead/23/001%20-%2023.mp3',
@@ -190,7 +190,7 @@ export class LibraryService {
       title: '23',
       artist: 'Blonde Redhead',
       albumId: '10',
-      duration: 222
+      duration: 318
     },
     '12': {
       url: 'http://72.182.62.242:4200/Blue%20Man%20Group/The%20Complex/001%20-%20Above.mp3',
@@ -198,7 +198,7 @@ export class LibraryService {
       title: 'Above',
       artist: 'Blue Man Group',
       albumId: '11',
-      duration: 222
+      duration: 166
     },
     '13': {
       url: 'http://72.182.62.242:4200/Blue%20Man%20Group/The%20Complex/012%20-%20The%20Complex.mp3',
@@ -206,7 +206,7 @@ export class LibraryService {
       title: 'The Complex',
       artist: 'Blue Man Group',
       albumId: '11',
-      duration: 222
+      duration: 357
     }
   };
   get numSongs() {

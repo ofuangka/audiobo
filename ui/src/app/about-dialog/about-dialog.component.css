@@ -1,11 +1,12 @@
-.about-heading {
-  align-items: flex-start;
+.spinner-container {
   display: flex;
-}
-.about-title {
-  flex-grow: 1;
+  padding: 50px;
+  justify-content: center;
 }
 .about-actions {
   display: flex;
   justify-content: center;
+}
+dd {
+  margin-bottom: 20px;
 }

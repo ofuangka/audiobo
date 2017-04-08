@@ -12,6 +12,7 @@ export class PlayerService {
   private songEnded = new Subject();
 
   currentTime = 0;
+  durationAvailable = false;
   error$ = this.error.asObservable();
   songEnded$ = this.songEnded.asObservable();
   loading = false;
@@ -36,9 +37,11 @@ export class PlayerService {
     this.audio.addEventListener('timeupdate', event => { this.currentTime = this.audio.currentTime });
     this.audio.addEventListener('ended', event => this.songEnded.next());
     this.audio.addEventListener('error', event => this.error.next(event.error));
+    this.audio.addEventListener('durationchange', event => this.durationAvailable = true);
   }
 
   autoload(song: Song) {
+    this.durationAvailable = false;
     this.autoplay = true;
     this.audio.autoplay = true;
     this.audio.src = this.getSrc(song);
@@ -49,6 +52,7 @@ export class PlayerService {
   }
 
   load(song: Song) {
+    this.durationAvailable = false;
     this.autoplay = false;
     this.audio.autoplay = false;
     this.audio.src = this.getSrc(song);

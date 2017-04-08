@@ -4,7 +4,7 @@
   <div class="now-playing-info">
     <span>{{ elapsedTime | duration }}</span>
     <span class="title">{{ (nowPlaying) ? (nowPlaying.title + ' - ' + nowPlaying.artist) : '' }}</span>
-    <span class="duration">{{ (nowPlaying) ? (nowPlaying.duration | duration) : '-:--' }}</span>
+    <span class="duration">{{ (nowPlaying) ? (duration | duration) : '-:--' }}</span>
   </div>
   <div class="button-controls">
     <button md-icon-button class="invisible" title="Like"><md-icon>favorite_border</md-icon></button>
