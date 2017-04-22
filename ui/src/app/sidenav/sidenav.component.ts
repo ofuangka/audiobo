@@ -15,10 +15,14 @@ export class SidenavComponent implements OnInit {
   ngOnInit() {
   }
 
+  closeSidenav() {
+    this.sidenav.close();
+  }
+
   showLibrarySetupDialog() {
     this.dialog.open(LibrarySetupDialogComponent).afterClosed().subscribe((userSelectedRefresh) => {
       if (userSelectedRefresh) {
-        this.sidenav.close();
+        this.closeSidenav();
       }
     });
   }

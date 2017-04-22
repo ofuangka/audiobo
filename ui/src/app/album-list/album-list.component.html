@@ -5,7 +5,10 @@
     </md-input-container>
   </form>
 </div>-->
-<div *ngIf="filteredAlbums.length === 0" class="no-albums-message">
+<div *ngIf="loadingAlbums" class="spinner-container">
+  <md-spinner></md-spinner>
+</div>
+<div *ngIf="!loadingAlbums && filteredAlbums.length === 0" class="no-albums-message pad-sm">
   <md-card>No albums to display</md-card>
 </div>
 <div #albums class="albums" (window:resize)="handleWindowResize($event)">

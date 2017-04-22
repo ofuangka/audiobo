@@ -55,12 +55,8 @@ a {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(-360deg); transform: rotate(-360deg); } }
-.songs-flex {
-  display: flex;
-  padding: 20px;
-}
 .songs {
-  flex-grow: 1;
+  padding: 10px;
 }
 .songs table {
   border-collapse: collapse;
@@ -81,6 +77,9 @@ a {
 .songs tr.highlight:hover td {
   background-color: rgba(0, 0, 0, 0.04);
 }
+.songs tr.highlight.active td {
+  background-color: rgba(0, 0, 0, 0.08);
+}
 .songs td {
   overflow-x: hidden;
   padding: 10px;
@@ -89,7 +88,7 @@ a {
 .songs .action-icon {
   visibility: hidden;
 }
-.songs tr:hover .action-icon {
+.songs tr:hover .action-icon, .songs tr.active .action-icon {
   visibility: visible;
 }
 .album-art {
@@ -112,6 +111,11 @@ a {
 .album-status {
   flex-grow: 1;
   padding: 10px;
+}
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 .bg-0 {
   background-color: #F44336;

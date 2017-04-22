@@ -11,10 +11,14 @@ import { LibraryService } from '../services';
 })
 export class AboutDialogComponent implements OnInit {
 
-  numSongs = 0;
-  numAlbums = 0;
   totalTime = 0;
 
+  get numSongs() {
+    return this.library.songs.length;
+  }
+  get numAlbums() {
+    return this.library.albums.length;
+  }
   get refreshing() {
     return this.library.refreshing;
   }
@@ -22,8 +26,6 @@ export class AboutDialogComponent implements OnInit {
   constructor(private library: LibraryService, public dialogRef: MdDialogRef<AboutDialogComponent>) { }
 
   ngOnInit() {
-    this.numSongs = Object.keys(this.library.songs).length;
-    this.numAlbums = Object.keys(this.library.albums).length;
     for (let id in this.library.songs) {
       this.totalTime += this.library.songs[id].duration;
     }

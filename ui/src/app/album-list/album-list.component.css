@@ -23,9 +23,6 @@
 .artist {
   color: gray;
 }
-.no-albums-message {
-  padding: 10px;
-}
 .album-art {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;

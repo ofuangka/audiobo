@@ -27,7 +27,7 @@ export class ComparatorService {
   constructor(private library: LibraryService) { }
 
   private getSongAlbumTitle(song: Song): string {
-    return this.library.albums[song.albumId].title;
+    return this.library.albumMap[song.albumId].title;
   }
 
 }

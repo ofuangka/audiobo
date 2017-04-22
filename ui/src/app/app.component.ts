@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Title } from '@angular/platform-browser';
 
-import { MdDialog } from '@angular/material';
+import { MdDialog, MdDialogConfig } from '@angular/material';
 
-import { SecurityService, QueueService, LibraryService } from './services';
+import { SecurityService, QueueService, LibraryService, ErrorService } from './services';
 import { Song } from './domain';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
+import { ErrorMessageDialogComponent } from './error-message-dialog/error-message-dialog.component';
 
 @Component({
   animations: [
@@ -32,10 +33,11 @@ export class AppComponent implements OnInit {
     return this.library.refreshing;
   }
 
-  constructor(private security: SecurityService, public dialog: MdDialog, private queue: QueueService, private title: Title, private library: LibraryService) { }
+  constructor(private security: SecurityService, public dialog: MdDialog, private queue: QueueService, private title: Title, private library: LibraryService, private error: ErrorService) { }
 
   ngOnInit() {
     this.queue.currentChanged$.subscribe((newSong: Song) => this.title.setTitle(newSong ? newSong.title + ' - ' + newSong.artist : 'Audiobo'));
+    this.error.message$.subscribe(this.showErrorDialog.bind(this));
   }
 
   isQueueEmpty() {
@@ -44,5 +46,13 @@ export class AppComponent implements OnInit {
 
   showAboutDialog() {
     this.dialog.open(AboutDialogComponent);
+  }
+
+  showErrorDialog(errorMessage) {
+    let config = new MdDialogConfig();
+    config.data = {
+      errorMessage: errorMessage
+    };
+    this.dialog.open(ErrorMessageDialogComponent, config);
   }
 }

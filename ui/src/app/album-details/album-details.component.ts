@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import 'rxjs/add/operator/switchMap';
 
-import { LibraryService, ComparatorService, QueueService, PlayerService, BackgroundColorService } from '../services';
+import { LibraryService, ComparatorService, QueueService, PlayerService, BackgroundColorService, ErrorService } from '../services';
 import { Song, Album } from '../domain';
 
 @Component({
@@ -14,6 +14,7 @@ import { Song, Album } from '../domain';
 export class AlbumDetailsComponent implements OnInit {
 
   album: Album;
+  loadingAlbum: boolean;
   totalDuration: number;
   songs: Song[];
   sortedBy: string;
@@ -25,28 +26,37 @@ export class AlbumDetailsComponent implements OnInit {
     return this.player.loading;
   }
 
-  constructor(private route: ActivatedRoute, private library: LibraryService, private comparator: ComparatorService, private queue: QueueService, private player: PlayerService, private backgroundColor: BackgroundColorService) { }
+  constructor(private route: ActivatedRoute, private library: LibraryService, private comparator: ComparatorService, private queue: QueueService, private player: PlayerService, private backgroundColor: BackgroundColorService, private error: ErrorService) { }
 
   ngOnInit() {
-    let albumId = this.route.snapshot.params['albumId']
-    this.album = this.library.albums[albumId];
-    this.totalDuration = 0;
-    this.songs = [];
-    for (let songId of this.album.songIds) {
-      let song = this.library.songs[songId];
-      this.songs.push(song);
-      this.totalDuration += song.duration;
-    }
-    this.sortBy('track');
+    this.loadingAlbum = true;
+    Promise.all([
+      this.library.albumsReady,
+      this.library.songsReady
+    ]).then(() => {
+      let albumId = this.route.snapshot.params['albumId']
+      this.album = this.library.albumMap[albumId];
+      this.totalDuration = 0;
+      this.songs = [];
+      for (let songId of this.album.songIds) {
+        let song = this.library.songMap[songId];
+        this.songs.push(song);
+        this.totalDuration += song.duration;
+      }
+      this.sortBy('track');
+    }).catch(this.error.getGenericFailureFn('Data services are unavailable.')).then(() => this.loadingAlbum = false);
   }
 
   addAlbumToQueue() {
     for (let song of this.songs) {
-      this.queue.add(song);
+      this.addToQueue(song);
     }
   }
 
   addToQueue(song: Song) {
+    if (this.queue.isEmpty()) {
+      this.player.load(song);
+    }
     this.queue.add(song);
   }
 

@@ -14,12 +14,13 @@ import { DrawerComponent } from './drawer/drawer.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlbumListComponent } from './album-list/album-list.component';
 import { SongListComponent } from './song-list/song-list.component';
-import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, HashCodeService, BackgroundColorService, PathValidatorService } from './services';
+import { CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, HashCodeService, BackgroundColorService, PathValidatorService, ErrorService } from './services';
 import { AboutDialogComponent } from './about-dialog/about-dialog.component';
 import { LibrarySetupDialogComponent } from './library-setup-dialog/library-setup-dialog.component';
 import { DurationPipe, ZeroPadPipe } from './pipes';
 import { SortArrowComponent } from './sort-arrow/sort-arrow.component';
 import { AlbumDetailsComponent } from './album-details/album-details.component';
+import { ErrorMessageDialogComponent } from './error-message-dialog/error-message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
     DurationPipe,
     SortArrowComponent,
     AlbumDetailsComponent,
-    ZeroPadPipe
+    ZeroPadPipe,
+    ErrorMessageDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +46,8 @@ import { AlbumDetailsComponent } from './album-details/album-details.component';
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title, HashCodeService, BackgroundColorService, PathValidatorService],
+  providers: [CapabilitiesService, PlayerService, SecurityService, QueueService, LibraryService, RandomService, ComparatorService, Title, HashCodeService, BackgroundColorService, PathValidatorService, ErrorService],
   bootstrap: [AppComponent],
-  entryComponents: [AboutDialogComponent, LibrarySetupDialogComponent]
+  entryComponents: [AboutDialogComponent, LibrarySetupDialogComponent, ErrorMessageDialogComponent]
 })
 export class AppModule { }

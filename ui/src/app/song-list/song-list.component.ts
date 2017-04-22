@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { QueueService, LibraryService, PlayerService, ComparatorService } from '../services';
+import { MdDialog } from '@angular/material';
+
+import { QueueService, LibraryService, PlayerService, ComparatorService, ErrorService } from '../services';
 import { Song } from '../domain/song';
+import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-setup-dialog.component';
 
 @Component({
   selector: 'song-list',
@@ -10,30 +13,36 @@ import { Song } from '../domain/song';
 })
 export class SongListComponent implements OnInit {
 
+  loadingSongs: boolean;
   songs: Song[] = [];
   sortedBy: string;
   filteredSongs: Song[] = [];
 
-  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService, private comparator: ComparatorService) { }
+  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService, private comparator: ComparatorService, private dialog: MdDialog, private error: ErrorService) { }
 
   ngOnInit() {
-    for (let id of Object.keys(this.library.songs)) {
-      this.songs.push(this.library.songs[id]);
-      this.filteredSongs.push(this.library.songs[id]);
-    }
-    this.sortBy('title');
+    this.loadingSongs = true;
+    this.library.songsReady.then(songs => {
+      for (let song of songs) {
+        this.songs.push(song);
+        this.filteredSongs.push(song);
+      }
+      this.sortBy('title');
+    }).catch(this.error.getGenericFailureFn('Song service is unavailable.')).then(() => this.loadingSongs = false);
   }
 
   addToQueue(song: Song) {
+    if (this.queue.isEmpty()) {
+      this.player.load(song);
+    }
     this.queue.add(song);
   }
 
   getAlbumTitle(song: Song): string {
-    return this.library.albums[song.albumId].title;
+    return this.library.albumMap[song.albumId].title;
   }
 
   handleSongClick(song: Song) {
-
   }
 
   isSongCurrent(song: Song): boolean {
@@ -48,6 +57,10 @@ export class SongListComponent implements OnInit {
     this.queue.clear();
     this.queue.add(song);
     this.player.autoload(this.queue.current);
+  }
+
+  showLibrarySetupDialog() {
+    this.dialog.open(LibrarySetupDialogComponent);
   }
 
   sortBy(property: string) {

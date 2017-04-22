@@ -1,25 +1,7 @@
+<h2 md-dialog-title>Audiobo</h2>
 <div md-dialog-content>
-  <md-tab-group>
-    <md-tab label="Audiobo">
-      <div *ngIf="refreshing" class="spinner-container"><md-spinner></md-spinner></div>
-      <p *ngIf="!refreshing">{{ numAlbums | number }} album{{ numAlbums !== 1 ? 's' : ''}} &middot; {{ numSongs | number }} song{{ numSongs !==
-        1 ? 's' : ''}} &middot; {{ totalTime | duration }}</p>
-    </md-tab>
-    <md-tab label="Release notes">
-      <dl>
-        <dt>v0.0.0-M20170405-01</dt>
-        <dd>This is the first ever release of Audiobo.</dd>
-        <dt>Albums view</dt>
-        <dd>View and play your albums.</dd>
-        <dt>Songs view</dt>
-        <dd>View, sort and play your songs.</dd>
-        <dt>Now playing controls</dt>
-        <dd>Pause the current song, skip next or previous, view the current progress or skip ahead.</dd>
-        <dt>Queue drawer</dt>
-        <dd>Manage your queued songs using the drawer. Shuffle your queue, remove items or clear your whole queue.</dd>
-      </dl>
-    </md-tab>
-  </md-tab-group>
+  <p>{{ numAlbums | number }} album{{ numAlbums !== 1 ? 's' : ''}} &middot; {{ numSongs | number }} song{{ numSongs !== 1 ?
+    's' : ''}} &middot; {{ totalTime | duration }}</p>
 </div>
 <div md-dialog-actions class="about-actions">
   <button md-raised-button (click)="dialogRef.close()">Done</button>

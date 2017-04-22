@@ -1,5 +1,5 @@
 export class Song {
-    url: string;
+    id: string;
     track: number;
     title: string;
     albumId: string;

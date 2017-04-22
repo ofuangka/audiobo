@@ -6,8 +6,8 @@
     <div class="toolbar">
       <button md-icon-button (click)="sidenav.toggle()" class="nav-button" title="Menu"><md-icon>menu</md-icon></button>
       <nav>
-        <button md-button [routerLink]="['/library/albums']">ALBUMS</button>
-        <button md-button [routerLink]="['/library/songs']">SONGS</button>
+        <button md-button [routerLink]="['/library/albums']" routerLinkActive="mat-raised-button mat-primary">ALBUMS</button>
+        <button md-button [routerLink]="['/library/songs']" routerLinkActive="mat-raised-button mat-primary">SONGS</button>
       </nav>
       <button md-icon-button (click)="showAboutDialog()" class="nav-button" title="About Audiobo"><md-icon [ngClass]="{rotate: refreshing}">{{ refreshing ? 'sync': 'audiotrack'}}</md-icon></button>
     </div>

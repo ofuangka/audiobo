@@ -1,58 +1,60 @@
-<div class="songs-flex">
-  <div class="songs">
-    <md-card>
-      <md-card-content>
-        <div md-card-image class="album-info">
-          <div class="album-art" (click)="handleAlbumArtClick()" [ngClass]="getBackgroundColor()">
-            <div class="album-status">
-              <span *ngIf="isAlbumCurrent()">
+<div *ngIf="loadingAlbum" class="spinner-container">
+  <md-spinner></md-spinner>
+</div>
+<div *ngIf="!loadingAlbum && album" class="songs">
+  <md-card>
+    <md-card-content>
+      <div md-card-image class="album-info">
+        <div class="album-art" (click)="handleAlbumArtClick()" [ngClass]="getBackgroundColor()">
+          <div class="album-status">
+            <span *ngIf="isAlbumCurrent()">
                 <md-icon *ngIf="loading" [ngClass]="{rotate: loading}">sync</md-icon>
                 <md-icon *ngIf="playing">equalizer</md-icon>
               </span>
-            </div>
-            <div class="album-controls">
-              <button md-mini-fab (click)="addAlbumToQueue()" title="Add to queue"><md-icon>add</md-icon></button>
-              <button md-mini-fab (click)="playAlbum()" title="Play now"><md-icon>play_arrow</md-icon></button>
-            </div>
           </div>
-          <div class="album-text">
-            <h3>{{ album.title }}</h3>
-            <div class="album-other">
-              <p>{{ album.artist }}</p>
-              <p>{{ album.songIds.length }} song{{ album.songIds.length !== 1 ? 's' : ''}} &middot; {{ totalDuration | duration }}
-              </p>
-            </div>
+          <div class="album-controls">
+            <button md-mini-fab (click)="addAlbumToQueue()" title="Add to queue"><md-icon>add</md-icon></button>
+            <button md-mini-fab (click)="playAlbum()" title="Play now"><md-icon>play_arrow</md-icon></button>
           </div>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th class="track"><a (click)="sortBy('track')"># <sort-arrow [dir]="sortDir('track')"></sort-arrow></a></th>
-              <th><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
-              <th class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
-              <th class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let song of songs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
-              <td class="text-center">
-                <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
-                <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
-              </td>
-              <td class="track">{{ song.track | zeroPad : 3 }}</td>
-              <td class="title">{{ song.title }}</td>
-              <td class="hidden-sm">{{ song.artist }}</td>
-              <td class="hidden-sm duration">{{ song.duration | duration }}</td>
-              <td class="text-center">
-                <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
-                <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </md-card-content>
-    </md-card>
-  </div>
+        <div class="album-text">
+          <h3>{{ album.title }}</h3>
+          <div class="album-other">
+            <p>{{ album.artist }}</p>
+            <p>{{ album.songIds.length }} song{{ album.songIds.length !== 1 ? 's' : ''}} &middot; {{ totalDuration | duration
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="track"><a (click)="sortBy('track')"># <sort-arrow [dir]="sortDir('track')"></sort-arrow></a></th>
+            <th><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
+            <th class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
+            <th class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let song of songs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
+            <td class="text-center">
+              <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
+              <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
+            </td>
+            <td class="track">{{ song.track | zeroPad : 3 }}</td>
+            <td class="title">{{ song.title }}</td>
+            <td class="hidden-sm">{{ song.artist }}</td>
+            <td class="hidden-sm duration">{{ song.duration | duration }}</td>
+            <td class="text-center">
+              <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
+              <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-card-content>
+  </md-card>
 </div>

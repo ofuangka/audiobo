@@ -77,7 +77,7 @@ export class PlayerService {
   }
 
   getSrc(song: Song): string {
-    return song.url;
+    return `/api/songs/${song.id}`;
   }
 
 }

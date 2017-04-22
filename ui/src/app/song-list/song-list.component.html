@@ -5,45 +5,45 @@
     </md-input-container>
   </form>
 </div>-->
-<div class="songs-flex">
-  <div class="songs">
-    <md-card>
-      <md-card-content>
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
-              <th class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
-              <th class="hidden-sm"><a (click)="sortBy('album')">ALBUM <sort-arrow [dir]="sortDir('album')"></sort-arrow></a></th>
-              <th class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngIf="filteredSongs.length === 0">
-              <td colspan="6">No songs to display</td>
-            </tr>
-            <tr *ngFor="let song of filteredSongs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
-              <td class="text-center">
-                <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
-                <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
-              </td>
-              <td class="title">{{ song.title }}</td>
-              <td class="hidden-sm">{{ song.artist }}</td>
-              <td class="hidden-sm">{{ getAlbumTitle(song) }}</td>
-              <td class="hidden-sm duration">{{ song.duration | duration }}</td>
-              <td class="text-center">
-                <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
-                <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </md-card-content>
-    </md-card>
-  </div>
-  <!--<div class="letters">
-    <a *ngFor="let letter of letters" (click)="jumpTo(letter)">{{ letter }}</a>
-  </div>-->
+<div *ngIf="loadingSongs" class="spinner-container">
+  <md-spinner></md-spinner>
+</div>
+<div *ngIf="!loadingSongs && filteredSongs.length === 0" class="no-songs-message pad-sm">
+  <md-card>
+    You currently have no songs to display. Do you need to <a href="javascript:void(0);" (click)="showLibrarySetupDialog()">set up your library</a>?
+  </md-card>
+</div>
+<div *ngIf="filteredSongs.length > 0" class="songs">
+  <md-card>
+    <md-card-content>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
+            <th class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
+            <th class="hidden-sm"><a (click)="sortBy('album')">ALBUM <sort-arrow [dir]="sortDir('album')"></sort-arrow></a></th>
+            <th class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let song of filteredSongs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
+            <td class="text-center">
+              <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
+              <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
+            </td>
+            <td class="title">{{ song.title }}</td>
+            <td class="hidden-sm">{{ song.artist }}</td>
+            <td class="hidden-sm">{{ getAlbumTitle(song) }}</td>
+            <td class="hidden-sm duration">{{ song.duration | duration }}</td>
+            <td class="text-center">
+              <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
+              <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-card-content>
+  </md-card>
 </div>

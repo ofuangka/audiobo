@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 
-import { LibraryService, QueueService, PlayerService, ComparatorService, BackgroundColorService } from '../services';
+import { LibraryService, QueueService, PlayerService, ComparatorService, BackgroundColorService, ErrorService } from '../services';
 import { Album } from '../domain/album';
+import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-setup-dialog.component';
 
-const ALBUM_WIDTH = 182;
+const ALBUM_WIDTH = 182,
+  VIEW_TIMEOUT = 30000;
 
 @Component({
   selector: 'album-list',
@@ -18,8 +21,16 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   albums: Album[] = [];
   filteredAlbums: Album[] = [];
+  loadingAlbums: boolean;
   remainderAlbums: boolean[] = [];
   sortedBy: string;
+  viewInitialized = new Promise((resolve, reject) => {
+    this.viewInitializedResolve = resolve;
+    setTimeout(() => {
+      reject(new Error('View did not initialize before timeout.'));
+    }, VIEW_TIMEOUT);
+  });
+  private viewInitializedResolve;
 
   get loading() {
     return this.player.loading;
@@ -28,18 +39,18 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     return this.player.playing;
   }
 
-  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router, private backgroundColor: BackgroundColorService) { }
+  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router, private backgroundColor: BackgroundColorService, private dialog: MdDialog, private error: ErrorService) { }
 
   ngOnInit() {
-    for (let id of Object.keys(this.library.albums)) {
-      this.albums.push(this.library.albums[id]);
-      this.filteredAlbums.push(this.library.albums[id]);
-    }
-    this.sortBy('title');
+    this.loadingAlbums = true;
+    Promise.all([
+      this.initAlbums(),
+      this.viewInitialized
+    ]).then(() => { this.setUpRemainderAlbums(); this.loadingAlbums = false });
   }
 
   ngAfterViewInit() {
-    this.setUpRemainderAlbums();
+    this.viewInitializedResolve();
   }
 
   addAlbumToQueue(album: Album) {
@@ -52,19 +63,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private getAlbumId(album: Album) {
-    for (let id of Object.keys(this.library.albums)) {
-      if (album === this.library.albums[id]) {
-        return id;
-      }
-    }
-    throw new Error('Could not find album in library');
-  }
-
   private getAlbumSongsInOrder(album: Album) {
     let ret = [];
     for (let songId of album.songIds) {
-      ret.push(this.library.songs[songId]);
+      ret.push(this.library.songMap[songId]);
     }
     ret.sort(this.comparator.property('track', false));
     return ret;
@@ -75,7 +77,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   }
 
   goToAlbumDetails(album: Album) {
-    this.router.navigate(['library', 'albums', this.getAlbumId(album)])
+    this.router.navigate(['library', 'albums', album.id]);
   }
 
   handleAlbumArtClick(album: Album) {
@@ -86,8 +88,18 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     this.setUpRemainderAlbums();
   }
 
+  private initAlbums() {
+    return this.library.albumsReady.then(albums => {
+      for (let album of albums) {
+        this.albums.push(album);
+        this.filteredAlbums.push(album);
+      }
+      this.sortBy('title');
+    }).catch(this.error.getGenericFailureFn('Album service is unavailable.'))
+  }
+
   isAlbumCurrent(album: Album): boolean {
-    return (this.queue.current) ? this.library.albums[this.queue.current.albumId] === album : false;
+    return (this.queue.current) ? this.library.albumMap[this.queue.current.albumId] === album : false;
   }
 
   isAlbumPlaying(album: Album): boolean {
@@ -108,6 +120,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < numToAdd; i++) {
       this.remainderAlbums.push(true);
     }
+  }
+
+  showLibrarySetupDialog() {
+    this.dialog.open(LibrarySetupDialogComponent);
   }
 
   sortBy(property: string) {
