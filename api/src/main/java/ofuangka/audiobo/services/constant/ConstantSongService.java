@@ -3,12 +3,9 @@ package ofuangka.audiobo.services.constant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import ofuangka.audiobo.domain.Song;
 import ofuangka.audiobo.services.SongService;
 
-@Service
 public class ConstantSongService implements SongService {
 
 	@Override

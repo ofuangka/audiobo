@@ -1,7 +1,7 @@
 <div *ngIf="loadingAlbum" class="spinner-container">
   <md-spinner></md-spinner>
 </div>
-<div *ngIf="!loadingAlbum && album" class="songs">
+<div *ngIf="!loadingAlbum && album !== null" class="songs">
   <md-card>
     <md-card-content>
       <div md-card-image class="album-info">
