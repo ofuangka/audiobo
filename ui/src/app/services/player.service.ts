@@ -32,7 +32,7 @@ export class PlayerService {
     this.audio.addEventListener('loadstart', event => { this.playing = false; this.loading = true });
     this.audio.addEventListener('playing', event => this.playing = true);
     this.audio.addEventListener('pause', event => this.playing = false);
-    this.audio.addEventListener('canplay', event => { this.loading = false });
+    this.audio.addEventListener('canplay', event => this.loading = false);
     this.audio.addEventListener('timeupdate', event => { this.currentTime = this.audio.currentTime });
     this.audio.addEventListener('ended', event => this.songEnded.next());
     this.audio.addEventListener('error', event => this.error.next(event.error));

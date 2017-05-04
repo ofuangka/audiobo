@@ -9,14 +9,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 import ofuangka.audiobo.services.SongFileService;
 
-@Produces(MediaType.APPLICATION_OCTET_STREAM)
+@Produces("audio/mpeg")
 public class SongInstanceEndpoint {
 
 	@Inject
