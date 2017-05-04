@@ -19,9 +19,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   @ViewChild("albums")
   albumsViewChild: ElementRef;
 
+  albumOffset = 0;
   albums: Album[] = [];
-  filteredAlbums: Album[] = [];
   loadingAlbums: boolean;
+  numAlbumsPerPage = 100;
   remainderAlbums: boolean[] = [];
   sortedBy: string;
   viewInitialized = new Promise((resolve, reject) => {
@@ -32,6 +33,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   });
   private viewInitializedResolve;
 
+  get filteredAlbums() {
+    return this.albums.slice(this.albumOffset, this.albumOffset + this.numAlbumsPerPage);
+  }
   get loading() {
     return this.player.loading;
   }
@@ -92,7 +96,6 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     return this.library.albumsReady.then(albums => {
       for (let album of albums) {
         this.albums.push(album);
-        this.filteredAlbums.push(album);
       }
       this.sortBy('title');
     }).catch(this.error.getGenericFailureFn('Album service is unavailable.'))
@@ -128,7 +131,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   sortBy(property: string) {
     let reverse = property === this.sortedBy;
-    this.filteredAlbums.sort(this.comparator.property(property, reverse));
+    this.albums.sort(this.comparator.property(property, reverse));
     if (reverse) {
       this.sortedBy = '!' + property;
     } else {

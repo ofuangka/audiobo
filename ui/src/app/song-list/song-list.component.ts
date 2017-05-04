@@ -14,9 +14,14 @@ import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-set
 export class SongListComponent implements OnInit {
 
   loadingSongs: boolean;
+  numSongsPerPage = 100;
+  songOffset = 0;
   songs: Song[] = [];
   sortedBy: string;
-  filteredSongs: Song[] = [];
+  
+  get filteredSongs() {
+    return this.songs.slice(this.songOffset, this.songOffset + this.numSongsPerPage);
+  }
 
   constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService, private comparator: ComparatorService, private dialog: MdDialog, private error: ErrorService) { }
 
@@ -25,7 +30,6 @@ export class SongListComponent implements OnInit {
     this.library.songsReady.then(songs => {
       for (let song of songs) {
         this.songs.push(song);
-        this.filteredSongs.push(song);
       }
       this.sortBy('title');
     }).catch(this.error.getGenericFailureFn('Song service is unavailable.')).then(() => this.loadingSongs = false);
@@ -66,9 +70,9 @@ export class SongListComponent implements OnInit {
   sortBy(property: string) {
     let reverse = property === this.sortedBy;
     if (property === 'album') {
-      this.filteredSongs.sort(this.comparator.songAlbumTitle(reverse));
+      this.songs.sort(this.comparator.songAlbumTitle(reverse));
     } else {
-      this.filteredSongs.sort(this.comparator.property(property, reverse));
+      this.songs.sort(this.comparator.property(property, reverse));
     }
     if (reverse) {
       this.sortedBy = '!' + property;
