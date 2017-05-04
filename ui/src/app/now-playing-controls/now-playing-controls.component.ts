@@ -41,7 +41,7 @@ export class NowPlayingControlsComponent implements OnInit {
     return this.player.playing;
   }
   get progress() {
-    let ret = this.player.currentTime / this.player.duration;
+    let ret = this.player.currentTime / this.duration;
     return (isNaN(ret)) ? 0 : ret;
   }
   frozenProgress = 0;

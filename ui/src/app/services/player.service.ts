@@ -7,7 +7,6 @@ import { Song } from '../domain/song';
 export class PlayerService {
 
   private audio = new Audio();
-  private autoplay = false;
   private error = new Subject();
   private songEnded = new Subject();
 
@@ -33,27 +32,21 @@ export class PlayerService {
     this.audio.addEventListener('loadstart', event => { this.playing = false; this.loading = true });
     this.audio.addEventListener('playing', event => this.playing = true);
     this.audio.addEventListener('pause', event => this.playing = false);
-    this.audio.addEventListener('canplay', event => { this.loading = false; if (this.autoplay) { this.autoplay = false; this.audio.play(); } });
+    this.audio.addEventListener('canplay', event => { this.loading = false });
     this.audio.addEventListener('timeupdate', event => { this.currentTime = this.audio.currentTime });
     this.audio.addEventListener('ended', event => this.songEnded.next());
     this.audio.addEventListener('error', event => this.error.next(event.error));
-    this.audio.addEventListener('durationchange', event => this.durationAvailable = true);
+    this.audio.addEventListener('loadedmetadata', event => { if (this.audio.duration !== Infinity) { this.durationAvailable = true } } );
   }
 
   autoload(song: Song) {
     this.durationAvailable = false;
-    this.autoplay = true;
     this.audio.autoplay = true;
     this.audio.src = this.getSrc(song);
   }
 
-  getNormalizedProgress(max: number) {
-    return isNaN(this.audio.duration) ? 0 : Math.floor(this.currentTime / this.audio.duration * max);
-  }
-
   load(song: Song) {
     this.durationAvailable = false;
-    this.autoplay = false;
     this.audio.autoplay = false;
     this.audio.src = this.getSrc(song);
   }
