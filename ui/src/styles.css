@@ -18,6 +18,11 @@ svg {
 a {
   cursor: pointer;
 }
+a.disabled {
+  color: lightgray;
+  cursor: default;
+  text-decoration: none;
+}
 .pad-sm {
   padding: 10px;
 }
@@ -173,4 +178,23 @@ a {
 }
 .bg-18 {
   background-color: #607D8B;
+}
+.paginator {
+  display: flex;
+  font-size: 0.8em;
+  justify-content: flex-end;
+  padding: 0 40px;
+}
+.paginator > li {
+  list-style-type: none;
+}
+.paginator > li > a {
+  color: gray;
+  padding: 10px;
+  text-decoration: none;
+}
+.paginator > li > a.active {
+  background-color: gray;
+  border-radius: 2px;
+  color: white;
 }

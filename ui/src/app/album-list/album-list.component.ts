@@ -22,7 +22,8 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   albumOffset = 0;
   albums: Album[] = [];
   loadingAlbums: boolean;
-  numAlbumsPerPage = 100;
+  numAlbumsPerPage = 2;
+  pages: number[] = []
   remainderAlbums: boolean[] = [];
   sortedBy: string;
   viewInitialized = new Promise((resolve, reject) => {
@@ -39,6 +40,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   get loading() {
     return this.player.loading;
   }
+  get numAlbums() {
+    return this.albums.length;
+  }
   get playing() {
     return this.player.playing;
   }
@@ -50,7 +54,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     Promise.all([
       this.initAlbums(),
       this.viewInitialized
-    ]).then(() => { this.setUpRemainderAlbums(); this.loadingAlbums = false });
+    ]).then(() => {
+      this.setUpRemainderAlbums();
+      this.loadingAlbums = false
+    });
   }
 
   ngAfterViewInit() {
@@ -84,6 +91,18 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     this.router.navigate(['library', 'albums', album.id]);
   }
 
+  goToNextPage() {
+    this.albumOffset = this.albumOffset + this.numAlbumsPerPage;
+  }
+
+  goToPage(page: number) {
+    this.albumOffset = (page - 1) * this.numAlbumsPerPage;
+  }
+
+  goToPreviousPage() {
+    this.albumOffset = this.albumOffset - this.numAlbumsPerPage;
+  }
+
   handleAlbumArtClick(album: Album) {
 
   }
@@ -97,6 +116,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
       for (let album of albums) {
         this.albums.push(album);
       }
+      for (let i = 0; i < albums.length / this.numAlbumsPerPage; i++) {
+        this.pages.push(i + 1);
+      }
       this.sortBy('title');
     }).catch(this.error.getGenericFailureFn('Album service is unavailable.'))
   }
@@ -109,6 +131,18 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     return this.isAlbumCurrent(album) && this.playing;
   }
 
+  isNextDisabled(): boolean {
+    return this.albumOffset === this.numAlbums / this.numAlbumsPerPage;
+  }
+
+  isPageActive(page: number): boolean {
+    return page === (this.albumOffset / this.numAlbumsPerPage) + 1;
+  }
+
+  isPreviousDisabled(): boolean {
+    return this.albumOffset === 0;
+  }
+
   playAlbum(album: Album) {
     this.queue.clear();
     this.addAlbumToQueue(album);
@@ -117,7 +151,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   setUpRemainderAlbums() {
     let numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
-      remainder = this.albums.length % numPerRow,
+      remainder = this.numAlbumsPerPage % numPerRow,
       numToAdd = (remainder === 0) ? 0 : numPerRow - remainder;
     this.remainderAlbums = [];
     for (let i = 0; i < numToAdd; i++) {

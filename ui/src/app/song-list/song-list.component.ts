@@ -14,7 +14,7 @@ import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-set
 export class SongListComponent implements OnInit {
 
   loadingSongs: boolean;
-  numSongsPerPage = 100;
+  numSongsPerPage = 50;
   songOffset = 0;
   songs: Song[] = [];
   sortedBy: string;

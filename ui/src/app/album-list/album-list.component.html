@@ -37,3 +37,8 @@
     </md-card-content>
   </md-card>
 </div>
+<ul *ngIf="numAlbums > numAlbumsPerPage" class="paginator">
+  <li><a href="javascript:void(0);" (click)="!isPreviousDisabled() && goToPreviousPage()" [ngClass]="{disabled: isPreviousDisabled()}">Previous</a></li>
+  <li *ngFor="let page of pages"><a href="javascript:void(0);" (click)="goToPage(page)" [ngClass]="{active: isPageActive(page)}">{{ page }}</a></li>
+  <li><a href="javascript:void(0);" (click)="!isNextDisabled() && goToNextPage()" [ngClass]="{disabled: isNextDisabled()}">Next</a></li>
+</ul>
