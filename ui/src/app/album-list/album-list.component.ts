@@ -23,7 +23,8 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   albums: Album[] = [];
   loadingAlbums: boolean;
   numAlbumsPerPage = 2;
-  pages: number[] = []
+  pages: number[] = [];
+  paginatorThreshold = 3;
   remainderAlbums: boolean[] = [];
   sortedBy: string;
   viewInitialized = new Promise((resolve, reject) => {
@@ -33,6 +34,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     }, VIEW_TIMEOUT);
   });
   private viewInitializedResolve;
+
+  get currentPage() {
+    return (this.albumOffset / this.numAlbumsPerPage) + 1;
+  }
 
   get filteredAlbums() {
     return this.albums.slice(this.albumOffset, this.albumOffset + this.numAlbumsPerPage);
@@ -87,20 +92,30 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     return this.backgroundColor.get(album.title);
   }
 
+  getPageLabel(page: number): string {
+    var ret = `${page}`;
+    if (page === this.currentPage - this.paginatorThreshold + 1
+        || page === this.currentPage + this.paginatorThreshold - 1) {
+        ret = '...';
+    }
+    return ret;
+  }
+
   goToAlbumDetails(album: Album) {
     this.router.navigate(['library', 'albums', album.id]);
   }
 
   goToNextPage() {
-    this.albumOffset = this.albumOffset + this.numAlbumsPerPage;
+    this.goToPage(this.currentPage + 1);
   }
 
   goToPage(page: number) {
     this.albumOffset = (page - 1) * this.numAlbumsPerPage;
+    this.setUpRemainderAlbums();
   }
 
   goToPreviousPage() {
-    this.albumOffset = this.albumOffset - this.numAlbumsPerPage;
+    this.goToPage(this.currentPage - 1);
   }
 
   handleAlbumArtClick(album: Album) {
@@ -132,11 +147,23 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   }
 
   isNextDisabled(): boolean {
-    return this.albumOffset === this.numAlbums / this.numAlbumsPerPage;
+    return this.albumOffset === this.numAlbums - this.numAlbumsPerPage;
   }
 
   isPageActive(page: number): boolean {
-    return page === (this.albumOffset / this.numAlbumsPerPage) + 1;
+    return page === this.currentPage;
+  }
+
+  isPageVisible(page: number): boolean {
+    var ret = false;
+    if (page === 1 || page === this.pages.length) {
+      ret = true;
+    } else if (page === this.currentPage
+        || page > this.currentPage - this.paginatorThreshold
+        || page < this.currentPage + this.paginatorThreshold) {
+      ret = true;
+    }
+    return ret;
   }
 
   isPreviousDisabled(): boolean {
@@ -151,7 +178,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   setUpRemainderAlbums() {
     let numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
-      remainder = this.numAlbumsPerPage % numPerRow,
+      remainder = this.filteredAlbums.length % numPerRow,
       numToAdd = (remainder === 0) ? 0 : numPerRow - remainder;
     this.remainderAlbums = [];
     for (let i = 0; i < numToAdd; i++) {
