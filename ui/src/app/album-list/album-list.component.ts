@@ -22,7 +22,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   albumOffset = 0;
   albums: Album[] = [];
   loadingAlbums: boolean;
-  numAlbumsPerPage = 2;
+  numAlbumsPerPage = 50;
   pages: number[] = [];
   paginatorThreshold = 3;
   remainderAlbums: boolean[] = [];
@@ -38,7 +38,6 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   get currentPage() {
     return (this.albumOffset / this.numAlbumsPerPage) + 1;
   }
-
   get filteredAlbums() {
     return this.albums.slice(this.albumOffset, this.albumOffset + this.numAlbumsPerPage);
   }
@@ -94,9 +93,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   getPageLabel(page: number): string {
     var ret = `${page}`;
-    if (page === this.currentPage - this.paginatorThreshold + 1
-        || page === this.currentPage + this.paginatorThreshold - 1) {
-        ret = '...';
+    if (page !== 1 && page !== this.pages.length && (page === this.currentPage - this.paginatorThreshold + 1
+      || page === this.currentPage + this.paginatorThreshold - 1)) {
+      ret = '...';
     }
     return ret;
   }
@@ -147,7 +146,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   }
 
   isNextDisabled(): boolean {
-    return this.albumOffset === this.numAlbums - this.numAlbumsPerPage;
+    return this.albumOffset >= this.numAlbums - this.numAlbumsPerPage;
   }
 
   isPageActive(page: number): boolean {
@@ -159,8 +158,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     if (page === 1 || page === this.pages.length) {
       ret = true;
     } else if (page === this.currentPage
-        || page > this.currentPage - this.paginatorThreshold
-        || page < this.currentPage + this.paginatorThreshold) {
+      || (page > this.currentPage - this.paginatorThreshold && page < this.currentPage + this.paginatorThreshold)) {
       ret = true;
     }
     return ret;

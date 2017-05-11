@@ -198,3 +198,6 @@ a.disabled {
   border-radius: 2px;
   color: white;
 }
+.hide {
+  display: none !important;
+}
