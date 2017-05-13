@@ -11,6 +11,11 @@
 <div *ngIf="!loadingAlbums && filteredAlbums.length === 0" class="no-albums-message pad-sm">
   <md-card>No albums to display</md-card>
 </div>
+<ul *ngIf="numAlbums > numAlbumsPerPage" class="paginator">
+  <li><a href="javascript:void(0);" (click)="!isPreviousDisabled() && goToPreviousPage()" [ngClass]="{disabled: isPreviousDisabled()}">Previous</a></li>
+  <li *ngFor="let page of pages" [ngClass]="{hide: !isPageVisible(page)}"><a href="javascript:void(0);" (click)="goToPage(page)" [ngClass]="{active: isPageActive(page)}">{{ getPageLabel(page) }}</a></li>
+  <li><a href="javascript:void(0);" (click)="!isNextDisabled() && goToNextPage()" [ngClass]="{disabled: isNextDisabled()}">Next</a></li>
+</ul>
 <div #albums class="albums" (window:resize)="handleWindowResize($event)">
   <md-card *ngFor="let album of filteredAlbums" class="album">
     <md-card-content>
@@ -37,8 +42,3 @@
     </md-card-content>
   </md-card>
 </div>
-<ul *ngIf="numAlbums > numAlbumsPerPage" class="paginator">
-  <li><a href="javascript:void(0);" (click)="!isPreviousDisabled() && goToPreviousPage()" [ngClass]="{disabled: isPreviousDisabled()}">Previous</a></li>
-  <li *ngFor="let page of pages" [ngClass]="{hide: !isPageVisible(page)}"><a href="javascript:void(0);" (click)="goToPage(page)" [ngClass]="{active: isPageActive(page)}">{{ getPageLabel(page) }}</a></li>
-  <li><a href="javascript:void(0);" (click)="!isNextDisabled() && goToNextPage()" [ngClass]="{disabled: isNextDisabled()}">Next</a></li>
-</ul>

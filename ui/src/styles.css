@@ -182,7 +182,8 @@ a.disabled {
 .paginator {
   display: flex;
   font-size: 0.8em;
-  justify-content: center;
+  justify-content: flex-end;
+  margin-top: 35px;
   padding: 0 40px;
 }
 .paginator > li {
