@@ -71,8 +71,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
       this.viewInitialized
     ]).then(() => {
       this.setUpRemainderAlbums();
-      this.loadingAlbums = false
-    });
+    }).catch(this.error.getGenericFailureFn('A rendering issue occurred.')).then(() => { this.loadingAlbums = false});
   }
 
   ngAfterViewInit() {
@@ -98,6 +97,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     }
     this.setUpRemainderAlbums();
     this.setUpPagination();
+    this.goToPage(1);
   }
 
   private getAlbumSongsInOrder(album: Album) {

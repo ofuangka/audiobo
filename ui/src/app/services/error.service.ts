@@ -12,6 +12,7 @@ export class ErrorService {
 
   getGenericFailureFn(message) {
     return (error) => {
+      console.error(error);
       this.message.next(message || error.message);
     }
   }

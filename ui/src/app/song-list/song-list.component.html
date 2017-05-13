@@ -18,31 +18,31 @@
   <li *ngFor="let page of pages" [ngClass]="{hide: !isPageVisible(page)}"><a href="javascript:void(0);" (click)="goToPage(page)" [ngClass]="{active: isPageActive(page)}">{{ getPageLabel(page) }}</a></li>
   <li><a href="javascript:void(0);" (click)="!isNextDisabled() && goToNextPage()" [ngClass]="{disabled: isNextDisabled()}">Next</a></li>
 </ul>
-<div *ngIf="paginatedSongs.length > 0" class="songs">
+<div class="songs">
   <md-card>
-    <md-card-content>
-      <table>
+    <md-card-content #songTableContainer (window:resize)="handleWindowResize($event)">
+      <table #songTable>
         <thead>
           <tr>
-            <th></th>
-            <th><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
-            <th class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
-            <th class="hidden-sm"><a (click)="sortBy('album')">ALBUM <sort-arrow [dir]="sortDir('album')"></sort-arrow></a></th>
-            <th class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
-            <th></th>
+            <th #songTableStatus></th>
+            <th #songTableTitle><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
+            <th #songTableArtist class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
+            <th #songTableAlbum class="hidden-sm"><a (click)="sortBy('album')">ALBUM <sort-arrow [dir]="sortDir('album')"></sort-arrow></a></th>
+            <th #songTableDuration class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
+            <th #songTableControls></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let song of paginatedSongs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
-            <td class="text-center">
+          <tr *ngFor="let song of paginatedSongs" class="song highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
+            <td class="status text-center">
               <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
               <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
             </td>
-            <td class="title">{{ song.title }}</td>
-            <td class="artist hidden-sm">{{ song.artist }}</td>
-            <td class="album hidden-sm">{{ getAlbumTitle(song) }}</td>
-            <td class="hidden-sm duration">{{ song.duration | duration }}</td>
-            <td class="text-center">
+            <td><div [ngStyle]="{width: titleWidth}">{{ song.title }}</div></td>
+            <td class="hidden-sm"><div [ngStyle]="{width: artistWidth}">{{ song.artist }}</div></td>
+            <td class="hidden-sm"><div [ngStyle]="{width: albumWidth}">{{ getAlbumTitle(song) }}</div></td>
+            <td class="hidden-sm duration"><div [ngStyle]="{width: durationWidth}">{{ song.duration | duration }}</div></td>
+            <td class="controls text-center">
               <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
               <md-icon (click)="play(song)" class="action-icon" title="Play">play_arrow</md-icon>
             </td>

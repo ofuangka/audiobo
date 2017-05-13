@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { MdDialog } from '@angular/material';
 
@@ -7,16 +7,35 @@ import { Subject } from 'rxjs/Subject';
 import { QueueService, LibraryService, PlayerService, ComparatorService, ErrorService } from '../services';
 import { Song } from '../domain/song';
 import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-setup-dialog.component';
+import { ResizingSongList } from '../abstract-classes/resizing-song-list';
+
+function isNotDisplayed(elementRef: ElementRef): boolean {
+  return elementRef.nativeElement.style.display === 'none';
+}
 
 const DEBOUNCE_TIME = 300,
-  PAGINATOR_THRESHOLD = 3;
+  PAGINATOR_THRESHOLD = 3,
+  VIEW_TIMEOUT = 30000,
+  PADDING = 20;
 
 @Component({
   selector: 'song-list',
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.css']
 })
-export class SongListComponent implements OnInit {
+export class SongListComponent extends ResizingSongList implements OnInit {
+
+  @ViewChild('songTableTitle')
+  songTableTitleViewChild: ElementRef;
+
+  @ViewChild('songTableArtist')
+  songTableArtistViewChild: ElementRef;
+
+  @ViewChild('songTableAlbum')
+  songTableAlbumViewChild: ElementRef;
+
+  @ViewChild('songTableDuration')
+  songTableDurationViewChild: ElementRef;
 
   private filterQueryChange = new Subject();
 
@@ -29,6 +48,10 @@ export class SongListComponent implements OnInit {
   songOffset = 0;
   songs: Song[] = [];
   sortedBy: string;
+  titleWidth = 'auto';
+  artistWidth = 'auto';
+  albumWidth = 'auto';
+  durationWidth = 'auto';
   
 
   get currentPage() {
@@ -41,19 +64,16 @@ export class SongListComponent implements OnInit {
     return this.filteredSongs.slice(this.songOffset, this.songOffset + this.numSongsPerPage);
   }
 
-  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService, private comparator: ComparatorService, private dialog: MdDialog, private error: ErrorService) { }
+  constructor(private queue: QueueService, private library: LibraryService, private player: PlayerService, private comparator: ComparatorService, private dialog: MdDialog, private error: ErrorService) {
+    super();
+  }
 
   ngOnInit() {
     this.loadingSongs = true;
     this.filterQueryChange$.subscribe(this.filterSongs.bind(this));
-    this.library.songsReady.then(songs => {
-      for (let song of songs) {
-        this.songs.push(song);
-        this.filteredSongs.push(song);
-      }
-      this.setUpPagination();
-      this.sortBy('title');
-    }).catch(this.error.getGenericFailureFn('Song service is unavailable.')).then(() => this.loadingSongs = false);
+    Promise.all([this.initSongs(), this.viewInitializedResolve]).then(() => {
+      setTimeout(this.adjustTableSize.bind(this));
+    }).catch(this.error.getGenericFailureFn('A rendering issue occurred.')).then(() => this.loadingSongs = false);
   }
 
   addToQueue(song: Song) {
@@ -61,6 +81,24 @@ export class SongListComponent implements OnInit {
       this.player.load(song);
     }
     this.queue.add(song);
+  }
+
+  adjustColumnSizes(ratio: number) {
+    let newTitleWidth = Math.floor(this.songTableTitleViewChild.nativeElement.offsetWidth * ratio),
+      newArtistWidth = Math.floor(this.songTableArtistViewChild.nativeElement.offsetWidth * ratio),
+      newAlbumWidth = Math.floor(this.songTableAlbumViewChild.nativeElement.offsetWidth * ratio),
+      newDurationWidth = Math.floor(this.songTableDurationViewChild.nativeElement.offsetWidth * ratio);
+    this.titleWidth = (newTitleWidth - PADDING) + 'px';
+    this.artistWidth = (newArtistWidth - PADDING) + 'px';
+    this.albumWidth = (newAlbumWidth - PADDING) + 'px';
+    this.durationWidth = (newDurationWidth - PADDING) + 'px';
+  }
+
+  clearTableSize() {
+    this.titleWidth = 'auto';
+    this.artistWidth = 'auto';
+    this.albumWidth = 'auto';
+    this.durationWidth = 'auto';
   }
 
   filterSongs(query: string) {
@@ -71,6 +109,7 @@ export class SongListComponent implements OnInit {
       }
     }
     this.setUpPagination();
+    this.goToPage(1);
   }
 
   getAlbumTitle(song: Song): string {
@@ -92,6 +131,8 @@ export class SongListComponent implements OnInit {
 
   goToPage(page: number) {
     this.songOffset = (page - 1) * this.numSongsPerPage;
+    this.clearTableSize();
+    setTimeout(this.adjustTableSize.bind(this));
   }
 
   goToPreviousPage() {
@@ -103,6 +144,17 @@ export class SongListComponent implements OnInit {
   }
 
   handleSongClick(song: Song) {
+  }
+
+  private initSongs() {
+    return this.library.songsReady.then(songs => {
+      for (let song of songs) {
+        this.songs.push(song);
+        this.filteredSongs.push(song);
+      }
+      this.setUpPagination();
+      this.sortBy('title');
+    }).catch(this.error.getGenericFailureFn('Song service is unavailable.'));
   }
 
   isNextDisabled(): boolean {

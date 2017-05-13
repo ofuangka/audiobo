@@ -204,3 +204,13 @@ a.disabled {
 .hide {
   display: none !important;
 }
+.songs .status {
+  width: 24px;
+}
+.songs .controls {
+  width: 52px;
+}
+.songs .song td > div {
+  display: inline-block;
+  overflow: hidden;
+}
