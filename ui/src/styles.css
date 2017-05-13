@@ -7,6 +7,9 @@ html {
   cursor: default;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+body {
+  -webkit-text-size-adjust: 100%;
+}
 html, body, app-root {
   margin: 0;
   width: 100%;
