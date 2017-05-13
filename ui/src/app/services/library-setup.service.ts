@@ -8,7 +8,7 @@ export class LibrarySetupService {
 
   constructor(private http: Http) { }
 
-  getFolders(): Promise<any> {
+  getPaths(): Promise<any> {
     return this.http.get('/api/library-setup').toPromise().then((response) => response.json());
   }
 

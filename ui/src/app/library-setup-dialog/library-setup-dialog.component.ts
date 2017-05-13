@@ -31,16 +31,15 @@ export class LibrarySetupDialogComponent implements OnInit {
 
   folders: LibrarySetupFolder[] = [];
   isLoading: boolean;
-  persistedFolders: Folder[] = [];
   pathChangeSubscriptions: Subscription[] = [];
 
   constructor(private library: LibraryService, private dialog: MdDialogRef<LibrarySetupDialogComponent>, private pathValidator: PathValidatorService, private librarySetup: LibrarySetupService, private error: ErrorService) { }
 
   ngOnInit() {
     this.isLoading = true;
-    this.librarySetup.getFolders().then((result) => {
-      for (let rawFolder of result.folders) {
-        this.addFolder(new LibrarySetupFolder(rawFolder));
+    this.librarySetup.getPaths().then((result) => {
+      for (let path of result.paths) {
+        this.addFolder(new LibrarySetupFolder(path));
       }
     }).catch().then(() => this.isLoading = false);
   }
@@ -48,13 +47,13 @@ export class LibrarySetupDialogComponent implements OnInit {
   private addFolder(folder: LibrarySetupFolder) {
     this.pathChangeSubscriptions.push(folder.pathChange$.subscribe((value: string) => {
       folder.loading = true;
-      this.pathValidator.isValid(value).subscribe((result) => {
-        folder.valid = Math.random() > 0.5;
+      this.pathValidator.isValid(value).then(result => {
+        folder.valid = result;
         if (folder.valid) {
           folder.path = value;
         }
         folder.loading = false;
-      });
+      }).catch(this.error.getGenericFailureFn('There was a problem checking folder validity.'));
     }));
     this.folders.push(folder);
 

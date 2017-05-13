@@ -18,7 +18,7 @@ public class ConstantLibrarySetupService implements LibrarySetupService {
 		LibrarySetup ret = new LibrarySetup();
 		List<String> paths = new ArrayList<String>();
 		paths.add(ROOT_PATH);
-		ret.setFolders(paths);
+		ret.setPaths(paths);
 		return ret;
 	}
 

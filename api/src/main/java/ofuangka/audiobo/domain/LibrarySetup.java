@@ -7,13 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class LibrarySetup {
 
-	private List<String> folders;
+	private List<String> paths;
 
-	public List<String> getFolders() {
-		return folders;
+	public List<String> getPaths() {
+		return paths;
 	}
 
-	public void setFolders(List<String> folders) {
-		this.folders = folders;
+	public void setPaths(List<String> paths) {
+		this.paths = paths;
 	}
 }

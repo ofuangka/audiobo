@@ -38,7 +38,7 @@ public class DirectoryLoadingService {
 	public void loadAlbumsAndSongs() {
 
 		LibrarySetup librarySetup = librarySetupService.get();
-		for (String path : librarySetup.getFolders()) {
+		for (String path : librarySetup.getPaths()) {
 
 			/* read the artists */
 			File[] rawArtists = null;
