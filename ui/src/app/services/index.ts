@@ -9,3 +9,4 @@ export * from './hash-code.service';
 export * from './background-color.service';
 export * from './path-validator.service';
 export * from './error.service';
+export * from './library-setup.service';

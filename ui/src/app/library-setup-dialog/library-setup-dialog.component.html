@@ -1,6 +1,7 @@
 <h2 md-dialog-title>Add media folders</h2>
 <md-dialog-content>
-  <div class="folders">
+  <div *ngIf="isLoading" class="spinner-container"><md-spinner></md-spinner></div>
+  <div *ngIf="!isLoading" class="folders">
     <div *ngIf="folders.length === 0">
       No media folders have been added yet. Add one to get started.
     </div>

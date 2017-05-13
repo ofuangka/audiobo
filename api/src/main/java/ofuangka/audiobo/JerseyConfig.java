@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import ofuangka.audiobo.endpoints.AlbumCollectionEndpoint;
 import ofuangka.audiobo.endpoints.CoverInstanceEndpoint;
 import ofuangka.audiobo.endpoints.SongInstanceEndpoint;
-import ofuangka.audiobo.endpoints.LibraryConfigurationEndpoint;
+import ofuangka.audiobo.endpoints.LibrarySetupEndpoint;
 import ofuangka.audiobo.endpoints.LibraryStatusEndpoint;
 import ofuangka.audiobo.endpoints.SongCollectionEndpoint;
 
@@ -18,7 +18,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(SongCollectionEndpoint.class);
 		register(CoverInstanceEndpoint.class);
 		register(SongInstanceEndpoint.class);
-		register(LibraryConfigurationEndpoint.class);
+		register(LibrarySetupEndpoint.class);
 		register(LibraryStatusEndpoint.class);
 	}
 }

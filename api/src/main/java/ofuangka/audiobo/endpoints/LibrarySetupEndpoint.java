@@ -11,25 +11,25 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.stereotype.Component;
 
-import ofuangka.audiobo.domain.LibraryConfiguration;
-import ofuangka.audiobo.services.LibraryConfigurationService;
+import ofuangka.audiobo.domain.LibrarySetup;
+import ofuangka.audiobo.services.LibrarySetupService;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Component
-@Path("/library-configuration")
-public class LibraryConfigurationEndpoint {
+@Path("/library-setup")
+public class LibrarySetupEndpoint {
 
 	@Inject
-	private LibraryConfigurationService libraryConfiguration;
+	private LibrarySetupService librarySetup;
 
 	@GET
-	public LibraryConfiguration read() {
-		return libraryConfiguration.get();
+	public LibrarySetup read() {
+		return librarySetup.get();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response save(LibraryConfiguration librarySetup) {
+	public Response save(LibrarySetup librarySetup) {
 		return null;
 	}
 }

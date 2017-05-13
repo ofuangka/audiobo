@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { LibraryService, PathValidatorService } from '../services';
+import { LibraryService, PathValidatorService, ErrorService, LibrarySetupService } from '../services';
 import { Folder } from '../domain/folder';
 
 class LibrarySetupFolder extends Folder {
@@ -30,16 +30,19 @@ class LibrarySetupFolder extends Folder {
 export class LibrarySetupDialogComponent implements OnInit {
 
   folders: LibrarySetupFolder[] = [];
+  isLoading: boolean;
   persistedFolders: Folder[] = [];
   pathChangeSubscriptions: Subscription[] = [];
 
-  constructor(private library: LibraryService, private dialog: MdDialogRef<LibrarySetupDialogComponent>, private pathValidator: PathValidatorService) { }
+  constructor(private library: LibraryService, private dialog: MdDialogRef<LibrarySetupDialogComponent>, private pathValidator: PathValidatorService, private librarySetup: LibrarySetupService, private error: ErrorService) { }
 
   ngOnInit() {
-    for (let folder of this.persistedFolders) {
-      this.addFolder(new LibrarySetupFolder(folder.path));
-    }
-    this.addFolder(new LibrarySetupFolder(''));
+    this.isLoading = true;
+    this.librarySetup.getFolders().then((result) => {
+      for (let rawFolder of result.folders) {
+        this.addFolder(new LibrarySetupFolder(rawFolder));
+      }
+    }).catch().then(() => this.isLoading = false);
   }
 
   private addFolder(folder: LibrarySetupFolder) {

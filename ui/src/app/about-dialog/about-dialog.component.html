@@ -1,7 +1,7 @@
 <h2 md-dialog-title>Audiobo</h2>
 <div md-dialog-content>
   <p>{{ numAlbums | number }} album{{ numAlbums !== 1 ? 's' : ''}} &middot; {{ numSongs | number }} song{{ numSongs !== 1 ?
-    's' : ''}} &middot; {{ totalTime | duration }}</p>
+    's' : ''}} &middot; {{ totalTime | prettySeconds }}</p>
 </div>
 <div md-dialog-actions class="about-actions">
   <button md-raised-button (click)="dialogRef.close()">Done</button>

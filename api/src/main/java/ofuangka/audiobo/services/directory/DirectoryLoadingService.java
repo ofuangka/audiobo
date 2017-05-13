@@ -15,9 +15,9 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import ofuangka.audiobo.domain.Album;
-import ofuangka.audiobo.domain.LibraryConfiguration;
+import ofuangka.audiobo.domain.LibrarySetup;
 import ofuangka.audiobo.domain.Song;
-import ofuangka.audiobo.services.LibraryConfigurationService;
+import ofuangka.audiobo.services.LibrarySetupService;
 
 @Service
 public class DirectoryLoadingService {
@@ -32,13 +32,13 @@ public class DirectoryLoadingService {
 	private Map<String, File> songFiles = new HashMap<>();
 
 	@Inject
-	private LibraryConfigurationService libraryConfigurationService;
+	private LibrarySetupService librarySetupService;
 
 	@PostConstruct
 	public void loadAlbumsAndSongs() {
 
-		LibraryConfiguration libraryConfiguration = libraryConfigurationService.get();
-		for (String path : libraryConfiguration.getPaths()) {
+		LibrarySetup librarySetup = librarySetupService.get();
+		for (String path : librarySetup.getFolders()) {
 
 			/* read the artists */
 			File[] rawArtists = null;
