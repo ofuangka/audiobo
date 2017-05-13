@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 
@@ -7,25 +7,24 @@ import { Subject } from 'rxjs/Subject';
 import { LibraryService, QueueService, PlayerService, ComparatorService, BackgroundColorService, ErrorService } from '../services';
 import { Album } from '../domain/album';
 import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-setup-dialog.component';
+import { NotifyingView } from '../abstract-classes/notifying-view';
 
 const ALBUM_WIDTH = 182,
   DEBOUNCE_TIME = 300,
   NUM_ALBUMS_PER_PAGE = 50,
-  PAGINATOR_THRESHOLD = 3,
-  VIEW_TIMEOUT = 30000;
+  PAGINATOR_THRESHOLD = 3;
 
 @Component({
   selector: 'album-list',
   templateUrl: './album-list.component.html',
   styleUrls: ['./album-list.component.css']
 })
-export class AlbumListComponent implements OnInit, AfterViewInit {
+export class AlbumListComponent extends NotifyingView implements OnInit {
 
   @ViewChild("albums")
   albumsViewChild: ElementRef;
 
   private filterQueryChange = new Subject();
-  private viewInitializedResolve;
 
   albumOffset = 0;
   albums: Album[] = [];
@@ -38,12 +37,6 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   paginatorThreshold = PAGINATOR_THRESHOLD;
   remainderAlbums: boolean[] = [];
   sortedBy: string;
-  viewInitialized = new Promise((resolve, reject) => {
-    this.viewInitializedResolve = resolve;
-    setTimeout(() => {
-      reject(new Error('View did not initialize before timeout.'));
-    }, VIEW_TIMEOUT);
-  });
 
   get currentPage() {
     return (this.albumOffset / this.numAlbumsPerPage) + 1;
@@ -61,7 +54,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     return this.player.playing;
   }
 
-  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router, private backgroundColor: BackgroundColorService, private dialog: MdDialog, private error: ErrorService) { }
+  constructor(private library: LibraryService, private queue: QueueService, private player: PlayerService, private comparator: ComparatorService, private router: Router, private backgroundColor: BackgroundColorService, private dialog: MdDialog, private error: ErrorService) {
+    super();
+  }
 
   ngOnInit() {
     this.loadingAlbums = true;
@@ -72,10 +67,6 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     ]).then(() => {
       this.setUpRemainderAlbums();
     }).catch(this.error.getGenericFailureFn('A rendering issue occurred.')).then(() => { this.loadingAlbums = false});
-  }
-
-  ngAfterViewInit() {
-    this.viewInitializedResolve();
   }
 
   addAlbumToQueue(album: Album) {
