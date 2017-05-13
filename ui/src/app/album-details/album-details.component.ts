@@ -19,15 +19,6 @@ export class AlbumDetailsComponent extends ResizingSongList implements OnInit {
   @ViewChild('songTableTrack')
   songTableTrackViewChild: ElementRef;
 
-  @ViewChild('songTableTitle')
-  songTableTitleViewChild: ElementRef;
-
-  @ViewChild('songTableArtist')
-  songTableArtistViewChild: ElementRef;
-
-  @ViewChild('songTableDuration')
-  songTableDurationViewChild: ElementRef;
-
   album: Album;
   loadingAlbum: boolean;
   totalDuration: number;
@@ -75,17 +66,18 @@ export class AlbumDetailsComponent extends ResizingSongList implements OnInit {
 
   adjustColumnSizes(ratio: number) {
     let newTitleWidth = Math.floor(this.songTableTitleViewChild.nativeElement.offsetWidth * ratio),
-      newArtistWidth = Math.floor(this.songTableArtistViewChild.nativeElement.offsetWidth * ratio),
-      newTrackWidth = Math.floor(this.songTableTrackViewChild.nativeElement.offsetWidth * ratio),
-      newDurationWidth = Math.floor(this.songTableDurationViewChild.nativeElement.offsetWidth * ratio);
-    this.trackWidth = (newTrackWidth - PADDING) + 'px';
+      newArtistWidth = Math.floor(this.songTableArtistViewChild.nativeElement.offsetWidth * ratio);
     this.titleWidth = (newTitleWidth - PADDING) + 'px';
     this.artistWidth = (newArtistWidth - PADDING) + 'px';
-    this.durationWidth = (newDurationWidth - PADDING) + 'px';
   }
 
   getBackgroundColor() {
     return this.backgroundColor.get(this.album.title);
+  }
+
+  getStaticColumnWidths(): number {
+    let trackWidth = this.songTableTrackViewChild.nativeElement.offsetWidth;
+    return super.getStaticColumnWidths() + trackWidth;
   }
 
   handleAlbumArtClick() {

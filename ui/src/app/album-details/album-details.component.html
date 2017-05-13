@@ -31,7 +31,7 @@
         <thead>
           <tr>
             <th #songTableStatus class="status"></th>
-            <th #songTableTrack class="track"><a (click)="sortBy('track')"># <sort-arrow [dir]="sortDir('track')"></sort-arrow></a></th>
+            <th #songTableTrack class="track" width="0%"><a (click)="sortBy('track')"># <sort-arrow [dir]="sortDir('track')"></sort-arrow></a></th>
             <th #songTableTitle><a (click)="sortBy('title')">NAME <sort-arrow [dir]="sortDir('title')"></sort-arrow></a></th>
             <th #songTableArtist class="hidden-sm"><a (click)="sortBy('artist')">ARTIST <sort-arrow [dir]="sortDir('artist')"></sort-arrow></a></th>
             <th #songTableDuration class="hidden-sm duration"><a (click)="sortBy('duration')">TIME <sort-arrow [dir]="sortDir('duration')"></sort-arrow></a></th>
@@ -44,7 +44,7 @@
               <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
               <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
             </td>
-            <td class="track"><div [ngStyle]="{width: trackWidth}">{{ song.track | zeroPad : 3 }}</div></td>
+            <td class="track">{{ song.track | zeroPad : 3 }}</td>
             <td><div [ngStyle]="{width: titleWidth}">{{ song.title }}</div></td>
             <td class="hidden-sm"><div [ngStyle]="{width: artistWidth}">{{ song.artist }}</div></td>
             <td class="hidden-sm duration"><div [ngStyle]="{width: durationWidth}">{{ song.duration | duration }}</div></td>

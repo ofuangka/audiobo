@@ -18,15 +18,29 @@ export abstract class ResizingSongList extends NotifyingView {
   @ViewChild('songTableControls')
   songTableControlsViewChild: ElementRef;
 
+  @ViewChild('songTableTitle')
+  songTableTitleViewChild: ElementRef;
+
+  @ViewChild('songTableArtist')
+  songTableArtistViewChild: ElementRef;
+
+  @ViewChild('songTableDuration')
+  songTableDurationViewChild: ElementRef;
+
   abstract adjustColumnSizes(ratio: number);
 
   adjustTableSize() {
-    let statusWidth = this.songTableStatusViewChild.nativeElement.offsetWidth,
-      controlsWidth = this.songTableControlsViewChild.nativeElement.offsetWidth,
-      tableWidth = this.songTableViewChild.nativeElement.offsetWidth - statusWidth - controlsWidth,
-      targetWidth = this.songTableContainerViewChild.nativeElement.offsetWidth - statusWidth - controlsWidth,
+    let tableWidth = this.songTableViewChild.nativeElement.offsetWidth - this.getStaticColumnWidths(),
+      targetWidth = this.songTableContainerViewChild.nativeElement.offsetWidth - this.getStaticColumnWidths(),
       ratio = targetWidth / tableWidth;
       this.adjustColumnSizes(ratio);
+  }
+
+  getStaticColumnWidths(): number {
+    let statusWidth = this.songTableStatusViewChild.nativeElement.offsetWidth,
+      controlsWidth = this.songTableControlsViewChild.nativeElement.offsetWidth,
+      durationWidth = this.songTableDurationViewChild.nativeElement.offsetWidth;
+    return statusWidth + controlsWidth + durationWidth;
   }
 
   handleWindowResize(event: Event) {

@@ -25,17 +25,8 @@ const DEBOUNCE_TIME = 300,
 })
 export class SongListComponent extends ResizingSongList implements OnInit {
 
-  @ViewChild('songTableTitle')
-  songTableTitleViewChild: ElementRef;
-
-  @ViewChild('songTableArtist')
-  songTableArtistViewChild: ElementRef;
-
   @ViewChild('songTableAlbum')
   songTableAlbumViewChild: ElementRef;
-
-  @ViewChild('songTableDuration')
-  songTableDurationViewChild: ElementRef;
 
   private filterQueryChange = new Subject();
 
@@ -51,7 +42,6 @@ export class SongListComponent extends ResizingSongList implements OnInit {
   titleWidth = 'auto';
   artistWidth = 'auto';
   albumWidth = 'auto';
-  durationWidth = 'auto';
   
 
   get currentPage() {
@@ -91,14 +81,12 @@ export class SongListComponent extends ResizingSongList implements OnInit {
     this.titleWidth = (newTitleWidth - PADDING) + 'px';
     this.artistWidth = (newArtistWidth - PADDING) + 'px';
     this.albumWidth = (newAlbumWidth - PADDING) + 'px';
-    this.durationWidth = (newDurationWidth - PADDING) + 'px';
   }
 
   clearTableSize() {
     this.titleWidth = 'auto';
     this.artistWidth = 'auto';
     this.albumWidth = 'auto';
-    this.durationWidth = 'auto';
   }
 
   filterSongs(query: string) {
