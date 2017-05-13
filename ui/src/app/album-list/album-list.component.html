@@ -1,14 +1,14 @@
-<!--<div class="filter-container">
-  <form>
-    <md-input-container class="filter">
-      <input mdInput type="search" placeholder="Filter albums">
-    </md-input-container>
-  </form>
-</div>-->
 <div *ngIf="loadingAlbums" class="spinner-container">
   <md-spinner></md-spinner>
 </div>
-<div *ngIf="!loadingAlbums && filteredAlbums.length === 0" class="no-albums-message pad-sm">
+<div *ngIf="!loadingAlbums" class="filter-container">
+  <form>
+    <md-input-container class="filter">
+      <input mdInput type="search" placeholder="Filter albums" (keyup)="handleFilterQueryChange($event.target.value)">
+    </md-input-container>
+  </form>
+</div>
+<div *ngIf="!loadingAlbums && paginatedAlbums.length === 0" class="no-albums-message pad-sm">
   <md-card>No albums to display</md-card>
 </div>
 <ul *ngIf="numAlbums > numAlbumsPerPage" class="paginator">
@@ -17,7 +17,7 @@
   <li><a href="javascript:void(0);" (click)="!isNextDisabled() && goToNextPage()" [ngClass]="{disabled: isNextDisabled()}">Next</a></li>
 </ul>
 <div #albums class="albums" (window:resize)="handleWindowResize($event)">
-  <md-card *ngFor="let album of filteredAlbums" class="album">
+  <md-card *ngFor="let album of paginatedAlbums" class="album">
     <md-card-content>
       <div md-card-image class="album-art" [ngClass]="getBackgroundColor(album)" (click)="goToAlbumDetails(album)">
         <div class="album-status">

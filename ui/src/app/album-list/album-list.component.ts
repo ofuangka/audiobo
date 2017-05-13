@@ -2,11 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { Router } from '@angular/router';
 import { MdDialog } from '@angular/material';
 
+import { Subject } from 'rxjs/Subject';
+
 import { LibraryService, QueueService, PlayerService, ComparatorService, BackgroundColorService, ErrorService } from '../services';
 import { Album } from '../domain/album';
 import { LibrarySetupDialogComponent } from '../library-setup-dialog/library-setup-dialog.component';
 
 const ALBUM_WIDTH = 182,
+  DEBOUNCE_TIME = 300,
+  NUM_ALBUMS_PER_PAGE = 50,
+  PAGINATOR_THRESHOLD = 3,
   VIEW_TIMEOUT = 30000;
 
 @Component({
@@ -19,12 +24,18 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   @ViewChild("albums")
   albumsViewChild: ElementRef;
 
+  private filterQueryChange = new Subject();
+  private viewInitializedResolve;
+
   albumOffset = 0;
   albums: Album[] = [];
+  filteredAlbums: Album[] = [];
+  filterQuery: string;
+  filterQueryChange$ = this.filterQueryChange.asObservable().debounceTime(DEBOUNCE_TIME).distinctUntilChanged();
   loadingAlbums: boolean;
-  numAlbumsPerPage = 50;
+  numAlbumsPerPage = NUM_ALBUMS_PER_PAGE;
   pages: number[] = [];
-  paginatorThreshold = 3;
+  paginatorThreshold = PAGINATOR_THRESHOLD;
   remainderAlbums: boolean[] = [];
   sortedBy: string;
   viewInitialized = new Promise((resolve, reject) => {
@@ -33,13 +44,12 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
       reject(new Error('View did not initialize before timeout.'));
     }, VIEW_TIMEOUT);
   });
-  private viewInitializedResolve;
 
   get currentPage() {
     return (this.albumOffset / this.numAlbumsPerPage) + 1;
   }
-  get filteredAlbums() {
-    return this.albums.slice(this.albumOffset, this.albumOffset + this.numAlbumsPerPage);
+  get paginatedAlbums() {
+    return this.filteredAlbums.slice(this.albumOffset, this.albumOffset + this.numAlbumsPerPage);
   }
   get loading() {
     return this.player.loading;
@@ -55,6 +65,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadingAlbums = true;
+    this.filterQueryChange$.subscribe(this.filterAlbums.bind(this));
     Promise.all([
       this.initAlbums(),
       this.viewInitialized
@@ -76,6 +87,17 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
       }
       this.queue.add(song);
     }
+  }
+
+  filterAlbums(query: string) {
+    this.filteredAlbums = [];
+    for (let album of this.albums) {
+      if (album.title && album.title.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+        this.filteredAlbums.push(album);
+      }
+    }
+    this.setUpRemainderAlbums();
+    this.setUpPagination();
   }
 
   private getAlbumSongsInOrder(album: Album) {
@@ -121,6 +143,10 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
 
   }
 
+  handleFilterQueryChange(newValue: string) {
+    this.filterQueryChange.next(newValue);
+  }
+
   handleWindowResize(event: Event) {
     this.setUpRemainderAlbums();
   }
@@ -129,10 +155,9 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     return this.library.albumsReady.then(albums => {
       for (let album of albums) {
         this.albums.push(album);
+        this.filteredAlbums.push(album);
       }
-      for (let i = 0; i < albums.length / this.numAlbumsPerPage; i++) {
-        this.pages.push(i + 1);
-      }
+      this.setUpPagination();
       this.sortBy('title');
     }).catch(this.error.getGenericFailureFn('Album service is unavailable.'))
   }
@@ -174,9 +199,16 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
     this.player.autoload(this.queue.current);
   }
 
+  setUpPagination() {
+    this.pages = [];
+    for (let i = 0; i < this.filteredAlbums.length / this.numAlbumsPerPage; i++) {
+      this.pages.push(i + 1);
+    }
+  }
+
   setUpRemainderAlbums() {
     let numPerRow = Math.floor(this.albumsViewChild.nativeElement.offsetWidth / ALBUM_WIDTH),
-      remainder = this.filteredAlbums.length % numPerRow,
+      remainder = this.paginatedAlbums.length % numPerRow,
       numToAdd = (remainder === 0) ? 0 : numPerRow - remainder;
     this.remainderAlbums = [];
     for (let i = 0; i < numToAdd; i++) {
@@ -191,6 +223,7 @@ export class AlbumListComponent implements OnInit, AfterViewInit {
   sortBy(property: string) {
     let reverse = property === this.sortedBy;
     this.albums.sort(this.comparator.property(property, reverse));
+    this.filteredAlbums.sort(this.comparator.property(property, reverse));
     if (reverse) {
       this.sortedBy = '!' + property;
     } else {

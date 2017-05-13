@@ -1,19 +1,24 @@
-<!--<div class="filter-container">
-  <form>
-    <md-input-container class="filter">
-      <input mdInput type="search" placeholder="Filter songs">
-    </md-input-container>
-  </form>
-</div>-->
 <div *ngIf="loadingSongs" class="spinner-container">
   <md-spinner></md-spinner>
 </div>
-<div *ngIf="!loadingSongs && filteredSongs.length === 0" class="no-songs-message pad-sm">
+<div class="filter-container">
+  <form>
+    <md-input-container class="filter">
+      <input mdInput type="search" placeholder="Filter songs" (keyup)="handleFilterQueryChange($event.target.value)">
+    </md-input-container>
+  </form>
+</div>
+<div *ngIf="!loadingSongs && paginatedSongs.length === 0" class="no-songs-message pad-sm">
   <md-card>
-    You currently have no songs to display. Do you need to <a href="javascript:void(0);" (click)="showLibrarySetupDialog()">set up your library</a>?
+    No songs to display
   </md-card>
 </div>
-<div *ngIf="filteredSongs.length > 0" class="songs">
+<ul *ngIf="numSongs > numSongsPerPage" class="paginator">
+  <li><a href="javascript:void(0);" (click)="!isPreviousDisabled() && goToPreviousPage()" [ngClass]="{disabled: isPreviousDisabled()}">Previous</a></li>
+  <li *ngFor="let page of pages" [ngClass]="{hide: !isPageVisible(page)}"><a href="javascript:void(0);" (click)="goToPage(page)" [ngClass]="{active: isPageActive(page)}">{{ getPageLabel(page) }}</a></li>
+  <li><a href="javascript:void(0);" (click)="!isNextDisabled() && goToNextPage()" [ngClass]="{disabled: isNextDisabled()}">Next</a></li>
+</ul>
+<div *ngIf="paginatedSongs.length > 0" class="songs">
   <md-card>
     <md-card-content>
       <table>
@@ -28,14 +33,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let song of filteredSongs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
+          <tr *ngFor="let song of paginatedSongs" class="highlight" (dblclick)="play(song)" (click)="handleSongClick(song)">
             <td class="text-center">
               <md-icon *ngIf="isSongCurrent(song)">{{ isSongPlaying(song) ? 'equalizer' : 'pause' }}</md-icon>
               <md-icon *ngIf="!isSongCurrent(song)" class="invisible">album</md-icon>
             </td>
             <td class="title">{{ song.title }}</td>
-            <td class="hidden-sm">{{ song.artist }}</td>
-            <td class="hidden-sm">{{ getAlbumTitle(song) }}</td>
+            <td class="artist hidden-sm">{{ song.artist }}</td>
+            <td class="album hidden-sm">{{ getAlbumTitle(song) }}</td>
             <td class="hidden-sm duration">{{ song.duration | duration }}</td>
             <td class="text-center">
               <md-icon (click)="addToQueue(song)" class="action-icon" title="Add to queue">add</md-icon>
