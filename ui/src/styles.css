@@ -214,3 +214,6 @@ a.disabled {
   display: inline-block;
   overflow: hidden;
 }
+.songs md-card-content {
+  overflow-x: hidden;
+}

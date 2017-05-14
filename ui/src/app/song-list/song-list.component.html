@@ -1,7 +1,4 @@
-<div *ngIf="loadingSongs" class="spinner-container">
-  <md-spinner></md-spinner>
-</div>
-<div class="filter-container">
+<div *ngIf="!loadingSongs" class="filter-container">
   <form>
     <md-input-container class="filter">
       <input mdInput type="search" placeholder="Filter songs" (keyup)="handleFilterQueryChange($event.target.value)" (search)="handleFilterQueryChange($event.target.value)">
@@ -49,6 +46,9 @@
           </tr>
         </tbody>
       </table>
+      <div *ngIf="loadingSongs" class="spinner-container">
+        <md-spinner></md-spinner>
+      </div>
     </md-card-content>
   </md-card>
 </div>
