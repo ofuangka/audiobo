@@ -11,7 +11,7 @@ import ofuangka.audiobo.services.LibrarySetupService;
 @Service
 public class ConstantLibrarySetupService implements LibrarySetupService {
 
-	private static final String ROOT_PATH = "/home/ofuangka/Music";
+	private static final String ROOT_PATH = "F:\\Music";
 	
 	@Override
 	public LibrarySetup get() {

@@ -133,7 +133,7 @@ export class NowPlayingControlsComponent implements OnInit {
   }
 
   seek(progress: number) {
-    this.player.seek(progress * this.player.duration);
+    this.player.seek(progress * this.duration);
   }
 
   toggleDrawer() {

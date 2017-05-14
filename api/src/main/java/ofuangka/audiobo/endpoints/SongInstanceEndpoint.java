@@ -28,6 +28,7 @@ public class SongInstanceEndpoint {
 			@Override
 			public void write(OutputStream output) throws IOException, WebApplicationException {
 				IOUtils.copy(new FileInputStream(songFileService.get(songId)), output);
+				output.flush();
 			}
 
 		};
