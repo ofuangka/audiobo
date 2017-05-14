@@ -39,5 +39,6 @@ md-dialog-actions {
   display: flex;
 }
 .folder-status {
+  cursor: default;
   margin-left: 20px;
 }

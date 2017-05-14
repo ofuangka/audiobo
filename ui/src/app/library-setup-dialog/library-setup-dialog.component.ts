@@ -31,6 +31,7 @@ export class LibrarySetupDialogComponent implements OnInit {
 
   folders: LibrarySetupFolder[] = [];
   isLoading: boolean;
+  isSaving = false;
   pathChangeSubscriptions: Subscription[] = [];
 
   constructor(private library: LibraryService, private dialog: MdDialogRef<LibrarySetupDialogComponent>, private pathValidator: PathValidatorService, private librarySetup: LibrarySetupService, private error: ErrorService) { }
@@ -92,8 +93,11 @@ export class LibrarySetupDialogComponent implements OnInit {
   }
 
   refreshAndClose() {
-    this.library.refreshing = true;
-    this.dialog.close(true);
+    this.isSaving = true;
+    this.librarySetup.save(this.folders).then(() => {
+      this.library.beginRefreshing();
+      this.dialog.close(true);
+    }).catch(this.error.getGenericFailureFn('There was a problem saving the folders.')).then(() => this.isSaving = false);
   }
 
 }

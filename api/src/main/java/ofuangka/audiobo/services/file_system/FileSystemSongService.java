@@ -1,4 +1,4 @@
-package ofuangka.audiobo.services.directory;
+package ofuangka.audiobo.services.file_system;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import ofuangka.audiobo.domain.Song;
 import ofuangka.audiobo.services.SongService;
 
 @Service
-public class DirectorySongService implements SongService {
+public class FileSystemSongService implements SongService {
 
 	@Inject
-	private DirectoryLoadingService directoryLoadingService;
+	private FileSystemLoadingService directoryLoadingService;
 
 	@Override
 	public List<Song> all() {

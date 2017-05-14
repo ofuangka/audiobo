@@ -29,7 +29,7 @@ public class LibrarySetupEndpoint {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response save(LibrarySetup librarySetup) {
-		return null;
+	public LibrarySetup save(LibrarySetup librarySetup) {
+		return librarySetup;
 	}
 }

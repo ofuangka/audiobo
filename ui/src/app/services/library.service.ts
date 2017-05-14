@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/toPromise';
 
 import { Song } from '../domain/song';
 import { Album } from '../domain/album';
 
+const REFRESH_POLLING_INTERVAL = 30000;
+
 @Injectable()
 export class LibraryService {
+
+  private refreshComplete = new Subject();
+
   albums: Album[] = [];
   albumMap: { [id: string]: Album } = {};
   songs: Song[] = [];
@@ -15,13 +21,22 @@ export class LibraryService {
   albumsReady: Promise<any>;
   songsReady: Promise<any>;
   refreshing = false;
+  refreshComplete$ = this.refreshComplete.asObservable();
+  refreshInterval;
+
   get numSongs() {
     return this.songs.length;
   }
 
   constructor(private http: Http) {
-    this.albumsReady = this.http.get('/api/albums').toPromise().then(response => response.json()).then(this.cacheAlbums.bind(this));
-    this.songsReady = this.http.get('/api/songs').toPromise().then(response => response.json()).then(this.cacheSongs.bind(this));
+    this.requestData();
+  }
+
+  beginRefreshing() {
+    this.refreshing = true;
+    this.refreshInterval = setTimeout(() => {
+      this.http.get('/api/library-status').toPromise().then(response => response.json()).then(this.handleLibraryStatus.bind(this));
+    }, REFRESH_POLLING_INTERVAL);
   }
 
   private cacheAlbums(rawAlbums: any[]) {
@@ -54,6 +69,23 @@ export class LibraryService {
       this.songMap[rawSong.id] = newSong;
     }
     return this.songs;
+  }
+
+  private handleLibraryStatus(result) {
+    if (result) {
+      this.requestData().then(() => {
+        this.refreshing = false;
+        this.refreshComplete.next();
+      });
+    } else {
+      setTimeout(this.handleLibraryStatus.bind(this), REFRESH_POLLING_INTERVAL);
+    }
+  }
+
+  private requestData() {
+    this.albumsReady = this.http.get('/api/albums').toPromise().then(response => response.json()).then(this.cacheAlbums.bind(this));
+    this.songsReady = this.http.get('/api/songs').toPromise().then(response => response.json()).then(this.cacheSongs.bind(this));
+    return Promise.all([this.albumsReady, this.songsReady]);
   }
 
 }

@@ -11,12 +11,12 @@
           <input mdInput [value]="folder.path" (keyup)="folder.triggerPathChange($event.target.value)"
             placeholder="Folder (e.g. /music)" tabindex="-1" />
         </md-input-container>
-        <a (click)="removeFolder(folder)">
+        <a (click)="removeFolder(folder)" title="Remove folder">
           <md-icon>clear</md-icon>
         </a>
       </div>
-      <a>
-        <md-icon [ngClass]="{rotate: folder.loading}" class="folder-status">{{ getFolderStatusIcon(folder) }}</md-icon>
+      <a class="folder-status">
+        <md-icon [ngClass]="{rotate: folder.loading}">{{ getFolderStatusIcon(folder) }}</md-icon>
       </a>
     </div>
   </div>
@@ -26,5 +26,5 @@
 </md-dialog-content>
 <md-dialog-actions>
   <button md-raised-button md-dialog-close>Cancel</button>
-  <button md-raised-button color="primary" (click)="refreshAndClose()" [disabled]="!allFoldersValid()">Refresh library</button>
+  <button md-raised-button color="primary" (click)="refreshAndClose()" [disabled]="!allFoldersValid() || isSaving">Refresh library</button>
 </md-dialog-actions>
