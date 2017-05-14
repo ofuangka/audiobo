@@ -4,7 +4,7 @@
 <div *ngIf="!loadingAlbums" class="filter-container">
   <form>
     <md-input-container class="filter">
-      <input mdInput type="search" placeholder="Filter albums" (keyup)="handleFilterQueryChange($event.target.value)">
+      <input mdInput type="search" placeholder="Filter albums" (keyup)="handleFilterQueryChange($event.target.value)" (search)="handleFilterQueryChange($event.target.value)">
     </md-input-container>
   </form>
 </div>
