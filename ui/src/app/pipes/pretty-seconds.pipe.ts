@@ -1,8 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-function pluralize(num: number, unit: string): string {
-  return num === 1 ? `${num} ${unit}` : `${num} ${unit}s`;
-}
+import { DecimalPipe } from '@angular/common';
 
 const SECOND = 1,
   MINUTE = 60 * SECOND,
@@ -14,29 +11,35 @@ const SECOND = 1,
 })
 export class PrettySecondsPipe implements PipeTransform {
 
+  constructor(private decimalPipe: DecimalPipe) { }
+
+  pluralize(num: number, unit: string): string {
+    return num === 1 ? `${this.decimalPipe.transform(num)} ${unit}` : `${this.decimalPipe.transform(num)} ${unit}s`;
+  }
+
   transform(value: any, args?: any): any {
     var buf: string[] = [], seconds = parseInt(value);
     if (seconds === 0) {
       return '0 seconds';
     }
     if (seconds > WEEK) {
-      buf.push(pluralize(Math.floor(seconds / WEEK), 'week'));
+      buf.push(this.pluralize(Math.floor(seconds / WEEK), 'week'));
       seconds = seconds % WEEK;
     }
     if (seconds > DAY) {
-      buf.push(pluralize(Math.floor(seconds / DAY), 'day'));
+      buf.push(this.pluralize(Math.floor(seconds / DAY), 'day'));
       seconds = seconds % DAY;
     }
     if (seconds > HOUR) {
-      buf.push(pluralize(Math.floor(seconds / HOUR), 'hour'));
+      buf.push(this.pluralize(Math.floor(seconds / HOUR), 'hour'));
       seconds = seconds % HOUR;
     }
     if (seconds > MINUTE) {
-      buf.push(pluralize(Math.floor(seconds / MINUTE), 'minute'));
+      buf.push(this.pluralize(Math.floor(seconds / MINUTE), 'minute'));
       seconds = seconds % MINUTE;
     }
     if (seconds > 0) {
-      buf.push(pluralize(seconds, 'second'));
+      buf.push(this.pluralize(seconds, 'second'));
     }
     return buf.join(' ');
   }
