@@ -14,4 +14,4 @@ Music streamer
     cd ../api
     mvn clean install
 
-The jar file will be generated in api/target.
+The jar file will be generated in `api/target`.
