@@ -62,7 +62,7 @@ export class SongListComponent extends ResizingSongList implements OnInit {
     this.loadingSongs = true;
     this.filterQueryChange$.subscribe(this.filterSongs.bind(this));
     Promise.all([this.initSongs(), this.viewInitializedResolve]).then(() => {
-      setTimeout(this.adjustTableSize.bind(this));
+      this.adjustTableSize();
     }).catch(this.error.getGenericFailureFn('A rendering issue occurred.')).then(() => this.loadingSongs = false);
   }
 
@@ -120,7 +120,7 @@ export class SongListComponent extends ResizingSongList implements OnInit {
   goToPage(page: number) {
     this.songOffset = (page - 1) * this.numSongsPerPage;
     this.clearTableSize();
-    setTimeout(this.adjustTableSize.bind(this));
+    this.adjustTableSize();
   }
 
   goToPreviousPage() {

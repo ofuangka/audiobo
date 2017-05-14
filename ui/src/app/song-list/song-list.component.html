@@ -21,7 +21,7 @@
 <div class="songs">
   <md-card>
     <md-card-content #songTableContainer (window:resize)="handleWindowResize($event)">
-      <table #songTable>
+      <table #songTable [ngClass]="{invisible: hideSongTable}">
         <thead>
           <tr>
             <th #songTableStatus></th>

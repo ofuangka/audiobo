@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <table #songTable (window:resize)="handleWindowResize()">
+      <table #songTable [ngClass]="{invisible: hideSongTable}" (window:resize)="handleWindowResize()">
         <thead>
           <tr>
             <th #songTableStatus class="status"></th>

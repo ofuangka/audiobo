@@ -27,13 +27,19 @@ export abstract class ResizingSongList extends NotifyingView {
   @ViewChild('songTableDuration')
   songTableDurationViewChild: ElementRef;
 
+  hideSongTable = false;
+
   abstract adjustColumnSizes(ratio: number);
 
   adjustTableSize() {
-    let tableWidth = this.songTableViewChild.nativeElement.offsetWidth - this.getStaticColumnWidths(),
-      targetWidth = this.songTableContainerViewChild.nativeElement.offsetWidth - this.getStaticColumnWidths(),
-      ratio = targetWidth / tableWidth;
+    this.hideSongTable = true;
+    setTimeout(() => {
+      let tableWidth = this.songTableViewChild.nativeElement.offsetWidth - this.getStaticColumnWidths(),
+        targetWidth = this.songTableContainerViewChild.nativeElement.offsetWidth - this.getStaticColumnWidths(),
+        ratio = targetWidth / tableWidth;
       this.adjustColumnSizes(ratio);
+      this.hideSongTable = false;
+    });
   }
 
   getStaticColumnWidths(): number {

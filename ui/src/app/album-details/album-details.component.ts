@@ -47,7 +47,7 @@ export class AlbumDetailsComponent extends ResizingSongList implements OnInit {
       this.initSongs(),
       this.viewInitialized
     ]).then(() => {
-      setTimeout(this.adjustTableSize.bind(this));
+      this.adjustTableSize();
     }).catch(this.error.getGenericFailureFn('There was a problem initializing the view.')).then(() => this.loadingAlbum = false);
   }
 
