@@ -75,40 +75,41 @@ public class FileSystemLoadingService {
 							album.setArtist(rawArtist.getName());
 							List<String> songIds = new ArrayList<>();
 							for (File rawSong : rawSongs) {
-								try {
-									AudioFile audioFile = AudioFileIO.read(rawSong);
-									AudioHeader header = audioFile.getAudioHeader();
-									int trackLength = header.getTrackLength();
-	
-									String name = rawSong.getName();
-									Matcher trackArtistSong = TRACK_ARTIST_SONG_REGEX.matcher(name);
-									Matcher trackSong = TRACK_SONG_REGEX.matcher(name);
-	
-									if (trackArtistSong.matches() || trackSong.matches()) {
+
+								String name = rawSong.getName();
+								Matcher trackArtistSong = TRACK_ARTIST_SONG_REGEX.matcher(name);
+								Matcher trackSong = TRACK_SONG_REGEX.matcher(name);
+
+								if (trackArtistSong.matches() || trackSong.matches()) {
+									try {
+										AudioFile audioFile = AudioFileIO.read(rawSong);
+										AudioHeader header = audioFile.getAudioHeader();
+										int trackLength = header.getTrackLength();
 										String songId = String.valueOf(songCounter);
 										if (trackArtistSong.matches()) {
 											songs.add(getSongInstance(songId, albumId,
 													Integer.valueOf(trackArtistSong.group(1)), trackArtistSong.group(3),
 													trackArtistSong.group(2), trackLength));
-	
+
 										} else if (trackSong.matches()) {
-											songs.add(getSongInstance(songId, albumId, Integer.valueOf(trackSong.group(1)),
-													trackSong.group(2), rawArtist.getName(), trackLength));
+											songs.add(getSongInstance(songId, albumId,
+													Integer.valueOf(trackSong.group(1)), trackSong.group(2),
+													rawArtist.getName(), trackLength));
 										}
 										songIds.add(songId);
 										songFiles.put(songId, rawSong);
 										songCounter++;
+									} catch (CannotReadException e) {
+										log.error("CannotReadException occurred", e);
+									} catch (IOException e) {
+										log.error("IOException occurred", e);
+									} catch (TagException e) {
+										log.error("TagException occurred", e);
+									} catch (ReadOnlyFileException e) {
+										log.error("ReadOnlyFileException occurred", e);
+									} catch (InvalidAudioFrameException e) {
+										log.error("InvalidAudioFrameException occurred", e);
 									}
-								} catch (CannotReadException e) {
-									log.error("CannotReadException occurred", e);
-								} catch (IOException e) {
-									log.error("IOException occurred", e);
-								} catch (TagException e) {
-									log.error("TagException occurred", e);
-								} catch (ReadOnlyFileException e) {
-									log.error("ReadOnlyFileException occurred", e);
-								} catch (InvalidAudioFrameException e) {
-									log.error("InvalidAudioFrameException occurred", e);
 								}
 							}
 							album.setSongIds(songIds);
