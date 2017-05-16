@@ -9,12 +9,10 @@ const SECOND = 1,
 @Pipe({
   name: 'prettySeconds'
 })
-export class PrettySecondsPipe implements PipeTransform {
-
-  constructor(private decimalPipe: DecimalPipe) { }
+export class PrettySecondsPipe extends DecimalPipe implements PipeTransform {
 
   pluralize(num: number, unit: string): string {
-    return num === 1 ? `${this.decimalPipe.transform(num)} ${unit}` : `${this.decimalPipe.transform(num)} ${unit}s`;
+    return num === 1 ? `${super.transform(num)} ${unit}` : `${super.transform(num)} ${unit}s`;
   }
 
   transform(value: any, args?: any): any {
